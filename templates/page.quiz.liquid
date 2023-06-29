@@ -1,0 +1,95 @@
+{% comment %}
+  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+{% endcomment %}
+
+<main id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section default-page">
+  <section class="section__wrapper
+                  section
+                  ">
+    <div class="container">
+      {% section 'page__main' %}
+    </div>
+  </section>
+</main>
+
+{% if template.suffix == "quiz" %}
+<!-- <p>Quiz page</p> -->
+
+<style>
+  .octane-ai-quiz-rendered button {
+    background: #000;
+    color: #fff;
+    padding: 14px 28px;
+    border-color: transparent;
+    transition: all 250ms ease;
+  }
+  
+  .octane-ai-quiz-rendered button:hover {
+    background: #997867;
+  }
+  
+  .shopify-section.default-page {
+    background: #fcfcfc;
+    background: rgb(205 180 144 / 40%);
+  }
+  
+  div[data-display="oct-display"] + button {
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+  }
+  
+  div[data-display="oct-display"] + button:hover {
+    background: #fff;
+  }
+  
+  @media(min-width: 768px) {
+    li.oct-quiz-picture-choice-options__option {
+      background: #fff;
+/*       color: #fff !important; */
+      padding: 20px !important;
+      border-radius: 10px !important;
+      transition: all 250ms ease !important;
+      box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+      border: 2px solid transparent;
+    }
+
+    li.oct-quiz-picture-choice-options__option:hover {
+      background: #cdb490;
+      background: rgb(205 180 144 / 60%);
+      color: #000;
+      border: 2px solid #cdb490;
+    }
+    
+    [data-display="oct-display"] ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    
+    
+    li.oct-quiz-multiple-choice-options__option {
+      margin: 0px 0px 10px 0px;
+      background: #fff;
+      padding: 10px 20px;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 5%);
+    }
+    
+    li.oct-quiz-multiple-choice-options__option:last-child {
+      margin-bottom: 0px;
+    }
+    
+    li.oct-quiz-multiple-choice-options__option:hover {
+      background: rgb(153 120 103 / 60%);
+      border-color: #997867;
+    }
+  }
+  
+</style>
+{% else %}
+<!-- <p style="display: none;">Not quiz page</p> -->
+{% endif %}
+

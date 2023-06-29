@@ -1,0 +1,59 @@
+{% assign id = section.id %}
+{% assign css = section.settings.css %}
+{% assign min_width = section.settings.min_width %}
+{% assign max_width = section.settings.max_width %}
+
+<style>
+#shopify-section-{{ id }} {
+    display: none !important;
+}
+
+{% unless css == blank and  min_width == blank and max_width == blank %}
+@media screen and (min-width: {{ min_width }}px) and (max-width: {{ max_width }}px) {
+{{ css }}
+}
+{% endunless %}
+
+</style>
+
+{% schema %}
+  {
+    "name": "Device CSS",
+    "class": "css-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "device_name",
+        "label": "Device name",
+        "info": "Device name",
+        "default": "iPhone 12"
+      },
+      {
+        "type": "text",
+        "id": "min_width",
+        "label": "Min device width",
+        "info": "Insert number value only"
+      },
+      {
+        "type": "text",
+        "id": "max_width",
+        "label": "Max device width",
+        "info": "Insert number value only"
+      },
+      {
+        "type": "textarea",
+        "id": "css",
+        "label": "CSS"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Device CSS",
+        "category": "Layout",
+        "settings": {
+
+        }
+      }
+    ]
+  }
+{% endschema %}

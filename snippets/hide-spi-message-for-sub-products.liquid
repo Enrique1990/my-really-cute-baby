@@ -1,0 +1,40 @@
+{% if product.selling_plan_groups.size > 0 %}
+    <script>
+        (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+
+                {% if product.selected_selling_plan %}
+                    var el = document.querySelector('shopify-payment-terms');
+                    if (el) {
+                        el.style.display = 'none';
+                    }
+                {% endif %}
+
+                var rs = history.replaceState;
+                history.replaceState = function () {
+
+                    rs.apply(history, arguments); // preserve normal functionality
+
+                    var newPath = '';
+                    var el = document.querySelector('shopify-payment-terms');
+
+                    if (arguments[0].path) {
+                        newPath = arguments[0].path;
+                    } else if (arguments[2]) {
+                        newPath = arguments[2];
+                    } else {
+                        console.log('Did not find new url in arguments passed to replaceState');
+                        return;
+                    }
+
+                    if (newPath.includes('selling_plan')) {
+                        el.style.display = 'none';
+                    } else {
+                        el.style.display = 'block';
+                    }
+
+                };
+            });
+        }());
+    </script>
+{% endif %}

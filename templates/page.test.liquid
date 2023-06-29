@@ -1,0 +1,78 @@
+{% comment %}
+  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+{% endcomment %}
+<script>
+ window.__ctmaccount = 322621;
+window.__ctm_cvars = [{ business_unit : "Hotel Collection" }];
+function gaPushToCTM() {
+   window.__ctm_cvars = window.__ctm_cvars || [];
+   var gaFields = gaconnector.getCookieValues();
+   var ctm_ga_obj = {};
+   for (var fieldName in gaFields) {
+      var ctm_fieldName = "ctm_" + fieldName;   
+      ctm_ga_obj[ctm_fieldName] = gaFields[fieldName];
+   }
+   window.__ctm_cvars.push(ctm_ga_obj);   
+}
+window.CTMSourceEvent = function (event) {
+   if (event.state == 'after') {
+      if (window.__ctm) { 
+         // We run our push CTM Parameters into the Form
+         var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
+         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
+      }
+      // We are using the CTM Flip code to give Facebook a delay
+      var Facebook_FBCLID = document.getElementById('LEADCF314');
+
+      let fbp = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+      let fbc = /_fbc=(fb\.1\.\d+\.[^;]+)/.exec(window.document.cookie);         
+      var fb_cookievals = {};
+      if (fbp && fbp[1]) {
+         fb_cookievals["Facebook_FBP"] = fbp;
+         var Facebook_FBP = document.getElementById('LEADCF313');
+         if (Facebook_FBP != null) {
+            Facebook_FBP.value = fbp;
+            Facebook_FBP.dispatchEvent(new Event('change'));
+         }
+      }
+
+      if (fbc && fbc[1]) {
+         fb_cookievals["Facebook_FBCLID"] = fbc;
+         var Facebook_FBCLID = document.getElementById('LEADCF314');
+         if (Facebook_FBCLID != null) {
+            Facebook_FBCLID.value = fbc;
+            Facebook_FBCLID.dispatchEvent(new Event('change'));   
+         }
+      }
+      window.__ctm_cvars = window.__ctm_cvars || [];
+      window.__ctm_cvars.push(fb_cookievals);
+   }
+};
+(function (account) {
+   var ctmjs = document.createElement('script');
+   ctmjs.setAttribute("type", "application/javascript");
+   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
+   ctmjs.setAttribute("async", "async");
+   document.getElementsByTagName("head")[0].appendChild(ctmjs);
+   var gacjs = document.createElement('script');
+   gacjs.setAttribute("src", "https://tracker.gaconnector.com/gaconnector.js");
+   gacjs.setAttribute("async", "async");
+   gacjs.onload = function() { gaconnector.setCallback(gaPushToCTM); }
+   document.getElementsByTagName("head")[0].appendChild(gacjs);
+
+   var gac2js = document.createElement('script');
+   gac2js.setAttribute("src", "https://track.gaconnector.com/gaconnector.js");
+   gac2js.setAttribute("async", "async");
+   gac2js.onload = function() { gaconnector2.track("9bcf27ea123afebfc5cdb44b0ecadc21",{internalDomains:["hotelcollection.com", "hotelcollection.myshopify.com"], storageEngine: 'cookies'}); };
+   document.getElementsByTagName("head")[0].appendChild(gac2js);
+})(__ctmaccount);
+</script>
+<main id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section default-page">
+  <section class="section__wrapper
+                  section
+                  ">
+    <div class="container">
+      {% section 'page__main' %}
+    </div>
+  </section>
+</main>

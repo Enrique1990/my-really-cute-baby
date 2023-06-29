@@ -1,0 +1,496 @@
+{% comment %}
+  Snippet can be used in section or block
+  eg. {% include 'include-image-with-text-overlay' %}
+{% endcomment %}
+
+<style>
+    body {
+      font-size: 18px;
+    }
+  </style>
+  
+  {% comment %}Assign object as block or section{% endcomment %}
+  {% if type == 'block' %}
+    {% assign object = block %}
+  {% else %}
+    {% assign object = section %}
+  {% endif %}
+  
+  {% assign id = object.id %}
+  {% assign image = object.settings.image %}
+  {% assign mobile_image = object.settings.mobile_image %}
+  {% assign link = object.settings.link %}
+  {% comment %} Text {% endcomment %}
+  {% assign pretext = object.settings.pretext %}
+  {% assign pretext_color = object.settings.pretext_color %}
+  {% assign title = object.settings.title %}
+  {% assign title_color = object.settings.heading_color %}
+  {% assign subtitle = object.settings.subtitle %}
+  {% assign subtitle_color = object.settings.subheading_color %}
+  {% assign text_alignment = object.settings.text_alignment %}
+  {% assign text_horizontal_position = object.settings.text_horizontal_position %}
+  {% assign text_vertical_position = object.settings.text_vertical_position %}
+  {% comment %} Text background {% endcomment %}
+  {% assign background_color =  object.settings.background_color %}
+  {% assign background_color_alpha = object.settings.background_opacity | divided_by: 100.00 %}
+  {% assign text_width =  object.settings.text_width %}
+  {% comment %} Buttons {% endcomment %}
+  {% assign button_1 = object.settings.button_1 %}
+  {% assign button_1_link = object.settings.button_1_link %}
+  {% assign button_1_style = object.settings.button_1_style %}
+  {% assign button_2 = object.settings.button_2 %}
+  {% assign button_2_link = object.settings.button_2_link %}
+  {% assign button_2_style = object.settings.button_2_style %}
+  {% if button_1 != blank and button_2 != blank %}
+    {% assign buttons = true %}
+  {% else %}
+    {% assign buttons = false %}
+  {% endif %}
+  {% assign caption_border_width = object.settings.border_width %}
+  {% assign caption_border_color = object.settings.border_color %}
+  {% comment %} Mobile {% endcomment %}
+  {% assign mobile_text_below_media = object.settings.mobile_text_below_image %}
+  {% assign mobile_text_crop = object.settings.mobile_image_crop %}
+  {% assign mobile_headline_color = object.settings.heading_color_mobile %}
+  {% assign mobile_preheading_color = object.settings.pretext_color_mobile %}
+  {% assign mobile_subtitle_color = object.settings.subheading_color_mobile %}
+  {% comment %}Layout{% endcomment %}
+  {% assign width = object.settings.width %}
+  {% assign padding_top = object.settings.padding_top %}
+  {% assign padding_bottom = object.settings.padding_bottom %}
+  {% assign padding_left = object.settings.padding_left %}
+  {% assign padding_right = object.settings.padding_right %}
+  {% assign animation = object.settings.animation | default: 'none' %}
+  
+  {% comment %}Is the color set to transparent?{% endcomment %}
+  {% assign heading_alpha = title_color | color_extract: 'alpha' %}
+  {% assign preheading_alpha = pretext_color | color_extract: 'alpha' %}
+  {% assign subheading_alpha = subtitle_color | color_extract: 'alpha' %}
+  {% assign mobile_headline_alpha = mobile_headline_color | color_extract: 'alpha' %}
+  {% assign mobile_preheading_alpha = mobile_preheading_color | color_extract: 'alpha' %}
+  {% assign mobile_subtitle_alpha = mobile_subtitle_color | color_extract: 'alpha' %}
+  {% assign caption_border_alpha = object.settings.border_color | color_extract: 'alpha' %}
+  
+  {% comment %}Advanced{% endcomment %}
+  {% assign css_class = object.settings.css_class %}
+  {% assign custom_css = object.settings.custom_css %}
+  
+  {% comment %}Section specific CSS{% endcomment %}
+  {% capture section_css -%}
+    .caption-content {
+      background-color: {% if background_color_alpha != 100 %}{{ background_color | color_modify: 'alpha', background_color_alpha }}{% else %}{{ background_color }}{% endif %};
+      border: {{ caption_border_width }}px solid {{ caption_border_color }};
+      padding: 50px 0;
+    }
+  
+    .image-with-text-overlay__heading {
+      color: {% if heading_alpha != 0 %}{{ title_color }}{% else %}{{ settings.heading_color }}{% endif %};
+    }
+  
+    .image-with-text-overlay__preheading {
+      color: {% if preheading_alpha != 0 %}{{ pretext_color }}{% else %}{{ settings.heading_color }}{% endif %};
+    }
+  
+    .image-with-text-overlay__subheading {
+      color: {% if subheading_alpha != 0 %}{{ subtitle_color }}{% else %}{{ settings.heading_color }}{% endif %};
+      font-weight: 500;
+      width: {{ object.settings.heading_width }}%;
+      font-size: 18px;
+    }
+  {%- endcapture -%}
+  
+  {% comment %}Section specific CSS{% endcomment %}
+  
+  {% style %}
+    {% render 'css-loop',
+            css: section_css,
+            id: id
+    %}
+  
+    #shopify-section-{{ id }} .banner__heading {
+      font-size: 40px;
+    }
+    #shopify-section-{{ id }} .caption {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 140px !important;
+    }
+    #shopify-section-{{ id }} .button-wrapper {
+      position: relative;
+      margin-top: 20px;
+    }
+    #shopify-section-{{ id }} .sales-message {
+      padding: 30px;
+      text-align: center;
+    }
+    #shopify-section-{{ id }} .sales-message.sales-message-desktop {
+      display: block;
+      padding: 0;
+      text-align: left;
+    }
+    #shopify-section-{{ id }} .sales-message.sales-message-mobile {
+      display: none;
+    }
+    #shopify-section-{{ id }} .sales-message h2 {
+      font-size: 58px;
+      line-height: 73px;
+      font-weight: 400;
+    }
+    #shopify-section-{{ id }} .sales-message p {
+      font-size: 24px;
+      line-height: 29px;
+      font-weight: 300;
+      color: #000;
+    }
+    #shopify-section-{{ id }} .sales-message p strong {
+      font-weight: 500;
+    }
+    #shopify-section-{{ id }} .review-wrapper {
+      margin-top: 30px;
+      flex: 1 0 47%;
+    }
+    #shopify-section-{{ id }} .review-wrapper .okeReviews {
+      margin: 20px 0;
+    }
+    #shopify-section-{{ id }} .review-wrapper .review-content {
+      margin: 10px 0;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: -0.015em;
+      color: #000000;
+    }
+    #shopify-section-{{ id }} .review-wrapper .reviewer-name {
+      margin: 15px 0;
+      font-weight: 500;
+      color: #020202;
+      font-size: 16px;
+    }
+    #shopify-section-{{ id }} .review-wrapper .reviewer-photo {
+      border-radius: 9999px;
+      border: 1px solid #000000;
+      width: fit-content;
+      padding: 1px;
+    }
+    #shopify-section-{{ id }} .review-wrapper .reviewer-photo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #shopify-section-{{ id }} .image-with-text-overlay__banner {
+      position: relative;
+    }
+    #shopify-section-{{ id }} .image-with-text-overlay__buttons .button {
+      vertical-align: middle;
+      height: 50px !important;
+      padding-left: 20px;
+      padding-right: 20px;
+      flex: none;
+      font-weight: 500;
+    }
+    #shopify-section-{{ id }} .image-with-text-overlay__subheading {
+      margin-bottom: 25px !important;
+    }
+    #shopify-section-{{ id }} .section-description {
+      display: flex;
+      align-items: flex-end;
+    }
+    #shopify-section-{{ id }} .section-features-wrapper {
+      flex: 0 1 53%;
+      margin-right: 50px;
+    }
+    #shopify-section-{{ id }} .section-features .section-feature {
+      border-bottom: 2px solid #000000;
+      padding: 10px 0;
+    }
+    #shopify-section-{{ id }} .section-feature .section-feature-title {
+      font-size: 18px;
+      line-height: 23px;
+      color: #000000;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    #shopify-section-{{ id }} .section-feature .section-feature-subtitle {
+      font-size: 16px;
+      line-height: 19px;
+      font-weight: 400;
+      color: #000;
+    }
+    @media only screen and (max-width: 480px) {
+      #shopify-section-{{ id }} .image-with-text-overlay__heading {
+        color: {% if mobile_headline_alpha != 0 %}{{ mobile_headline_color}}{% endif %};
+      }
+      #shopify-section-{{ id }} .image-with-text-overlay__preheading {
+        color: {% if mobile_preheading_alpha != 0 %}{{ mobile_preheading_color}}{% endif %};
+      }
+      #shopify-section-{{ id }} .image-with-text-overlay__subheading {
+        color: {% if mobile_subtitle_alpha != 0 %}{{ mobile_subtitle_color}}{% endif %};
+      }
+    }
+  
+    @media only screen and (max-width: 768px) {
+      #shopify-section-{{ id }} .sales-message h2 {
+          font-size: 50px;
+          line-height: 63px;
+          font-weight: 400;
+      }
+      #shopify-section-{{ id }} .sales-message p {
+          font-size: 20px;
+          line-height: 24px;
+          font-weight: 300;
+          color: #000;
+      }
+      #shopify-section-{{ id }} .banner__heading {
+          font-size: 30px;
+          line-height: 38px;
+      }
+      #shopify-section-{{ id }} .subtitle {
+          font-size: 16px;
+      }
+      #shopify-section-{{ id }} .mobile-text--below-media .caption {
+          position: absolute;
+          text-align: center;
+          margin-top: 5px;
+          margin-bottom: 5px;
+          top: 0; 
+          display: flex;
+          flex-direction: column-reverse;
+          height: 100%;
+          padding: 0 32px !important;
+      }
+      #shopify-section-{{ id }} .caption-content {
+          margin-bottom: 30px;
+      }
+      #shopify-section-{{ id }} .caption {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1% !important;
+      }
+      #shopify-section-{{ id }} .sales-message.sales-message-desktop {
+        display: none;
+      }
+      #shopify-section-{{ id }} .sales-message.sales-message-mobile {
+        display: block;
+      }
+      #shopify-section-{{ id }} .section-description {
+        display: block;
+      }
+      #shopify-section-{{ id }} .section-features-wrapper {
+        margin-right: 0;
+        margin-bottom: 30px;
+      }
+      #shopify-section-{{ id }} .image-with-text-overlay__subheading {
+        width: 100%;
+        margin-bottom: 30px !important;
+      }
+    }
+  
+    @media only screen and (min-width: 480px) {
+      #shopify-section-{{ id }} .caption-content {
+        width: {{ text_width }}%;
+      }
+    }
+  
+    @media only screen and (min-width: 1380px) {
+        #shopify-section-{{ id }} .section-description {
+            display: block;
+        }
+    }
+  
+    @media only screen and (min-width: 1409px) {
+      #shopify-section-{{ id }} .adjust-content-width .caption-content {
+        width: 65%;
+      }
+      #shopify-section-{{ id }} .section-features .section-feature {
+            border-bottom: 2px solid #000000;
+            padding: 15px 0;
+        }
+    }
+    @media only screen and (min-width: 1610px) {
+      #shopify-section-{{ id }} .adjust-content-width .caption-content {
+        width: 62%;
+      }
+      #shopify-section-{{ id }} .caption {
+        padding: 0 180px !important;
+      }
+    }
+  
+    #shopify-section-{{ id }} {
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      padding-left: {{ padding_left }}px;
+      padding-right: {{ padding_right }}px;
+      {% if width == 'wide' %}
+        width: 100%;
+      {% elsif width == 'half' %}
+        width: 50%;
+      {% endif %}
+    }
+  
+    {% render 'css-loop',
+            css: custom_css,
+            id: id
+    %}
+  
+  {% endstyle %}
+  
+  {% comment %} HTML markup {% endcomment %}
+  <section class="section
+                  {{ css_class }}
+                  is-width-{{ width }}
+                  under-overlay-menu
+                  {% if mobile_text_below_media == true %}
+                    mobile-text--below-media
+                    {% else %}
+                    mobile-text--over-media
+                  {% endif %}
+                  {% if caption_border_alpha != 0 %}
+                    has-border
+                  {% endif %}
+                  "
+                  {% if animation != "none" %}
+                    data-scroll-class="{{ animation }}"
+                  {% endif %}>
+    <div class="container
+                image-with-text-overlay__container
+                {% if width == 'wide' or width == 'half' %}
+                  equal-columns--outside-trim
+                {% endif %}">
+      <div class="image-with-text-overlay__banner columns one-whole image-crop-{{ mobile_text_crop }}">
+  
+        {% if mobile_image != blank %}
+          {% assign hide_mobile = 'is-hidden-mobile-only' %}
+        {% endif %}
+  
+        {% if image != blank %}
+          {% render 'image-element',
+                  image: image,
+                  alt: image.alt,
+                  stretch_width: true,
+                  additional_classes: hide_mobile
+          %}
+        {% else %}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+  
+        {% if mobile_image != blank %}
+          <div class="is-hidden-desktop-only">
+            {% render 'image-element',
+                    image: mobile_image,
+                    alt: mobile_image.alt,
+                    stretch_width: true
+            %}
+          </div>
+        {% endif %}
+  
+        {% if link != blank %}
+          <a href="{{ link }}" class="banner--full-link"></a>
+        {% endif %}
+  
+        {% if pretext != blank or title != blank or subtitle != blank or button_1 != blank or button_2 != blank %}
+          <div class="caption text-align-{{ text_horizontal_position }} align-{{ text_vertical_position }}">
+            <div class="caption-content text-align-{{ text_alignment }} {% if object.settings.centered-on-mobile == true %} centered-text-on-mobile {% endif %}">
+              {% if pretext != blank %}
+                <div class="image-with-text-overlay__preheading banner__subheading pretext subtitle">
+                  {{ pretext }}
+                </div>
+              {% endif %}
+              {% if title != blank %}
+                <h2 class="image-with-text-overlay__heading banner__heading title">
+                  <span>{{ title }}</span>
+                </h2>
+              {% endif %}
+              {% if subtitle != blank %}
+                <div class="image-with-text-overlay__subheading banner__subheading subtitle">
+                  {{ subtitle }}
+                </div>
+              {% endif %}
+  
+              {% if section.settings.sales_msg != blank %}
+              <div class="sales-message sales-message-desktop">
+                {{ section.settings.sales_msg }}
+              </div>
+              {% endif %}
+  
+              <div class="section-description">
+                {% if section.blocks.size > 0 %}
+                <div class="section-features-wrapper">
+                  <ul class="section-features">
+                    {% for block in section.blocks %}
+                    <li class="section-feature">
+                      <h4 class="section-feature-title">{{ block.settings.heading }}</h4>
+                      <div class="section-feature-subtitle">{{ block.settings.subheading }}</div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+                {% if section.settings.review_content != blank %}
+                <div class="review-wrapper">
+                    <div class="okeReviews okeReviews--theme">
+                        <div class="okeReviews-reviewsSummary-starRating">
+                            <span class="okeReviews-starRating okeReviews-starRating--small">
+                                <span class="okeReviews-a11yText">Rated 5.0 out of 5</span>
+                                <span class="okeReviews-starRating-indicator" role="presentation">
+                                    <span class="okeReviews-starRating-indicator-layer"></span>
+                                    <span class="okeReviews-starRating-indicator-layer okeReviews-starRating-indicator-layer--foreground" style="width: 100%"></span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <div class="review-content">
+                        {{ section.settings.review_content }}
+                    </div>
+    
+                    <div class="reviewer-name">
+                        {{ section.settings.reviewer }}
+                    </div>
+    
+                    <!-- <div class="reviewer-photo">
+                        <img src="{{ section.settings.reviewer_photo | img_url }}" alt="{{ section.settings.reviewer }}" />
+                    </div> -->
+
+                    <div class="button-wrapper">
+                        {% if button_1 != blank or button_2 != blank %}
+                          <div class="image-with-text-overlay__buttons buttons {% unless buttons == true %}is-justify-{{ text_alignment }}{% endunless %}">
+          
+                          {% if button_1 != blank %}
+                            {% render 'button',
+                                    label: button_1,
+                                    href: button_1_link,
+                                    type: "link",
+                                    style: button_1_style
+                            %}
+                          {% endif %}
+                          {% if button_2 != blank %}
+                            {% render 'button',
+                                    label: button_2,
+                                    href: button_2_link,
+                                    type: "link",
+                                    style: button_2_style
+                            %}
+                          {% endif %}
+          
+                          </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+  
+            {% if section.settings.sales_msg != blank %}
+            <div class="sales-message sales-message-mobile">
+              {{ section.settings.sales_msg }}
+            </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  

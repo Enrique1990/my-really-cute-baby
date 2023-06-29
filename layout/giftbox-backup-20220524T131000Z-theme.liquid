@@ -1,0 +1,577 @@
+{% capture content %}
+<!doctype html>
+<html lang="{{ shop.locale }}">
+<head>
+
+<script>
+/* >> TriplePixel :: start*/
+~function(W,H,A,L,E){try{A.setItem(H,1+(0|A.getItem(H)||0)),W.includes("⇈")&&A.setItem(H+"Stg",1+(0|A.getItem(H+"Stg")||0))}catch(e){}function O(T,R){void 0===R&&(R=!1),H=new XMLHttpRequest,H.open("GET","//triplewhale-pixel.web.app/triplepx.txt?"+~(Date.now()/9e7),!0),H.send(null),H.onreadystatechange=function(){4===H.readyState&&200===H.status?setTimeout(function(){return eval(H.responseText)},50):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(T-1))}}A=window,A[H]||(L=function(){return"tp.."+Date.now().toString(36)+Math.random().toString(36)},E=A[H]=function(t,e,n){return W=L(),(E._q=E._q||[]).push([W,e,n]),W},E.ch=W,O(5))}("","TriplePixel",localStorage);
+/* << TriplePixel :: end*/
+</script>
+
+
+  <meta name="facebook-domain-verification" content="fpkp0s3oaw19vnfiyyeknp0ywzicay" />
+  <meta charset="utf-8">
+  <meta http-equiv="cleartype" content="on">
+  {% if product.id == 7186083381414 or product.id == 7225891455142 %}
+    <meta name="robots" content="noindex,nofollow">
+    {% else %}
+    <meta name="robots" content="index,follow">
+  {% endif %}
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.shop_bg_color }}">
+  <link rel="canonical" href="{{ canonical_url }}" />
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KPDXVW3');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Optimize -->
+<script src="https://www.googleoptimize.com/optimize.js?id=OPT-5SG92ML"></script>
+  
+  
+<!--  bing pixel code  -->
+  <script>
+    (function(w,d,t,r,u)
+     {
+      var f,n,i;
+      w[u]=w[u]||[],f=function()
+      {
+        var o={ti:" 17498669"};
+        o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")
+      },
+        n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function()
+      {
+        var s=this.readyState;
+        s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)
+      },
+        i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)
+    })
+    (window,document,"script","//bat.bing.com/bat.js","uetq");
+  </script>
+  <!--  end bing  -->
+  
+  <!--MNTN Tracking Pixel-->
+<!-- INSTALL ON ALL PAGES OF SITE-->
+<script type=“text/javascript”>
+	(function(){“use strict”;var e=null,b=“4.0.0”,
+	n=“33163",
+	additional=“term=value”,
+	t,r,i;try{t=top.document.referer!==“”?encodeURIComponent(top.document.referrer.substring(0,2048)):“”}catch(o){t=document.referrer!==null?document.referrer.toString().substring(0,2048):“”}try{r=window&&window.top&&document.location&&window.top.location===document.location?document.location:window&&window.top&&window.top.location&&“”!==window.top.location?window.top.location:document.location}catch(u){r=document.location}try{i=parent.location.href!==“”?encodeURIComponent(parent.location.href.toString().substring(0,2048)):“”}catch(a){try{i=r!==null?encodeURIComponent(r.toString().substring(0,2048)):“”}catch(f){i=“”}}var l,c=document.createElement(“script”),h=null,p=document.getElementsByTagName(“script”),d=Number(p.length)-1,v=document.getElementsByTagName(“script”)[d];if(typeof l===“undefined”){l=Math.floor(Math.random()*1e17)}h=“dx.mountain.com/spx?“+”dxver=“+b+“&shaid=“+n+“&tdr=“+t+“&plh=“+i+“&cb=“+l+additional;c.type=“text/javascript”;c.src=(“https:“===document.location.protocol?“https://“:”http://“)+h;v.parentNode.insertBefore(c,v)})()
+</script>
+
+  {%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' -%}{%- endif -%}
+  <title>{%- if template contains "index" -%}{{ page_title }}{%- else -%}{{ page_title }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags }}{%- endif -%}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}{% endif %}</title>
+
+  <link rel="preconnect dns-prefetch" href="https://fonts.shopifycdn.com" />
+  <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com" />
+  <link rel="preconnect dns-prefetch" href="https://v.shopify.com" />
+  <link rel="preconnect dns-prefetch" href="https://cdn.shopifycloud.com" />
+  {% if settings.enable_shopify_review_comments %}
+    <link rel="preconnect dns-prefetch" href="https://productreviews.shopifycdn.com" />
+  {% endif %}
+
+  {{ 'fancybox.css' | asset_url | stylesheet_tag }}
+  <!-- Stylesheets for Flex "2.0.3" -->
+  {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+
+  {% if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 %}
+    <script type="text/javascript" src="/services/javascripts/currencies.js" ></script>
+  {% endif %}
+  <script>
+    {% render 'js-variables' %}
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script defer src="{{ 'vendors.js' | asset_url }}"></script>
+  <script defer src="{{ 'utilities.js' | asset_url }}"></script>
+  <script defer src="{{ 'app.js' | asset_url }}"></script>
+
+  {%- if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 -%}
+    <script defer src="{{ 'currencyConversion.js' | asset_url }}"></script>
+  {%- endif -%}
+
+  {%- if settings.enable_shipping_calculator and template contains "cart" -%}
+    <script defer type="text/javascript" src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    <script defer type="text/javascript" src="{{ 'api.jquery.js' | shopify_asset_url }}"></script>
+    <script defer type="text/javascript" src="/services/javascripts/countries.js"></script>
+  {%- endif -%}
+
+  <noscript>
+    <style>
+      /* Insert styles for styles when JS is not loaded */
+    </style>
+  </noscript>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags | escape }}.{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}.{% endif %}" />
+  {%- endif -%}
+
+  {%- if settings.favicon != nil -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ settings.favicon | img_url: '180x180' }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | img_url: '180x180' }}"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ settings.favicon | img_url: '57x57' }}"/>
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ settings.favicon | img_url: '60x60' }}"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ settings.favicon | img_url: '72x72' }}"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ settings.favicon | img_url: '76x76' }}"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ settings.favicon | img_url: '114x114' }}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | img_url: '180x180' }}"/>
+    <link rel="apple-touch-icon" sizes="228x228" href="{{ settings.favicon | img_url: '228x228' }}"/>
+  {%- else -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+  {%- endif -%}
+
+  {%- if template.directory == 'customers' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    <script src="{{ 'customer_area.js' | shopify_asset_url }}"></script>
+  {%- endif -%}
+
+  {% render 'treedify' %}{{ content_for_header }}
+
+  {% render 'social-meta-info' %}
+  {% if collection.previous_product %}<link rel="prev" href="{{ collection.previous_product }}">{% endif %}
+  {% if collection.next_product %}<link rel="next" href="{{ collection.next_product }}">{% endif %}
+
+<!-- Textual
+<script type="text/javascript" src="https://go.textual.com/x-scripts/textual.js"></script>
+<script type="text/javascript">
+	window.textualReady = function() {
+
+		new TextualSession({
+			companyHandle: "aroma360",
+		});
+
+	};
+</script> -->
+
+<meta name="google-site-verification" content="SsL7n1o724qxGP-Sy1eNsnSSor69FEDCZ7ud0T7W314" />
+
+<!-- Global site tag (gtag.js) - Google Ads: 611999839 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-611999839"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-611999839');
+</script>
+
+
+<!-- Start of Littledata - Fix Google Analytics Script-->
+{% include 'LittledataLayer' %}
+<!-- End of Littledata - Fix Google Analytics Script -->
+  <script src="https://www.dwin1.com/19038.js" type="text/javascript" defer="defer"></script>
+  <!-- Hotjar Tracking Code for https://www.hotelcollection.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:2168247,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<!-- ga tags - utm for crm -->
+<script>
+window.__ctmaccount = 312204;
+window.__ctm_cvars = [{ business_unit : "Hotel Collection" }];
+function gaPushToCTMandHiddenInputs() {
+   window.__ctm_cvars = window.__ctm_cvars || [];
+   var gaFields = gaconnector.getCookieValues();
+   var ctm_ga_obj = {};
+   for (var fieldName in gaFields) {
+      var fieldValue = gaFields[fieldName];
+
+      var ctm_fieldName = "ctm_" + fieldName;   
+      ctm_ga_obj[ctm_fieldName] = fieldValue;
+
+      var hidden_input = document.getElementById(fieldName);
+      if (hidden_input) { hidden_input.value = fieldValue; }
+   }
+   window.__ctm_cvars.push(ctm_ga_obj);   
+}
+window.CTMSourceEvent = function (event) {
+   if (event.state == 'after') {
+      if (window.__ctm) { 
+         // We run our push CTM Parameters into the Form
+         var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
+         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
+      }
+      // We are using the CTM Flip code to give Facebook a delay
+      var Facebook_FBCLID = document.getElementById('LEADCF314');
+
+      let fbp = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+      let fbc = /_fbc=(fb\.1\.\d+\.[^;]+)/.exec(window.document.cookie);         
+      var fb_cookievals = {};
+      if (fbp && fbp[1]) {
+         fb_cookievals["Facebook_FBP"] = fbp[1];
+         var Facebook_FBP = document.getElementById('LEADCF313');
+         if (Facebook_FBP != null) {
+            Facebook_FBP.value = fbp[1];
+            Facebook_FBP.dispatchEvent(new Event('change'));
+         }
+      }
+
+      if (fbc && fbc[1]) {
+         fb_cookievals["Facebook_FBCLID"] = fbc[1];
+         var Facebook_FBCLID = document.getElementById('LEADCF314');
+         if (Facebook_FBCLID != null) {
+            Facebook_FBCLID.value = fbc[1];
+            Facebook_FBCLID.dispatchEvent(new Event('change'));   
+         }
+      }
+      window.__ctm_cvars = window.__ctm_cvars || [];
+      window.__ctm_cvars.push(fb_cookievals);
+   }
+};
+(function (account) {
+   var ctmjs = document.createElement('script');
+   ctmjs.setAttribute("type", "application/javascript");
+   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
+   ctmjs.setAttribute("async", "async");
+   document.getElementsByTagName("head")[0].appendChild(ctmjs);
+   var gacjs = document.createElement('script');
+   gacjs.setAttribute("src", "https://tracker.gaconnector.com/gaconnector.js");
+   gacjs.setAttribute("async", "async");
+   gacjs.onload = function() { gaconnector.setCallback(gaPushToCTMandHiddenInputs); }
+   document.getElementsByTagName("head")[0].appendChild(gacjs);
+
+   var gac2js = document.createElement('script');
+   gac2js.setAttribute("src", "https://track.gaconnector.com/gaconnector.js");
+   gac2js.setAttribute("async", "async");
+   gac2js.onload = function() { gaconnector2.track("a869596c85117d3beb785b0750efeaec",{internalDomains:["hotelcollection.com", "hotelcollection.myshopify.com"], storageEngine: 'cookies'}); };
+   document.getElementsByTagName("head")[0].appendChild(gac2js);
+
+})(__ctmaccount);
+</script>
+  {% include "loyaltylion" %}
+  
+  {% comment %} Age verification code {% endcomment %}
+  {% if collection.handle contains 'wine' and collection.handle != 'wine-accessories' %}
+  	<script src="https://zooomyapps.com/age/ZooomyAgeVerify.js" data-shop="hotelcollection.myshopify.com"></script>
+  {% endif %}
+  
+  <script>
+    var metaData = { };
+  </script>
+<script async src="https://assets.apphero.co/script_tags/341610_841286.js"></script><script async src="https://assets.apphero.co/script_tags/711821_304822.js"></script><script async src="https://assets.apphero.co/script_tags/733871_796483.js"></script><script async src="https://assets.apphero.co/script_tags/605694_933406.js"></script><script async src="https://assets.apphero.co/script_tags/988118_364933.js"></script><script async src="https://assets.apphero.co/script_tags/820386_60589.js"></script><script async src="https://assets.apphero.co/script_tags/323266_570142.js"></script><script async src="https://assets.apphero.co/script_tags/205941_672894.js"></script><script async src="https://assets.apphero.co/script_tags/205941_649859.js"></script>
+  {% include 'friendbuy' %}
+</head>
+
+{% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ routes.search_url }}?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+{% endif %}
+
+<!-- <div id="influencer-subscribe" style="display:none;">
+  <img src="" alt="">
+  <div class="klaviyo-form-Tx8Q7T"></div>
+  <script>
+  setTimeout(function () {
+      openPopup();
+  }, 3000);
+  </script>
+
+</div>
+
+<script>
+
+  if(window.location.href.indexOf('?influencer') != -1) {
+    function openPopup() {
+      $("#influencer-subscribe").fancybox({
+        closeClick  : false,
+        fitToView: true,
+        autoResize: true,
+        closeBtn : false,
+        // showCloseButton : false,
+        // smallBtn: false,
+        toolbar: false,
+        helpers : {
+          overlay : {closeClick: false}
+        },
+        clickSlide: false, // disable close on outside click
+        touch: false // disable close on swipe
+      }).trigger('click');
+      };
+    };
+
+
+</script> -->
+
+
+{% for locale in shop.enabled_locales %}
+  {% if locale.primary == true %}
+    {% assign defaultLocale = locale.iso_code %}
+  {% endif %}
+{% endfor %}
+
+<body class="{%- if template == '404' -%}
+              error-404
+            {% else -%}
+              {{ template | replace: '.', '-' | handle }}
+            {%- endif -%}
+            {% if settings.header_layout == 'vertical' -%}
+              has-vertical-header
+            {%- endif -%}"
+      data-money-format="
+        {%- if settings.currency_format == 'money_with_currency_format' -%}
+          {{ shop.money_with_currency_format | strip_html }}
+        {%- else -%}
+          {{ shop.money_format | strip_html }}
+        {%- endif -%}"
+      data-shop-url="{{ shop.url }}"
+      data-default-lang="{{ defaultLocale }}"
+      data-current-lang="{{ request.locale.iso_code }}">
+{% capture the_snippet_content %}{% render 'socialshopwave-helper' %}{% endcapture %}
+            {% unless the_snippet_content contains 'Liquid error' %}
+              {{ the_snippet_content }}
+            {% endunless %}
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPDXVW3"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  <!-- temp sale banner 
+  <div class="temp-image-banner">
+    <img src="{{ 'memorial_banner-mobile.png' | file_url  }}" alt="Memorial Day Sale" class="temp-image-mobile">
+    <img src="{{ 'memorial-banner3.png' | file_url  }}" alt="Memorial Day Sale" class="temp-image-desktop">
+  </div> -->  
+    
+  {%- if settings.show_announcement_bar -%}
+    {% section 'announcement-alt' %}
+  {%- endif -%}
+  
+
+   {%- if settings.show_sale_bar -%}
+    {% section 'sale-bar' %}
+  {%- endif -%}
+
+  {%- if settings.header_layout == "classic" -%}
+    {% section 'header__top-bar' %}
+    {% section 'header-classic' %}
+  {%- elsif settings.header_layout == "centered" -%}
+    {% section 'header-centered__top-bar' %}
+    {% section 'header-centered' %}
+  {%- elsif settings.header_layout == "vertical" -%}
+    {% section 'header-vertical' %}
+  {%- elsif settings.header_layout == "search_focus" -%}
+    {% section 'header__top-bar' %}
+    {% section 'header-search-focus' %}
+  {%- endif -%}
+
+  {%- if settings.cart_action == 'drawer' -%}
+    {% render 'ajax-cart' %}
+  {%- endif -%}
+
+  {% if settings.mega_menu_1 == true %}
+    {% section 'mega-menu-1' %}
+  {% endif %}
+  {% if settings.mega_menu_2 == true %}
+    {% section 'mega-menu-2' %}
+  {% endif %}
+  {% if settings.mega_menu_3 == true %}
+    {% section 'mega-menu-3' %}
+  {% endif %}
+  {% if settings.mega_menu_4 == true %}
+    {% section 'mega-menu-4' %}
+  {% endif %}
+  {% if settings.mega_menu_5 == true %}
+    {% section 'mega-menu-5' %}
+  {% endif %}
+  {% if settings.mega_menu_6 == true %}
+    {% section 'mega-menu-6' %}
+  {% endif %}
+  {% if settings.mega_menu_7 == true %}
+    {% section 'mega-menu-7' %}
+  {% endif %}
+  {% if settings.mega_menu_8 == true %}
+    {% section 'mega-menu-8' %}
+  {% endif %}
+  {% if settings.mega_menu_9 == true %}
+    {% section 'mega-menu-9' %}
+  {% endif %}
+  {% if settings.mega_menu_10 == true %}
+    {% section 'mega-menu-10' %}
+  {% endif %}
+
+  {% if settings.header_layout == "vertical" %}
+    <div class="is-beside-vertical-header">
+  {% endif %}
+
+  {{ content_for_layout }}
+	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>{% render 'treedify_script' %}
+
+  {% if settings.footer_layout == "centered" %}
+    {% section 'footer__icon-bar' %}
+    {% section 'footer-centered' %}
+  {% elsif settings.footer_layout == "classic" %}
+    {% section 'footer__icon-bar' %}
+    {% section 'footer-classic' %}
+  {% elsif settings.footer_layout == "promotional" %}
+    {% section 'footer__icon-bar' %}
+    {% section 'footer-promotional' %}
+  {% endif %}
+
+  {% if settings.header_layout == "vertical" %}
+    </div>
+  {% endif %}
+
+  {% if settings.show_fixed_message %}
+    {% section 'fixed-message' %}
+  {% endif %}
+
+  {% if settings.enable_quickshop %}
+    {% render 'quick-shop' %}
+  {% endif %}
+
+  {% if settings.search_display_style == 'popup' %}
+    {% render 'search-popup' %}
+  {% endif %}
+
+  {% if settings.show_popup %}
+    {% section 'popup' %}
+  {% endif %}
+
+
+  {% if settings.disqus_enabled %}
+    {% if template contains "blog" or template contains "article" or template contains "index" %}
+      <script id="dsq-count-scr" src="//{{ settings.disqus_shortname }}.disqus.com/count.js" async></script>
+    {% endif %}
+  {% endif %}
+
+
+
+{% include 'pick-an-option' %}
+
+
+{% include 'mw_GP_objects' %}{% render 'awesome-quantity', product: product %}
+<!-- zoho tracking -->
+  <script type="application/javascript">
+window.__ctmaccount = 312204;
+window.__ctm_cvars = window.__ctm_cvars || [];
+__ctm_cvars.push({ business_unit : "Hotel Collection" });
+window.CTMSourceEvent = function (event) {
+   if (event.state == 'after') {
+      if (window.__ctm) {
+         // We run our push CTM Parameters into the Form
+	 var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
+         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
+      }
+   }
+};
+(function (account) {
+   var ctmjs = document.createElement('script');
+   ctmjs.setAttribute("type", "application/javascript");
+   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
+   ctmjs.setAttribute("async", "async");
+   document.getElementsByTagName("head")[0].appendChild(ctmjs);
+})(__ctmaccount);
+</script>
+ {% include 'smile-initializer' %}
+  
+  
+<script src="https://cdn.attn.tv/hotelcollection/dtag.js"></script>  
+<!-- chat -->
+<iframe class="ctm-call-widget" src="https://312204.tctm.co/form/FRT472ABB2C5B9B141A283BEFF6465EBEE001B899589910DC0BF93205EB1536EFC9.html" style="display:none"></iframe>
+<script defer async src="https://312204.tctm.co/formreactor.js"></script>
+    {% if collection.handle == "the-wine-collection" %} 
+ 
+
+   
+{% endif %} 
+  {% for collection in product.collections %}
+
+  {% if collection.handle == "the-wine-collection" %} 
+ 
+   
+  
+{% endif %} 
+{% endfor %}
+
+  
+
+<!-- snippet for out of stock notification flow, managed via Klaviyo -->
+<script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+<script>
+    var klaviyo = klaviyo || [];
+    klaviyo.init({
+      account: "W6n4RN",
+      platform: "shopify",
+      list: 'SBzyfS',
+    });
+    klaviyo.enable("backinstock",{ 
+    trigger: {
+      product_page_text: "Notify Me When Available",
+      product_page_class: "btn",
+      product_page_text_align: "center",
+      product_page_margin: "0px",
+      replace_anchor: false
+    },
+    modal: {
+    subscribe_checked: true,
+     headline: "{product_name}",
+     body_content: "<strong>Inerested in this item?</strong> <br>Be the first to know when we restock! Sign up now to receive an email update as soon as its back.",
+     email_field_label: "Email",
+     button_label: "Notify me when available",
+     subscription_success_label: "You're in! We'll let you know when it's back.",
+     footer_content: '',
+     drop_background_color: "#000",
+     background_color: "#fff",
+     text_color: "#222",
+     button_text_color: "#fff",
+     button_background_color: "#000",
+     close_button_color: "#ccc",
+     error_background_color: "#fcd6d7",
+     error_text_color: "#C72E2F",
+     success_background_color: "#d3efcd",
+     success_text_color: "#1B9500"
+    }
+  });
+</script>
+  
+  <script src='https://app.bellwethr.com/staticfiles/code_snippets/recharge_redirect.js'>
+</script>
+<script>
+  window.addEventListener(
+    'DOMContentLoaded', startRetentionEngine('https://app.bellwethr.com/offboard/experience/hotel-collection-3342252508')
+  );
+
+  const generateRetentionEngineLink = (subscription_ids_array) => {
+    return RELinkGenerator('https://app.bellwethr.com/offboard/experience/hotel-collection-3342252508', subscription_ids_array);
+  };
+</script>
+  
+  <script src="https://unpkg.com/@loophq/onstore-sdk@latest/dist/loop-onstore-sdk.js"></script>
+  <script> 
+    LoopOnstore.init({ 
+      key: "a1f91227bc946c0042bba9bd28ce9c0feb3dcba3",
+      attach: ".rebuy-cart__flyout-actions button" 
+    });
+  </script> 
+  <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
+
+
+
+</body>
+</html>
+{% endcapture %}
+{% assign content = content | replace_first: '<!doctype', '!doctype' | split: ' <' %}
+{%- for html in content -%}{%- assign htmlblock = html | strip | prepend: ' <' -%}{{htmlblock | replace: ' </', '</'}}{%- endfor -%}

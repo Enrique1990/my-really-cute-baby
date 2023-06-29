@@ -1,0 +1,517 @@
+{% comment %}
+** Sale bar - static **
+- Static section
+{% endcomment %}
+
+{% assign id = section.id %}
+{% assign icon = section.settings.icon_label | downcase %}
+{% assign size = section.settings.size %}
+{% assign text_color = section.settings.text_color %}
+{% assign show_close_icon = section.settings.show_close_icon %}
+
+{% comment %} Advanced {% endcomment %}
+{% assign width = section.settings.width %}
+{% assign css_class = section.settings.css_class %}
+{% assign custom_css = section.settings.custom_css %}
+
+{% comment %} Is the color set to transparent? {% endcomment %}
+{% assign text_alpha = text_color | color_extract: 'alpha' %}
+
+{% comment %} Section specific CSS {% endcomment %}
+{% capture section_css -%}
+
+#shopify-section-{{ id }} {
+  {% if width == 'wide' %}
+    width: 100%;
+  {% endif %}
+}
+{% render 'css-loop',
+        css: section_css,
+        id: id
+%}
+{% render 'css-loop',
+        css: custom_css,
+        id: id
+%}
+
+
+{%- endcapture -%}
+
+{% style %}
+<style>
+{% if section.settings.enable_sticky %}
+div.announcement-bar {
+  position: fixed !important;
+  z-index: 31 !important;
+}
+{% endif %}
+
+  .announcement-bar__content {
+    padding: 0 0.2em;
+    justify-content: center;
+    margin:0 auto;
+    flex-wrap: wrap;
+  }
+
+  .break {
+    flex-basis: 100%;
+    height:0;
+  }
+
+  .announcement-bar__content p {
+    padding: 0 0.2em;
+    justify-content: center;
+    margin:0 auto;
+    text-align:center;
+  }
+
+  h3.large-text {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text-size }}%;
+    text-align: center;
+    padding-right: 3px;
+  }
+
+span.detail-text {
+    text-align: center;
+    padding-left:3px;
+    padding-top: {% if section.settings.text-size >= 170 %} 5px; {% endif %}
+  }
+
+  p.small-text {
+    color: {{ section.settings.text_color }};
+    font-size: 13px;
+    text-align: center;
+    width:100%;
+  }
+
+  .small-text-top {
+    color: {{ section.settings.text_color }};
+    font-size: 13px;
+    text-align: center;
+    display: block;
+    width:100%;
+    margin: 0 auto;
+  }
+
+  .announcement-bar-background-color {
+    background-color: {{ section.settings.background }};
+  }
+
+
+    .banner-with-background {
+        background-image: url('{{ section.settings.sale_banner_background_image }}');
+        background-position:center;
+        background-repeat:no-repeat;
+        background-size:cover;
+    }
+
+  .announcement-bar__close {
+    fill: {{ text_color }};
+    background-color: {{ text_color | color_modify: 'alpha', 0.1 }};
+    margin-left: auto;
+  }
+
+  .announcement-bar__close:hover {
+    background-color: {{ text_color | color_modify: 'alpha', 0.2 }};
+  }
+
+  .message-header {
+    color: {% if text_alpha != 0 %}{{ text_color }}{% else %}{{ settings.regular_color }}{% endif %};
+  	padding: unset;
+  	height:{% if section.settings.section_height %} {{section.settings.section_height }}px{% endif %};
+  }
+
+   img.desktop-image {
+        display: grid;
+        place-items: center;
+        max-height:85px;
+        margin-left:20px;
+    }
+
+
+  img.mobile-image {
+	display: none;
+  }
+
+  div.announcement-bar__text:before, div.announcement-bar__text:after {
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 1px;
+    display: block;
+    width: {% if section.settings.text != blank or section.settings.large-text != blank  %} 30px {% endif %};
+    background: #808080;
+    content: '';
+  }
+
+  @media only screen and (max-width: 768px) {
+
+    .message-header {
+     height:{% if section.settings.section_height %} {{section.settings.section_height }}px{% endif %};
+    }
+
+{% if section.settings.sale_banner_background_image_mobile != blank %}
+    .banner-with-background {
+     background-image: url("{{ section.settings.sale_banner_background_image_mobile | img_url:'master' }}") !important;
+    }
+{% endif %}
+
+{% if section.settings.centered_banner_image_mobile != blank %}
+
+    img.desktop-image {
+        display: none !important;
+    }
+
+     img.mobile-image {
+     display: grid !important;
+     place-items: center;
+     max-height:85px;
+     margin-left:20px;
+     }
+  {% endif %}
+
+     h3.large-text {
+       font-size: 125%;
+     }
+
+     p.small-text {
+       color: {{ section.settings.text_color }};
+       font-size: 10px;
+       text-align: center;
+       width:100%;
+       padding-bottom: 10px;
+     }
+
+       div.announcement-bar__text:before, div.announcement-bar__text:after  {
+         width: {% if section.settings.text != blank or section.settings.large-text != blank  %} 20px {% endif %};
+       }
+   }
+
+</style>
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+{% capture announcement %}
+
+{% if section.settings.banner-link %}
+<a href="{{ section.settings.banner-link }}">
+{% endif %}
+
+<div class="announcement-bar__container {{ css_class }}">
+  <div class="announcement-bar {% if section.settings.sale_banner_background_image or section.settings.sale_banner_background_image_mobile != blank %} banner-with-background {% else %} announcement-bar-background-color {% endif %}
+              is-{{ size }}"
+        id="announcement-bar">
+
+    <div class="section">
+      <div class="message-header">
+
+
+
+       {% if section.settings.centered_banner_image or section.settings.centered_banner_image_mobile or section.settings.text or section.settings.large-text != blank %}
+        <div class="announcement-bar__content is-justify-{{ section.settings.alignment }}">
+          {% if section.settings.centered_banner_image != blank %}
+          <img class="lazyload transition--{{ settings.image_loading_style }} desktop-image" src="{{ section.settings.centered_banner_image | img_url: 'large' }}" alt="Hotel Collections - Hotel Scents Promotion">
+          {% endif %}
+          {% if section.settings.centered_banner_image_mobile != blank %}
+          <img class="lazyload transition--{{ settings.image_loading_style }} mobile-image" src="{{ section.settings.centered_banner_image_mobile | img_url: 'large' }}" alt="Hotel Collections - Hotel Scents Promotion">
+          {% endif %}
+
+        {% if section.settings.large-text or section.settings.text != blank %}
+
+        {% if section.settings.small-text-top != blank %}
+          <p class="small-text-top">{{section.settings.small-text-top}}</p>
+        {% endif %}
+
+        <div class="announcement-bar__text justify-content-center" >
+          {% if section.settings.large-text != blank %}
+            <h3 class="large-text">{{ section.settings.large-text }}</h3>
+          {% endif %}
+
+          {% if section.settings.text != blank %}
+            <span class="detail-text">{{ section.settings.text }}</span>
+          {% endif %}
+
+        </div>
+
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+              <p class="buttons">
+                {% render 'button',
+                        label: section.settings.button_label,
+                        href: section.settings.link,
+                        type: "link",
+                        style: section.settings.button_style
+                %}
+              </p>
+          {% endif %}
+
+        {% if section.settings.small-text != blank %}
+          <p class="small-text">{{section.settings.small-text}}</p>
+        {% endif %}
+
+       {% endif %}
+     </div>
+
+       {% if show_close_icon == true %}
+         <button class="close announcement-bar__close js-close-announcement" aria-label="close">
+           {% render 'icon', name: 'x' %}
+         </button>
+       {% endif %}
+
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+   {% if section.settings.banner-link != blank %}
+  </a>
+  {% endif %}
+
+  <div class="announcement-bar__shadow" id="announcement-bar__shadow" aria-visible="false"></div>
+
+{% endcapture %}
+
+{% if section.settings.homepage_only %}
+  {% if template == 'index' %}
+    {{ announcement }}
+  {% endif %}
+{% else %}
+  {{ announcement }}
+{% endif %}
+
+{% comment %}Javascript{% endcomment %}
+<script
+  type="application/json"
+  data-section-id="{{ section.id }}"
+  data-section-data
+>
+  {
+    "homepage_only": {{ section.settings.homepage_only | json }},
+    "enable_sticky": {{ section.settings.enable_sticky | json }},
+    "show_close_icon": {{ section.settings.show_close_icon | json }}
+  }
+</script>
+<script src="{{ 'z__jsAnnouncementBar.js' | asset_url }}"></script>
+
+{% comment %}Schema{% endcomment %}
+{% schema %}
+
+{
+  "name": "Sale Banner",
+  "class": "announcement-container jsAnnouncementBar",
+  "settings": [
+ {
+      "type": "header",
+      "content": "Full Banner Link"
+    },
+
+	{
+      "type": "url",
+      "id": "banner-link",
+      "label": "Link"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Banner Height",
+      "min": 40,
+      "max" : 80,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+{
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "small-text-top",
+      "label": "Small Text Top",
+      "default": "Limited Time"
+    },
+    {
+      "type": "text",
+      "id": "large-text",
+      "label": "Large Text",
+      "default": "X% OFF"
+    },
+    {
+      "type": "range",
+      "id": "text-size",
+      "label": "Enlarge Text on Desktop",
+      "min": 100,
+      "max" : 180,
+      "step": 1,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Details",
+      "default": "<p>This weekend only</p>"
+    },
+    {
+      "type": "text",
+      "id": "small-text",
+      "label": "Conditions",
+      "default": "*Applied automatically at checkout."
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Base size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "regular",
+          "label": "Regular"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "regular"
+    },
+    {
+      "type": "header",
+      "content": "Image Layers"
+    },
+   {
+      "type": "image_picker",
+      "id": "centered_banner_image",
+      "label": "Choose Desktop Image"
+    },
+	{
+      "type": "image_picker",
+      "id": "centered_banner_image_mobile",
+      "label": "Choose Mobile Image"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Image alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+	{
+      "type": "image_picker",
+      "id": "sale_banner_background_image",
+      "label": "Background Image ( or single-layer full-width graphic)"
+    },
+	{
+      "type": "image_picker",
+      "id": "sale_banner_background_image_mobile",
+      "label": "Choose Background Image for mobile"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "button--primary",
+          "label": "Primary"
+        },
+        {
+          "value": "button--secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "button--link-style",
+          "label": "Link style"
+        }
+      ],
+      "default": "button--primary"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background (use if no background image is selected)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text & Close Button Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "homepage_only",
+      "label": "Home page only",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable sticky on scroll",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close_icon",
+      "label": "Show close icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ]
+}
+
+{% endschema %}

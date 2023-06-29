@@ -1,0 +1,59 @@
+<div class="product-recommendations__list" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}">TEST</div>
+
+<script>
+  // Find the container that will hold the recommendations
+  var list = document.querySelector(".product-recommendations__list");
+  // Get the base URL for translated product recommendations
+  var baseUrl = list.dataset.baseUrl;
+  // Get the product ID to request the product recommendations
+  //var productId = 5314947186854;
+  var productId = document.querySelector(".item__title").dataset.itemId;
+  //  <p class="item__title" data-item-id="{{ item.product.id }}">
+  // Create an AJAX request
+  var request = new XMLHttpRequest();
+
+  console.log('here');
+  console.log(baseUrl);
+
+  request.open(
+    "GET",
+    baseUrl + ".json?product_id=" + productId + "&limit=4"
+  );
+
+  request.onload = function() {
+    if (request.status === 404 || request.status === 422) {
+      return hideRecommendationsSection();
+    }
+
+    var products = JSON.parse(request.response).products;
+
+    if (products.length === 0) {
+      return hideRecommendationsSection();
+    }
+
+    // Append product recommendations to the DOM.
+    list.innerHTML = products.map(function(product) { return renderProduct(product) }).join("");
+  };
+
+  request.onerror = function() {
+    hideRecommendationsSection();
+  };
+
+  // Send AJAX request
+  request.send();
+
+  function hideRecommendationsSection() {
+    list.style.display = "none";
+  }
+
+  function renderProduct(product) {
+    return [
+      '<div>',
+        '<a href="' + product.url + '" class="product__anchor">',
+          '<img class="product__img" src="' + product.featured_image + '" alt="'+ product.title +'"/>',
+          '<p class="product__title">' + product.title + '</p>',
+        '</a>',
+      '</div>'
+    ].join("");
+  }
+</script>

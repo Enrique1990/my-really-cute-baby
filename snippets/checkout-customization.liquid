@@ -1,0 +1,464 @@
+<style>
+    .fg--flex {
+        display: flex;
+    }
+
+    .fg--flex-v_nd_h_center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fg--full-width {
+        width: 100%;
+        height: 100%;
+    }
+
+    #fg--overlay {
+        position: fixed;
+        /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%;
+        /* Full width (cover the whole page) */
+        height: 100%;
+        /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Black background with opacity */
+        z-index: 98;
+        /* Specify a stack order in case you're using a different order for other elements */
+/*         cursor: pointer; */
+        /* Add a pointer on hover */
+    }
+
+    .fg--modal-popup {
+        position: fixed;
+        display: none;
+        top: 50%;
+        left: 50%;
+        right: 0;
+        bottom: 0;
+        z-index: 990;
+        max-width: 1020px;
+        width:80%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 99;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        margin: auto;
+        padding: 0;
+        width: 100%;
+/*         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+      
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 2px solid rgb(254 252 253);
+      padding: 20px;
+    }
+
+    /* Add Animation */
+    {% comment %} @-webkit-keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    @keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    } {% endcomment %}
+
+    /* The Close Button */
+    .close {
+      color: white;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      color: #000;
+      
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .close:hover,
+    .close:focus {
+        cursor: pointer;
+    }
+
+    .modal-header {
+      position: relative;
+        padding: 2px 16px;
+        background-color: #101010;
+        color: white;
+        text-align: center;
+      
+      background: transparent;
+      margin-bottom: 20px;
+      color: #000;
+    }
+  
+  .modal-header__title {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+  
+  .modal-header__subtitle {
+    font-size: 20px;
+  }
+
+    .modal-body {
+      overflow: auto;
+    }
+  
+  .modal-footer {
+        margin-top: 20px;
+  }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      width: 60%;
+      max-width: 300px;
+      margin: 0px 10px;
+      text-align: center;
+      font-family: arial;
+      flex-shrink: 0;
+
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+
+      display: grid;
+      gap: 6px;
+      
+      transition: all 250ms ease;
+
+      outline: 2px solid transparent;
+
+    }
+  
+  .card:hover {
+    outline: 2px solid #000;
+  }
+
+    .card button {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+      line-height: inherit;
+      transition: all 250ms ease;
+    }
+  
+    .fg-btn-decline {
+      background: transparent;
+      color: #000;
+      width: auto;
+      font-size: 16px;
+      min-width: auto;
+      padding: 8px;
+      text-decoration: underline;
+    }
+
+    .card button:hover {
+        background: #c9b0a1;
+      color: #000;
+    }
+  
+  
+  @media(min-width: 1200px) {
+    .modal-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      overflow: initial;
+    }
+    
+    .modal-content {
+      padding: 20px 30px;
+    }
+    
+    .card {
+      width: 100%;
+      margin: 0;
+    }
+  }
+</style>
+
+    <div class="free-gift--overlay popup_close_effect-- popup_close_effect--to-hide" id="fg--overlay"></div>
+    <div class="fg--modal-popup popup_close_effect--to-hide fg--flex fg--flex-v_nd_h_center">
+        <div class="modal-wrapper fg--flex fg--flex-v_nd_h_center">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close popup_close_effect" id="btn-close">&times;</span>
+                    <h2 class="modal-header__title">Enjoy a bottle of wine on us!</h2>
+                  	<p class="modal-header__subtitle">Must be 21 years or older to consume alcohol</p>
+                </div>
+                <div class="modal-body fg--flex">
+                    {% if settings.free_gift_image_1 != blank and settings.free_gift_title_1 != blank and settings.free_gift_variant_id_1 != blank %}
+                        <div class="card">
+                            <img src="{{ settings.free_gift_image_1 | img_url: '2000x' }}" alt="{{ settings.free_gift_image_1.alt }}" style="width:100%">
+                            <h2>{{ settings.free_gift_title_1 }}</h2>
+                            <p class="price">Free</p>
+                            <div><button type="button" data-variant_id="{{ settings.free_gift_variant_id_1 }}" class="ff-add-to-cart" >Add to Cart</button></div>
+                        </div>
+                    {% endif%}
+                    {% if settings.free_gift_image_2 != blank and settings.free_gift_title_2 != blank and settings.free_gift_variant_id_2 != blank %}
+                        <div class="card">
+                            <img src="{{ settings.free_gift_image_2 | img_url: '2000x' }}" alt="{{ settings.free_gift_image_2.alt }}" style="width:100%">
+                            <h2>{{ settings.free_gift_title_2 }}</h2>
+                            <p class="price">Free</p>
+                            <div><button type="button" data-variant_id="{{ settings.free_gift_variant_id_2 }}" class="ff-add-to-cart" >Add to Cart</button></div>
+                        </div>
+                    {% endif%}
+                    {% if settings.free_gift_image_3 != blank and settings.free_gift_title_3 != blank and settings.free_gift_variant_id_3 != blank %}
+                        <div class="card">
+                            <img src="{{ settings.free_gift_image_3 | img_url: '2000x' }}" alt="{{ settings.free_gift_image_3.alt }}" style="width:100%">
+                            <h2>{{ settings.free_gift_title_3 }}</h2>
+                            <p class="price">Free</p>
+                            <div><button type="button" data-variant_id="{{ settings.free_gift_variant_id_3 }}" class="ff-add-to-cart" >Add to Cart</button></div>
+                        </div>
+                    {% endif%}
+                    {% if settings.free_gift_image_4 != blank and settings.free_gift_title_4 != blank and settings.free_gift_variant_id_4 != blank %}
+                        <div class="card">
+                            <img src="{{ settings.free_gift_image_4 | img_url: '2000x' }}" alt="{{ settings.free_gift_image_4.alt }}" style="width:100%">
+                            <h2>{{ settings.free_gift_title_4 }}</h2>
+                            <p class="price">Free</p>
+                            <div><button type="button" data-variant_id="{{ settings.free_gift_variant_id_4 }}" class="ff-add-to-cart" >Add to Cart</button></div>
+                        </div>
+                    {% endif%}
+                </div>
+                <div class="modal-footer fg--flex fg--flex-v_nd_h_center">
+                    <div><button type="button" class="popup_close_effect fg-btn-decline" id="fg-btn-decline">Skip this offer</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+	// At info step, check if cart has Fragrance Oil Subscription [AND] Scent Diffuser product
+
+	// If true, show popup with 3 free product options
+	// If false, dont show popup
+
+	// If customer selects a free product, THEN add a custom line_item_property called "free-wine" to the selected product AND add it to cart
+
+	// In the Shopify Script, if a wine product item in cart has "free-wine" line item property, make it 100% discounted, else 50% discount.
+
+	// If Fragrance Oil Subscription [AND] Scent Diffuser product products are removed from cart, remove free item from cart.
+
+	(function ($) {
+		$(document).on(`page:load page:change`, async function () {
+		// console.log("Custom Checkout page init");
+
+		// const temp = {{ checkout.line_items | json }};
+		// console.log({ temp });
+		let cartData;
+		let free_gift_variant_id_1 = "{{ settings.free_gift_variant_id_1 }}";
+		let free_gift_variant_id_2 = "{{ settings.free_gift_variant_id_2 }}";
+		let free_gift_variant_id_3 = "{{ settings.free_gift_variant_id_3 }}";
+        let free_gift_variant_id_4 = "{{ settings.free_gift_variant_id_4 }}";
+        const scentDiffuserProductId = "{{ settings.main_product_id }}" || 5314947186854;
+
+		let checkoutPageStep = Shopify.Checkout.step;
+		// console.log("current step", checkoutPageStep);
+
+		async function getCartData() {
+			const cartDataResponse = await fetch('/cart.js', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+			cartData = await cartDataResponse.json();
+			return cartData;
+		}
+
+		async function addProductToCart(inputData) {
+			const response = await fetch('/cart/add.js', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(inputData)
+			})
+			const responseData = await response.json();
+
+			return responseData;
+		}
+
+
+		// change or remove quantity of a line item
+		async function removeProductFromCart(inputData) {
+			const response = await fetch('/cart/change.js', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(inputData)
+			})
+			const responseData = await response.json();
+
+			return responseData;
+		}
+
+
+		async function checkCartItems() {
+			const cartData = await getCartData();
+			var items = cartData.items || [];
+			// console.log({items});
+			const giftVariantIds = [];
+			if(free_gift_variant_id_1) giftVariantIds.push(free_gift_variant_id_1);
+			if(free_gift_variant_id_2) giftVariantIds.push(free_gift_variant_id_2);
+			if(free_gift_variant_id_3) giftVariantIds.push(free_gift_variant_id_3);
+            if(free_gift_variant_id_4) giftVariantIds.push(free_gift_variant_id_4);
+
+			// console.log({giftVariantIds})
+
+			const scentDiffuserFound = items.filter(item => item.product_id == scentDiffuserProductId);
+			let giftIndex = 0;
+			const giftProductsFound = items.filter((item, index) => {
+				if(item.properties && item.properties._gift_type && (item.properties._gift_type == 'wine-day-gift') && giftVariantIds.includes(Number(item.variant_id).toString())) {
+					giftIndex = index + 1;
+					return true;
+				}
+				return false;
+			});
+
+			console.log({scentDiffuserFound, giftProductsFound, giftIndex});
+
+			if (scentDiffuserFound.length && !giftProductsFound.length) {
+				const declined = localStorage.getItem(`declined-${cartData.token}`);
+				if(declined) {
+					return;
+				}
+				// Alert a model and ask to add products
+                $('.popup_close_effect--to-hide').show();
+
+			} else if(!scentDiffuserFound.length && giftProductsFound.length)  {
+				// remove giftProductsFound from cart
+				await removeProductFromCart({ 'line': giftIndex, 'quantity': 0 });
+				window.location.reload();
+				// console.log('TODO: Reload the page');
+			}  else if(giftProductsFound.length && giftProductsFound.length > 1)  {
+				// remove giftProductsFound from cart
+				await removeProductFromCart({ 'line': giftIndex, 'quantity': 0 });
+				window.location.reload();
+				// console.log('TODO: Reload the page');
+			} else if(giftProductsFound.length && giftProductsFound[0].quantity > 1)  {
+				// remove giftProductsFound from cart
+				await removeProductFromCart({ 'line': giftIndex, 'quantity': giftProductsFound.length > 1 ? 0: 1 });
+				window.location.reload();
+				// console.log('TODO: Reload the page');
+			}
+		}
+
+		async function attachButtonEventListeners() {
+			const buttons = document.querySelectorAll('button.ff-add-to-cart');
+			const skipOfferBtn = document.getElementById('btn-close');
+            const overlay = document.getElementById('fg--overlay')
+			
+			
+
+            $('.popup_close_effect').on('click', function() {
+                $('.popup_close_effect--to-hide').hide();
+                const declined = localStorage.setItem(`declined-${cartData.token}`, 'yes');
+            });
+
+			for(const button of buttons) {
+				button.addEventListener('click', async function(event) {
+					event.preventDefault();
+					const dataset = event.target.dataset || {};
+					const variant_id = dataset.variant_id;
+					if(!variant_id) {
+						return;
+					}
+					try {
+						await addProductToCart({
+							items: [
+								{
+									quantity: 1,
+									id: variant_id,
+									properties: {
+										'_gift_type': 'wine-day-gift'
+									}
+								}
+							]
+						});
+		
+                        if(overlay) {
+                            $('.popup_close_effect--to-hide').hide();
+                        }
+						setTimeout(function() {
+                            window.location.reload();
+                        }, 1500);
+					} catch (error) {
+						console.error(error);
+					}
+				});
+			}
+		} 
+
+		checkCartItems();
+		attachButtonEventListeners();
+
+
+    })
+  }) (Checkout.$);
+</script>

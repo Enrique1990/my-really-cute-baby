@@ -1,0 +1,25 @@
+{{ section.settings.javascript_code }}
+
+{% schema %}
+  {
+    "name": "Page JS",
+    "class": "js-section",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "javascript_code",
+        "label": "Javascript Code",
+        "info": "You must wrap javascript code with <script></script> tag"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page JS",
+        "category": "Layout",
+        "settings": {
+
+        }
+      }
+    ]
+  }
+{% endschema %}

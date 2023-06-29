@@ -1,0 +1,666 @@
+{% comment %}
+  Snippet can be used in section or block
+  eg. {% include 'include-image-with-text-overlay' %}
+{% endcomment %}
+
+{% comment %}Assign object as block or section{% endcomment %}
+{% if type == 'block' %}
+  {% assign object = block %}
+{% else %}
+  {% assign object = section %}
+{% endif %}
+
+{% assign id = object.id %}
+{% assign image = object.settings.image %}
+{% assign mobile_image = object.settings.mobile_image %}
+{% assign link = object.settings.link %}
+{% comment %} Text {% endcomment %}
+{% assign pretext = object.settings.pretext %}
+{% assign pretext_color = object.settings.pretext_color %}
+{% assign title = object.settings.title %}
+{% assign title_color = object.settings.heading_color %}
+{% assign subtitle = object.settings.subtitle %}
+{% assign subtitle_color = object.settings.subheading_color %}
+{% assign text_alignment = object.settings.text_alignment %}
+{% assign text_horizontal_position = object.settings.text_horizontal_position %}
+{% assign text_vertical_position = object.settings.text_vertical_position %}
+{% assign form_horizontal_position = object.settings.form_horizontal_position %}
+{% assign form_vertical_position = object.settings.form_vertical_position %}
+{% comment %} Text background {% endcomment %}
+{% assign background_color =  object.settings.background_color %}
+{% assign background_color_alpha = object.settings.background_opacity | divided_by: 100.00 %}
+{% assign text_width =  object.settings.text_width %}
+{% comment %} Buttons {% endcomment %}
+{% assign button_1 = object.settings.button_1 %}
+{% assign button_1_link = object.settings.button_1_link %}
+{% assign button_1_style = object.settings.button_1_style %}
+{% assign button_2 = object.settings.button_2 %}
+{% assign button_2_link = object.settings.button_2_link %}
+{% assign button_2_style = object.settings.button_2_style %}
+{% if button_1 != blank and button_2 != blank %}
+  {% assign buttons = true %}
+{% else %}
+  {% assign buttons = false %}
+{% endif %}
+{% assign caption_border_width = object.settings.border_width %}
+{% assign caption_border_color = object.settings.border_color %}
+{% comment %} Mobile {% endcomment %}
+{% assign mobile_text_below_media = object.settings.mobile_text_below_image %}
+{% assign mobile_text_crop = object.settings.mobile_image_crop %}
+{% assign mobile_headline_color = object.settings.heading_color_mobile %}
+{% assign mobile_preheading_color = object.settings.pretext_color_mobile %}
+{% assign mobile_subtitle_color = object.settings.subheading_color_mobile %}
+{% comment %}Layout{% endcomment %}
+{% assign width = object.settings.width %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% assign padding_left = object.settings.padding_left %}
+{% assign padding_right = object.settings.padding_right %}
+{% assign animation = object.settings.animation | default: 'none' %}
+
+{% comment %}Is the color set to transparent?{% endcomment %}
+{% assign heading_alpha = title_color | color_extract: 'alpha' %}
+{% assign preheading_alpha = pretext_color | color_extract: 'alpha' %}
+{% assign subheading_alpha = subtitle_color | color_extract: 'alpha' %}
+{% assign mobile_headline_alpha = mobile_headline_color | color_extract: 'alpha' %}
+{% assign mobile_preheading_alpha = mobile_preheading_color | color_extract: 'alpha' %}
+{% assign mobile_subtitle_alpha = mobile_subtitle_color | color_extract: 'alpha' %}
+{% assign caption_border_alpha = object.settings.border_color | color_extract: 'alpha' %}
+
+{% comment %}Advanced{% endcomment %}
+{% assign css_class = object.settings.css_class %}
+{% assign custom_css = object.settings.custom_css %}
+
+{% comment %}Section specific CSS{% endcomment %}
+{% capture section_css -%}
+  .caption-content {
+    background-color: {% if background_color_alpha != 100 %}{{ background_color | color_modify: 'alpha', background_color_alpha }}{% else %}{{ background_color }}{% endif %};
+    border: {{ caption_border_width }}px solid {{ caption_border_color }};
+  }
+
+ .image-with-text-overlay__heading {
+    color: {% if heading_alpha != 0 %}{{ title_color }}{% else %}{{ settings.heading_color }}{% endif %};
+  }
+
+  .image-with-text-overlay__preheading {
+    color: {% if preheading_alpha != 0 %}{{ pretext_color }}{% else %}{{ settings.heading_color }}{% endif %};
+  }
+
+  .image-with-text-overlay__subheading {
+    color: {% if subheading_alpha != 0 %}{{ subtitle_color }}{% else %}{{ settings.heading_color }}{% endif %};
+  }
+{%- endcapture -%}
+
+{% comment %}Section specific CSS{% endcomment %}
+
+{% style %}
+  {% render 'css-loop',
+          css: section_css,
+          id: id
+  %}
+
+  @media only screen and (max-width: 480px) {
+    #shopify-section-{{ id }} .image-with-text-overlay__heading {
+      color: {% if mobile_headline_alpha != 0 %}{{ mobile_headline_color}}{% endif %};
+    }
+    #shopify-section-{{ id }} .image-with-text-overlay__preheading {
+      color: {% if mobile_preheading_alpha != 0 %}{{ mobile_preheading_color}}{% endif %};
+    }
+    #shopify-section-{{ id }} .image-with-text-overlay__subheading {
+      color: {% if mobile_subtitle_alpha != 0 %}{{ mobile_subtitle_color}}{% endif %};
+    }
+  }
+
+  @media only screen and (min-width: 480px) {
+    #shopify-section-{{ id }} .caption-content {
+      width: {{ text_width }}%;
+    }
+
+
+
+
+  }
+
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    padding-left: {{ padding_left }}px;
+    padding-right: {{ padding_right }}px;
+    {% if width == 'wide' %}
+      width: 100%;
+    {% elsif width == 'half' %}
+      width: 50%;
+    {% endif %}
+  }
+
+  {% render 'css-loop',
+          css: custom_css,
+          id: id
+  %}
+
+{% endstyle %}
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section
+                {{ css_class }}
+                is-width-{{ width }}
+                under-overlay-menu
+                {% if mobile_text_below_media == true %}
+                  mobile-text--below-media
+                  {% else %}
+                  mobile-text--over-media
+                {% endif %}
+                {% if caption_border_alpha != 0 %}
+                  has-border
+                {% endif %}
+                "
+                {% if animation != "none" %}
+                  data-scroll-class="{{ animation }}"
+                {% endif %}>
+  <div class="container
+              image-with-text-overlay__container
+              {% if width == 'wide' or width == 'half' %}
+                equal-columns--outside-trim
+              {% endif %}">
+
+    <div class="image-with-text-overlay__banner columns one-whole image-crop-center">
+
+      {% if mobile_image != blank %}
+        {% assign hide_mobile = 'is-hidden-mobile-only' %}
+      {% endif %}
+
+      {% if image != blank %}
+        {% render 'image-element',
+                image: image,
+                alt: image.alt,
+                stretch_width: true,
+                additional_classes: hide_mobile
+        %}
+      {% else %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+
+      {% if mobile_image != blank %}
+        <div class="is-hidden-desktop-only">
+          {% render 'image-element',
+                  image: mobile_image,
+                  alt: mobile_image.alt,
+                  stretch_width: true
+          %}
+        </div>
+        {% else %}
+        <div class="filler-element is-hidden-desktop-only" style="width:100%;height:700px;background-color:#f0f0f0;"></div>
+      {% endif %}
+
+      {% if link != blank %}
+        <a href="{{ link }}" class="banner--full-link"></a>
+      {% endif %}
+
+        <div class="caption form-align-{{ form_horizontal_position }} align-{{ form_vertical_position }}">
+
+          <div class="caption-content" style="">
+
+            <div id="centered" class="zoho-form form-align-{{ form_horizontal_position }} align-{{ form_vertical_position }}" style="padding:5%;" >
+
+            {% if pretext != blank %}
+              <div class="image-with-text-overlay__preheading banner__subheading pretext subtitle">
+                {{ pretext }}
+              </div>
+            {% endif %}
+            {% if title != blank %}
+              <h2 class="image-with-text-overlay__heading banner__heading title">
+                <span>{{ title }}</span>
+              </h2>
+            {% endif %}
+            {% if subtitle != blank %}
+              <div class="image-with-text-overlay__subheading banner__subheading subtitle">
+                {{ subtitle }}
+              </div>
+            {% endif %}
+            {% if button_1 != blank or button_2 != blank %}
+              <div class="image-with-text-overlay__buttons buttons {% unless buttons == true %}is-justify-{{ text_alignment }}{% endunless %}">
+
+              {% if button_1 != blank %}
+                {% render 'button',
+                        label: button_1,
+                        href: button_1_link,
+                        type: "link",
+                        style: button_1_style
+                %}
+              {% endif %}
+              {% if button_2 != blank %}
+                {% render 'button',
+                        label: button_2,
+                        href: button_2_link,
+                        type: "link",
+                        style: button_2_style
+                %}
+              {% endif %}
+
+              </div>
+            {% endif %}
+
+
+
+          <style>
+
+          #centered.zoho-form {
+
+            width: 55%;
+            height: auto;
+
+            }
+
+           @media only screen and (max-width: 900px) {
+
+           .is-hidden-desktop-only {
+           display: block !important;
+           }
+
+             .is-hidden-mobile-only {
+             display: none !important;
+             }
+
+
+            #centered.zoho-form {
+            width: 100%;
+            padding-top:30px;
+            }
+
+           }
+
+          #centered.zoho-form.form-align-left {
+            margin: 0 auto;
+            justify-content:center;
+            position: absolute;
+          	left: 0;
+
+          }
+
+           #centered.zoho-form.form-align-center {
+            margin: auto;justify-content:center;position: absolute;
+  			left: 0;
+            right: 0;
+          }
+
+          #centered.zoho-form.form-align-right {
+            margin: 0 auto;justify-content:center;position: absolute;
+          	right: 0;
+          }
+
+          #centered.zoho-form.align-top {
+            margin: 0 auto;
+            justify-content:center;
+            position: absolute;
+            top: 0;
+          }
+
+          #centered.zoho-form.align-middle {
+/*             margin: auto;
+            justify-content:center; */
+            position: absolute;
+  			top:50%;
+            transform: translate(0%, -50%);
+          }
+
+          #centered.zoho-form.align-bottom {
+           margin: 0 auto;
+           justify-content:center;
+           position: absolute;
+          bottom: 0;
+          }
+
+          </style>
+
+     {% if link != blank %}
+        <a href="{{ link }}" class="banner--full-link"></a>
+      {% endif %}
+
+
+
+			<!-- Note :
+   - You can modify the font style and form style to suit your website.
+   - Code lines with comments ���Do not remove this code���  are required for the form to work properly, make sure that you do not remove these lines of code.
+   - The Mandatory check script can modified as to suit your business needs.
+   - It is important that you test the modified form before going live.-->
+<div id='crmWebToEntityForm' style='margin:auto;'>
+  <META HTTP-EQUIV ='content-type' CONTENT='text/html;charset=UTF-8'>
+ <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST"> <input type='text' style='display:none;' name='xnQsjsdp' value='2fe0049733a08d53bc0d5fce14c904b6f906b570ab70dc020e93456c3e0bce9c'></input>
+ <input type=hidden name="oid" value="00D5e0000012ruD">
+ <input type='hidden' name='zc_gad' id='zc_gad' value=''></input>
+ <input type='text' style='display:none;' name='xmIwtLD' value='fccb9e8c55c35c5f4564ce9e712c5ad29ffacfd47d77f3f3051aba923f37a316'></input>
+ <input type='text'  style='display:none;' name='actionType' value='TGVhZHM='></input>
+ <input type='text' style='display:none;' name='retUrl' value='https://hotelcollection.com/pages/thank-you'> </input>
+	 <!-- Do not remove this code. -->
+	<style>
+		#crmWebToEntityForm tr , #crmWebToEntityForm td {
+			padding:6px;
+			border-spacing:0px;
+			border-width:0px;
+			}
+
+      input.dist-form {
+       border: black;
+      }
+
+      input.dist-form:not(.no-margin) {
+      	/* margin-top: 3%; */
+      }
+
+      table {
+          width: 100%;
+          height: 100%;
+      }
+
+    @media screen and (max-width:900px){
+
+
+      input.dist-form {
+        border: 1px solid #000;
+      }
+
+      select.dist-form {
+        border: 1px solid #000;
+      }
+
+
+      .banner__heading span {
+      font-size: 30px;
+      }
+
+
+    table {
+        max-width: 530px;
+        height: 100%;
+    }
+
+    td {
+        display:block;
+        width:100%;
+    }
+}
+
+@media screen and (max-width:600px) {
+  table {
+      max-width: 330px;
+      width:100%;
+      height: 100%;
+  }
+}
+
+	</style>
+
+<!--     ACTUAL FORM   -->
+	<table style="margin:0 auto;">
+      <tr>
+        <td><input class="dist-form no-margin input is-primary-btn-style is-regular" type='text' style='width:100%;box-sizing:border-box;'  maxlength='40' name='first_name' placeholder="First Name"/></td>
+        <td><input class="dist-form input is-primary-btn-style is-regular" type='text' style='width:100%;box-sizing:border-box;'  maxlength='80' name='last_name' placeholder="Last Name"/></td>
+      </tr>
+
+      <tr>
+        <td><input class="dist-form input is-primary-btn-style is-regular" type='text' style='width:100%;box-sizing:border-box;'  maxlength='80' name='company' placeholder="Business Name"/></td>
+         <td><input class="dist-form input is-primary-btn-style is-regular" type='text' style='width:100%;box-sizing:border-box;'  maxlength='100' name='email' ftype='email' placeholder="Email"/></td>
+      </tr>
+
+      <tr>
+        <td><input class="dist-form input is-primary-btn-style is-regular" type='text' style='width:100%;box-sizing:border-box;'  maxlength='30' name='phone' placeholder="123-456-7890"/></td>
+        <td><input class="dist-form input is-primary-btn-style is-regular" type='text' style='width:100%;box-sizing:border-box;'  maxlength='100' name='state' ftype='state' placeholder="State"/></td>
+      </tr>
+      <tr>
+        <td>
+          <select class='dist-form is-primary-btn-style is-regular' id='LEADCF182' name='00N5e00000ZNp2a'>
+      			<option value='-None-'>Interested In...</option>
+      			<option value='Corporate&#x2f;Client&#x20;Gifting'>Corporate&#x2f;Client Gifting</option>
+      			<option value='Promotional'>Promotional</option>
+      			<option value='Resell'>Resell</option>
+      			<option value='Special&#x20;Occasion&#x2f;&#x20;Event'>Special Occasion&#x2f; Event</option>
+    		  </select>
+        </td>
+
+        <td>
+          <select class='dist-form is-primary-btn-style is-regular' id='LEADCF181' name='00N5e00000ZNp2k'>
+        			<option value='-None-'>Where are you looking to sell?</option>
+        			<option value='Retail'>Retail</option>
+        			<option value='E-commerce'>E-commerce</option>
+        			<option value='Retail&#x20;&amp;&#x20;E-commerce'>Retail &amp; E-commerce</option>
+        			<option value='Hand&#x20;Delivery'>Hand Delivery</option>
+        		</select>
+        </td>
+      </tr>
+
+      <style>
+      select.is-primary-btn-style {
+        border-radius: 0px;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+
+      select {
+        background-color: #fff;
+        border: none;
+        color: #6f6f6f;
+        box-shadow: none;
+        max-width: 100%;
+        width: 100%;
+        padding-top: calc(0.375em - 1px);
+        position: relative;
+        vertical-align: top;
+        display: inline-flex;
+        font-size: 1rem;
+        height: 2.25em;
+        align-items: center;
+      }
+
+      </style>
+
+      <!-- <tr><td colspan="2" ><input class="dist-form input is-primary-btn-style is-regular" type='text' style='width:100%;height:70px;box-sizing:border-box;'  maxlength='300' name='LEADCF40' placeholder="Comments"/></td></tr> -->
+
+      <tr style='display:none;' ><td style='word-break: break-word;text-align:left;font-size:12px;font-family:Arial;width:30%'>Lead Category</td><td style='width:40%;'>
+		<select style='width:100%;box-sizing:border-box;' name='00N5e00000BlCrQ'>
+			<option value='-None-'>-None-</option>
+		<option selected value='Active&#x20;Lead'>Active Lead</option>
+			<option value='Acxiom&#x20;Data'>Acxiom Data</option>
+			<option value='Affiliate'>Affiliate</option>
+			<option value='Distributor&#x20;Wait&#x20;List'>Distributor Wait List</option>
+			<option value='Do&#x20;Not&#x20;Contact'>Do Not Contact</option>
+			<option value='Misc'>Misc</option>
+			<option value='Purchased'>Purchased</option>
+			<option value='Reopened&#x20;Record'>Reopened Record</option>
+			<option value='Retarget&#x20;Purchase'>Retarget Purchase</option>
+			<option value='Shopify&#x20;Retargeting'>Shopify Retargeting</option>
+			<option value='Untouched&#x20;Lead'>Untouched Lead</option>
+			<option value='Website&#x20;Purchase'>Website Purchase</option>
+		</select></td><td style='width:30%;'></td></tr><tr style='display:none;' ><td style='word-break: break-word;text-align:left;font-size:12px;font-family:Arial;width:30%'>Lead Type</td><td style='width:40%;'>
+		<select style='width:100%;box-sizing:border-box;' name='00N5e00000M3aKs'>
+			<option value='-None-'>-None-</option>
+			<option value='Affiliate'>Affiliate</option>
+			<option value='Business'>Business</option>
+		<option selected value='Distributor'>Distributor</option>
+			<option value='Home'>Home</option>
+			<option value='Home&#x20;And&#x20;Business'>Home And Business</option>
+			<option value='Unknown'>Unknown</option>
+			<option value='Vendor'>Vendor</option>
+		</select></td><td style='width:30%;'></td></tr><tr style='display:none;' ><td style='word-break: break-word;text-align:left;font-size:12px;font-family:Arial;width:30%'>Lead Source</td><td style='width:40%;'>
+		<select style='width:100%;box-sizing:border-box;' name='lead_source'>
+			<option value='-None-'>-None-</option>
+			<option value='Abandoned&#x20;Cart'>Abandoned Cart</option>
+			<option value='Additional&#x20;Location'>Additional Location</option>
+			<option value='Affiliate&#x20;Lead&#x20;Form'>Affiliate Lead Form</option>
+			<option value='Affiliate&#x20;Referral'>Affiliate Referral</option>
+			<option value='Automotive&#x20;LP'>Automotive LP</option>
+			<option value='Brand&#x20;Yourself'>Brand Yourself</option>
+			<option value='Calendar&#x20;Aroma360&#x20;Site'>Calendar Aroma360 Site</option>
+			<option value='Chat'>Chat</option>
+			<option value='Cold&#x20;Call'>Cold Call</option>
+			<option value='Contact&#x20;Form'>Contact Form</option>
+			<option value='CS&#x20;Chat'>CS Chat</option>
+			<option value='Customer&#x20;Walked&#x20;In'>Customer Walked In</option>
+			<option value='Distributor&#x20;Form'>Distributor Form</option>
+			<option value='Email'>Email</option>
+			<option value='Facebook'>Facebook</option>
+			<option value='Feeder'>Feeder</option>
+			<option value='Fitness&#x20;LP'>Fitness LP</option>
+			<option value='Friends&#x20;and&#x20;Family'>Friends and Family</option>
+			<option value='Google&#x20;AdWords'>Google AdWords</option>
+		<option selected value='HC&#x20;Distributor'>HC Distributor</option>
+			<option value='HC&#x20;Spa&#x20;Program'>HC Spa Program</option>
+			<option value='Home&#x20;Scenting&#x20;LP'>Home Scenting LP</option>
+			<option value='Hotel&#x20;Collection&#x20;LP'>Hotel Collection LP</option>
+			<option value='Hotel&#x20;LP'>Hotel LP</option>
+			<option value='Hotel&#x20;Scenting&#x20;Landing&#x20;Page'>Hotel Scenting Landing Page</option>
+			<option value='HS&#x20;Chat'>HS Chat</option>
+			<option value='HS&#x20;Contact&#x20;Form'>HS Contact Form</option>
+			<option value='HS&#x20;Incoming&#x20;Call'>HS Incoming Call</option>
+			<option value='HS&#x20;NovoCall'>HS NovoCall</option>
+			<option value='HS&#x20;Trial&#x20;Form'>HS Trial Form</option>
+			<option value='HVAC&#x20;Scenting&#x20;Contact&#x20;Form'>HVAC Scenting Contact Form</option>
+			<option value='Incoming&#x20;Office&#x20;Call'>Incoming Office Call</option>
+			<option value='Incoming&#x20;PPC&#x20;Call'>Incoming PPC Call</option>
+			<option value='Instagram'>Instagram</option>
+			<option value='JB&#x20;Leads'>JB Leads</option>
+			<option value='Lead&#x20;Capture&#x20;Form&#x2f;Sales&#x20;Flow'>Lead Capture Form&#x2f;Sales Flow</option>
+			<option value='LinkedIn'>LinkedIn</option>
+			<option value='Media&#x20;Advertising'>Media Advertising</option>
+			<option value='Medical&#x20;Scenting&#x20;LP'>Medical Scenting LP</option>
+			<option value='Offices&#x20;LP'>Offices LP</option>
+			<option value='Offline&#x20;Chat'>Offline Chat</option>
+			<option value='Outside&#x20;Lead'>Outside Lead</option>
+			<option value='PL&#x20;Chat'>PL Chat</option>
+			<option value='PL&#x20;Social'>PL Social</option>
+			<option value='PL&#x20;Wedding'>PL Wedding</option>
+			<option value='PL-Novocall'>PL-Novocall</option>
+			<option value='Plaque&#x20;Referral'>Plaque Referral</option>
+			<option value='PPC&#x20;Form'>PPC Form</option>
+			<option value='Press'>Press</option>
+			<option value='Private&#x20;Label&#x20;Form'>Private Label Form</option>
+			<option value='Property&#x20;Mgmt&#x20;Dev&#x20;LP'>Property Mgmt Dev LP</option>
+			<option value='Referral'>Referral</option>
+			<option value='Religious&#x20;LP'>Religious LP</option>
+			<option value='Restaurant&#x20;LP'>Restaurant LP</option>
+			<option value='Retail&#x20;LP'>Retail LP</option>
+			<option value='Sample&#x20;Pack&#x20;Request'>Sample Pack Request</option>
+			<option value='Scent&#x20;Consultation&#x20;Form'>Scent Consultation Form</option>
+			<option value='Scent&#x20;Marketing&#x20;Contact&#x20;Form'>Scent Marketing Contact Form</option>
+			<option value='Spa&#x20;LP'>Spa LP</option>
+			<option value='Spa&#x20;Scenting&#x20;Landing&#x20;Page'>Spa Scenting Landing Page</option>
+			<option value='Trade&#x20;Show&#x2f;Networking&#x20;Event'>Trade Show&#x2f;Networking Event</option>
+			<option value='Trial&#x20;Contact&#x20;Form'>Trial Contact Form</option>
+			<option value='Walk&#x20;In'>Walk In</option>
+			<option value='Web&#x20;Research'>Web Research</option>
+			<option value='Website&#x20;Purchase'>Website Purchase</option>
+			<option value='Website&#x20;Purchase&#x20;Scent&#x20;Box'>Website Purchase Scent Box</option>
+		</select></td><td style='width:30%;'></td></tr><tr style='display:none;' ><td style='word-break: break-word;text-align:left;font-size:12px;font-family:Arial;width:30%'>Lead Status</td><td style='width:40%;'>
+		<input type="hidden" name="Status" value="New" />
+
+		</select></td><td style='width:30%;'></td></tr>
+      
+    <input type='text' class="lead-hidden" id='LEADCF180' name='00N5e00000BlD1h' maxlength='450' value='MM.com' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF220' name='00N5e00000BlCx0' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF301' name='00N5e00000BlCx5' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF302' name='00N5e00000BlCxF' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF303' name='00N5e00000BlCxK' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF304' name='00N5e00000BlCxP' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF305' name='00N5e00000BlD1c' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF306' name='00N5e00000BlCqx' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF307' name='00N5e00000BlCwq' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF308' name='00N5e00000BlCwv' maxlength='255' value='' hidden></input>
+    <input type='text' class="lead-hidden" id='LEADCF309' name='00N5e00000BlCwh' maxlength='255' value='' hidden></input>
+	{% comment %} v6 {% endcomment %}
+	<input type='text' class="lead-hidden" id='LEADCF314' name='00N5e00000FfHZb' maxlength='255' value='' hidden>
+	<input type='text' class="lead-hidden" id='LEADCF313' name='00N5e00000FfHZg' maxlength='255' value='' hidden></input>
+
+    <select  style='display:none;' class='zcwf_col_fld_slt' id='LEADCF170' name='00N5e00000BlCqI'>
+      <option value='-None-'>-None-</option>
+      <option value='Aroma360'>Aroma360</option>
+      <option value='Hotel&#x20;Scents'>Hotel Scents</option>
+      <option value='Private&#x20;Label'>Private Label</option>
+      <option selected value='Hotel&#x20;Collection'>Hotel Collection</option>
+    </select>
+
+    <div style='display: none;'><label for='LEADCF180'>Referrer URL</label><input type='text' id='LEADCF180' name='00N5e00000BlD1h' maxlength='450' value='MM.com'></div>
+
+	<tr><td colspan='2' style='text-align:left; padding-top:5%;'>
+		<input class="button button--primary is-within-form" style="background-color: black; border-color:#fff;width: 100px; color: #fff;" id='formsubmit' type='submit' value='Submit' ></input>
+      </td></tr>
+
+    </table>
+
+<!-- end actual form -->
+	<script>
+ 	  var mndFileds=new Array('First Name','Last Name','Email','Phone');
+ 	  var fldLangVal=new Array('First Name','Last Name','Email','Phone');
+		var name='';
+		var email='';
+	function validateEmail()
+	{
+		var emailFld = document.querySelectorAll('[ftype=email]');
+		var i;
+		for (i = 0; i < emailFld.length; i++)
+		{
+			var emailVal = emailFld[i].value;
+			if((emailVal.replace(/^\s+|\s+$/g, '')).length!=0 )
+			{
+				var atpos=emailVal.indexOf('@');
+				var dotpos=emailVal.lastIndexOf('.');
+				if (atpos<1 || dotpos<atpos+2 || dotpos+2>=emailVal.length)
+				{
+					alert('Please enter a valid email address. ');
+					emailFld[i].focus();
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+                  function checkMandatory1506685000111027369() {
+                    for(i=0;i<mndFileds.length;i++) {
+                      var fieldObj=document.forms['WebToLeads1506685000111027369'][mndFileds[i]];
+                      if(fieldObj) {
+                        if (((fieldObj.value).replace(/^\s+|\s+$/g, '')).length==0) {
+                         if(fieldObj.type =='file')
+                            {
+                             alert('Please select a file to upload.');
+                             fieldObj.focus();
+                             return false;
+                            }
+                        alert(fldLangVal[i] +' cannot be empty.');
+                          fieldObj.focus();
+                          return false;
+                        }  else if(fieldObj.nodeName=='SELECT') {
+                         if(fieldObj.options[fieldObj.selectedIndex].value=='-None-') {
+                            alert(fldLangVal[i] +' cannot be none.');
+                            fieldObj.focus();
+                            return false;
+                           }
+                        } else if(fieldObj.type =='checkbox'){
+                         if(fieldObj.checked == false){
+                            alert('Please accept  '+fldLangVal[i]);
+                            fieldObj.focus();
+                            return false;
+                           }
+                         }
+                         try {
+                             if(fieldObj.name == 'Last Name') {
+                            name = fieldObj.value;
+                            }
+                        } catch (e) {}
+                        }
+                    }
+                    if(!validateEmail()){return false;}
+
+                    document.getElementById('formsubmit').disabled=true;
+                }
+            </script>
+                <input type='hidden' name='eo' value='14f4ec16431e0686150daa43f3210513'/> <input type='hidden' name='te' value='true'/><img id='tr_img_fccb9e8c55c35c5f4564ce9e712c5ad29ffacfd47d77f3f3051aba923f37a316' src='https://crm.zohopublic.com/crm/WebFormAnalyticsServlet?rid=fccb9e8c55c35c5f4564ce9e712c5ad29ffacfd47d77f3f3051aba923f37a316gid2fe0049733a08d53bc0d5fce14c904b6f906b570ab70dc020e93456c3e0bce9cgida378f81585080d3b6fb1acbec6638b71gid885e3c1045bd9bdcc91bdf30f82b5696gid14f4ec16431e0686150daa43f3210513' style='display: none;' /> <script> if(typeof wfTRKey=='undefined'){wfTRKey = {};}wfTRKey['url_fccb9e8c55c35c5f4564ce9e712c5ad29ffacfd47d77f3f3051aba923f37a316']='https://crm.zohopublic.com/crm/WebFormAnalyticsServlet?rid=fccb9e8c55c35c5f4564ce9e712c5ad29ffacfd47d77f3f3051aba923f37a316gid2fe0049733a08d53bc0d5fce14c904b6f906b570ab70dc020e93456c3e0bce9cgid364f49863aa1c6f080988c8e111a90b8gid885e3c1045bd9bdcc91bdf30f82b5696gid14f4ec16431e0686150daa43f3210513';wfTRKey['rs_fccb9e8c55c35c5f4564ce9e712c5ad29ffacfd47d77f3f3051aba923f37a316']=false; function sf(ev){var te = ev.target ? ev.target : ev.srcElement; var nd = te.nodeName ? te.nodeName.toLowerCase() : ''; var fm; if (te.form) { fm = te.form.elements.xmIwtLD.value; } if (fm && !wfTRKey['rs_' + fm] && ((nd == 'input' && te.type != 'file') || (nd == 'input' && te.type == 'file' && ev.type == 'click') || nd == 'select' || nd == 'textarea' || nd == 'div')) { document.getElementById('tr_img_'+fm).setAttribute('src', wfTRKey['url_'+fm]);  wfTRKey['rs_'+fm] = true }} if(document.addEventListener){document.addEventListener('click', sf);document.addEventListener('change', sf);}else{document.attachEvent('onclick', sf);document.attachEvent('onchange', sf);}</script></form>
+            </div>
+
+			</div>
+          </div>
+        </div>
+
+
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+{% liquid 
+ assign prodDescription = false
+ if has_variant_description == true 
+     assign prodDescription = true 
+     elsif  product.description != blank 
+        assign prodDescription = true 
+ endif 
+%}
+
+{% if prodDescription %}
+    <section id="content-accordion" class="pdp-description-accordion from_thy_snippet">
+        <div id="accordion" class="accordion-container">
+        <article class="content-entry bTransparent">
+            <h4 class="article-title bTransparent"><i></i>Description</h4>
+            <div class="accordion-content">
+                {% if has_variant_description == true %}
+                <div class="description content has-padding-top">
+                    {{ product.selected_or_first_available_variant.metafields.my_fields.variant_description }}
+                </div>
+                {% else %}
+                {% if product.description != blank %}
+                    <div class="description content has-padding-top">
+                    {{ product.description | split: '<!-- split -->' | first }}
+                    </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </article>  
+        </div>
+    </section>
+{% endif %}

@@ -1,0 +1,1 @@
+GIFTBOX_CUSTOM_BUTTON_SELECTORS = [".rebuy-button"];

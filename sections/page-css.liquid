@@ -1,0 +1,101 @@
+{% assign id = section.id %}
+{% assign css_mobile = section.settings.css_mobile %}
+{% assign css_desktop = section.settings.css_desktop %}
+{% assign css_1024 = section.settings.css_1024 %}
+{% assign css_1200 = section.settings.css_1200 %}
+{% assign css_1400 = section.settings.css_1400 %}
+{% assign css_1610 = section.settings.css_1610 %}
+
+<style>
+#shopify-section-{{ id }} {
+    display: none !important;
+}
+
+{% unless css_desktop == blank %}
+{{ css_desktop }}
+{% endunless %}
+
+{% unless css_mobile == blank %}
+@media screen and (max-width: 768px) {
+{{ css_mobile }}
+}
+{% endunless %}
+
+{% unless css_desktop == blank %}
+@media screen and (min-width: 768px) {
+{{ css_desktop }}
+}
+{% endunless %}
+
+{% unless css_1024 == blank %}
+@media screen and (min-width: 1024px) {
+{{ css_1024 }}
+}
+{% endunless %}
+
+{% unless css_1200 == blank %}
+@media screen and (min-width: 1200px) {
+{{ css_1200 }}
+}
+{% endunless %}
+
+{% unless css_1400 == blank %}
+@media screen and (min-width: 1400px) {
+{{ css_1400 }}
+}
+{% endunless %}
+
+{% unless css_1610 == blank %}
+@media screen and (min-width: 1610px) {
+{{ css_1610 }}
+}
+{% endunless %}
+</style>
+
+{% schema %}
+  {
+    "name": "Page CSS",
+    "class": "css-section",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "css_desktop",
+        "label": "CSS for Desktop"
+      },
+      {
+        "type": "textarea",
+        "id": "css_mobile",
+        "label": "CSS for Mobile"
+      },
+      {
+        "type": "textarea",
+        "id": "css_1024",
+        "label": "CSS for wider than 1024px"
+      },
+      {
+        "type": "textarea",
+        "id": "css_1200",
+        "label": "CSS for wider than 1200px"
+      },
+      {
+        "type": "textarea",
+        "id": "css_1400",
+        "label": "CSS for wider than 1400px"
+      },
+      {
+        "type": "textarea",
+        "id": "css_1610",
+        "label": "CSS for wider than 1610px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page CSS",
+        "category": "Layout",
+        "settings": {
+
+        }
+      }
+    ]
+  }
+{% endschema %}

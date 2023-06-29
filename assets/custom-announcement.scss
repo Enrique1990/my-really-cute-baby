@@ -1,0 +1,22 @@
+.announcement-full-link {
+  text-decoration: none !important;
+}
+
+.prismfly-countdown {
+  &.hidden {
+    display: none;
+  }
+
+  .simply-section {
+    display: inline-block;
+    padding: 0 5px;
+
+    .simply-amount {
+      margin-right: 3px;
+    }
+
+    .simply-word {
+      text-transform: capitalize;
+    }
+  }
+}

@@ -1,0 +1,288 @@
+<style>
+  .tier_overview {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% if section.settings.show_section %}
+<section class="tier_overview">
+  <div class="section__wrapper section">
+    <div class="row full-contained-width">
+      <div class="title-overview">
+        <h2>{{ section.settings.section_title }}</h2>
+        <p>{{ section.settings.section_paragraph }}</p>
+      </div>
+
+      {% comment %} START For mobile {% endcomment %}
+      <div class="blocks-container for-mobile">
+        <div class="row">
+          <div class="single-block block1" data-id="block1">
+            <div class="in-circle block1">
+              <p class="single-block-title">{{ section.settings.block1_title }}</p>
+            </div>
+          </div>
+          <div class="single-block block2 active" data-id="block2">
+            <div class="in-circle block2">
+              <p class="single-block-title">{{ section.settings.block2_title }}</p>
+            </div>
+          </div>
+          <div class="single-block block3" data-id="block3">
+            <div class="in-circle block3">
+              <p class="single-block-title">{{ section.settings.block3_title }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% comment %} END For mobile only {% endcomment %}
+
+
+      <div class="blocks-container">
+        <div class="row">
+          <div class="single-block block1">
+            <div class="in-circle block1">
+              <p class="single-block-title">{{ section.settings.block1_title }}</p>
+              <p class="single-block-subtitle">{{ section.settings.block1_subtitle }}</p>
+            </div>
+            <p class="single-block-text">{{ section.settings.block1_text }}</p>
+          </div>
+          <div class="single-block block2 active">
+            <div class="in-circle block2">
+              <p class="single-block-title">{{ section.settings.block2_title }}</p>
+              <p class="single-block-subtitle">{{ section.settings.block2_subtitle }}</p>
+            </div>
+            <p class="single-block-text">{{ section.settings.block2_text }}</p>
+          </div>
+          <div class="single-block block3">
+            <div class="in-circle block3">
+              <p class="single-block-title">{{ section.settings.block3_title }}</p>
+              <p class="single-block-subtitle">{{ section.settings.block3_subtitle }}</p>
+            </div>
+            <p class="single-block-text">{{ section.settings.block3_text }}</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div> <!-- END section_wrapper -->
+
+  {% for block in section.blocks %}
+    {% if block.type == 'new_label' %}
+    <div class="all-blocks" style="background-color: {{ block.settings.bg_color }};">
+      <div class="section__wrapper section">
+        <div class="row full-contained-width">
+          <div class="title-overview tier-label">
+            <p>{{ block.settings.title }}</p>
+          </div>
+          <div class="blocks-container tier-label">
+            <div class="row">
+              <div class="single-block block1">
+                {% if block.settings.show_block1 %}
+                  <span class="in-circle block1"></span>
+                {% endif %}
+              </div>
+              <div class="single-block block2 active">
+                {% if block.settings.show_block2 %}
+                  <span class="in-circle block2"></span>
+                {% endif %}
+              </div>
+              <div class="single-block block3">
+                {% if block.settings.show_block3 %}
+                  <span class="in-circle block3"></span>
+                {% endif %}
+            </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+    {%endif%}
+  {% endfor %}
+
+</section>
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    let for_mobile = $('.for-mobile .single-block');
+    for_mobile.click(function() {
+      let block_id = $(this).data('id');
+      // console.log(block_id);
+
+      for_mobile.removeClass('active');
+      for_mobile.parents('.tier_overview').find(".single-block").removeClass('active');
+
+      $(this).addClass('active');
+      for_mobile.parents('.tier_overview').find(`.single-block.${block_id}`).addClass('active');
+    });
+    // console.log(' HELO I M RADY');
+  })
+
+</script>
+
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Tier Overview",
+  "class": "loyalty-tierOverview",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Tier Overview"
+    },
+    {
+      "type": "richtext",
+      "id": "section_paragraph",
+      "label": "Title",
+      "default": "<p>Get exclusive rewards on your birthday & be the first to know about our deals!</p>"
+    },
+    {
+        "type": "header",
+        "content": "Block 1"
+    },
+    {
+      "type": "text",
+      "id": "block1_title",
+      "label": "Title",
+      "default": "V.I.P."
+    },
+    {
+      "type": "text",
+      "id": "block1_subtitle",
+      "label": "Subtitle",
+      "default": "$1 - $499"
+    },
+    {
+      "type": "text",
+      "id": "block1_text",
+      "label": "Bottom Text",
+      "default": "$1 = 5 points"
+    },
+    {
+        "type": "header",
+        "content": "Block 2"
+    },
+    {
+      "type": "text",
+      "id": "block2_title",
+      "label": "Title",
+      "default": "Platinum"
+    },
+    {
+      "type": "textarea",
+      "id": "block2_subtitle",
+      "label": "Subtitle",
+      "default": "$500+<br>(without subscription)"
+    },
+    {
+      "type": "text",
+      "id": "block2_text",
+      "label": "Bottom Text",
+      "default": "$1 = 7 points"
+    },
+    {
+        "type": "header",
+        "content": "Block 3"
+    },
+    {
+      "type": "text",
+      "id": "block3_title",
+      "label": "Title",
+      "default": "Black Card"
+    },
+    {
+      "type": "textarea",
+      "id": "block3_subtitle",
+      "label": "Subtitle",
+      "default": "$1,000+<br>(with subscription)"
+    },
+    {
+      "type": "text",
+      "id": "block3_text",
+      "label": "Bottom Text",
+      "default": "$1 = 10 points"
+    },
+    {
+        "type": "header",
+        "content": "Section Padding"
+    },
+    {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "default": 30,
+        "step": 5,
+        "min": 0,
+        "max": 200,
+        "unit": "px"
+    },
+    {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "default": 30,
+        "step": 5,
+        "min": 0,
+        "max": 200,
+        "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "New Label",
+      "type": "new_label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "This is the row label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_block1",
+          "label": "Show on Block 1",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_block2",
+          "label": "Show on Block 2",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_block3",
+          "label": "Show on Block 3",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Row Background",
+          "default": "#F3EFEF"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "new_label", "settings":{} },
+      { "type": "new_label", "settings":{} },
+      { "type": "new_label" }
+    ]
+  }
+  
+}
+{% endschema %}

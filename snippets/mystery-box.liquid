@@ -1,0 +1,240 @@
+<style>
+    .mystery-box-wrapper {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, .5);
+        z-index: 10;
+        display: none;
+    }
+    .mystery-box {
+        border: 1px solid #888;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #fff;
+        position: relative;
+        max-width: 780px;
+    }
+    #btn-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 0px 15px;
+        font-size: 28px;
+    }
+    .mystery-box-body {
+        display: flex;
+        align-items: center;
+    }
+    .mystery-product-wrapper {
+        width: 50%;
+    }
+    .mystery-product-info {
+        width: 50%;
+        margin-left: 30px;
+        padding: 30px 0;
+    }
+    .mystery-box-heading h2 {
+        font-size: 26px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: 500;
+    }
+    .mystery-product-title {
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: normal;
+    }
+    .mystery-product-description {
+        margin-bottom: 30px;
+    }
+    .mystery-product-description ul {
+        list-style: disc;
+        margin-left: 20px;
+    }
+    .mystery-box .btn {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        line-height: inherit;
+        transition: all 250ms ease;
+        border-radius: 0;
+    }
+    .mystery-box .btn.btn-close {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #000;
+        margin-top: 20px;
+    }
+    #mystery-product-image {
+            max-width: 220px;
+            margin: auto;
+            display: block;
+            PADDING-LEFT: 60PX;
+            PADDING-RIGHT: 60PX;
+        }
+
+    @media screen and (max-width: 768px) {
+        .mystery-box-body {
+            flex-direction: column;
+        }
+        .mystery-product-wrapper {
+            width: 100%;
+        }
+        .mystery-product-info {
+            width: 100%;
+            margin-left: 0;
+            padding: 15px 0;
+        }
+        .mystery-box-heading h2 {
+            font-size: 20px;
+        }
+        .mystery-product-title {
+            font-size: 18px;
+        }
+        #mystery-product-image {
+            max-width: 220px;
+            margin: auto;
+            display: block;
+        }
+    }
+</style>
+
+{% assign heading = settings.mystery_heading %}
+{% assign mystery_product = settings.mystery_product %}
+
+<div class="mystery-box-wrapper">
+    <div class="mystery-box">
+        <button id="btn-close">&times;</button>
+        <div class="mystery-box-heading">
+            <h2>{{ heading }}</h2>
+        </div>
+        <div class="mystery-box-body">
+            <div class="mystery-product-wrapper">
+                <div class="image__container" style="max-width: {{ media.width }}px">
+                    <img
+                        id="mystery-product-image"
+                        class="lazyload lazyload--fade-in"
+                        alt=""
+                        src="{{ mystery_product.media | img_url: '500x' }}"
+                    >
+                </div>
+            </div>
+            <div class="mystery-product-info">
+                <h3 class="mystery-product-title"></h3>
+                <div class="mystery-product-description"></div>
+    
+                <button class="btn" id="add-mystery-to-cart">ADD ONE TIME</button>
+                <button class="btn btn-close">NO THANKS</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var variantId;
+    async function addProductToCart(inputData) {
+        const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputData)
+        })
+        const responseData = await response.json();
+
+        return responseData;
+    }
+
+    async function getCartData() {
+        const cartDataResponse = await fetch('/cart.js', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        cartData = await cartDataResponse.json();
+        return cartData;
+    }
+
+	(function ($) {
+        $(document).on(`page:load page:change`, async function () {
+            const cartData = await getCartData();
+            let itemAlreadyAdded = false;
+            let isClosed = localStorage.getItem(`declined-${cartData.token}`);
+
+            cartData.items.forEach(item => {
+                if (item.url.includes("{{mystery_product}}")) {
+                    itemAlreadyAdded = true
+                }
+            });
+
+            let showMysteryBox = false;
+            console.log('[CHECKOUT]', Shopify.Checkout.step);
+            if (Shopify.Checkout.step == 'contact_information' || Shopify.Checkout.step == 'shipping_method' || Shopify.Checkout.step == 'payment_method') showMysteryBox = true;
+
+            if (!itemAlreadyAdded && isClosed !== 'yes' && showMysteryBox) {
+                $('#btn-close').click(function() {
+                    $('.mystery-box-wrapper').hide();
+                    localStorage.setItem(`declined-${cartData.token}`, 'yes');
+                });
+                $('.btn-close').click(function() {
+                    $('.mystery-box-wrapper').hide();
+                    localStorage.setItem(`declined-${cartData.token}`, 'yes');
+                });
+
+                $.getJSON('/products/{{mystery_product}}.js', function(product) {
+                    $('.mystery-product-title').text(`${product.title} | $${(product.variants[0].price / 100).toFixed(2)}`);
+                    $('.mystery-product-description').html(product.description);
+                    const originalImageName = (product.images[0].split('/').reverse()[0]).split('?')[0];
+                    const newImageName = `${originalImageName.split('.')[0]}_500x.${originalImageName.split('.')[1]}`;
+                    const imageUrl = product.images[0].replace(originalImageName, newImageName)
+
+                    $('#mystery-product-image').attr('src', imageUrl ? imageUrl : product.images[0]);
+                    variantId = product.variants[0].id
+
+                    $('.mystery-box-wrapper').css('display', 'flex');
+                });
+
+                $("#add-mystery-to-cart").on('click', async function(event) {
+                    event.preventDefault();
+
+                    if(!variantId) {
+                        return;
+                    }
+                    
+                    try {
+                        await addProductToCart({
+                            items: [
+                                {
+                                    quantity: 1,
+                                    id: variantId,
+                                    properties: {
+                                        '_gift_type': 'mystery-item'
+                                    }
+                                }
+                            ]
+                        });
+
+                        $('.mystery-box-wrapper').hide();
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1000);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                });
+            }
+        })
+    }) (Checkout.$);
+</script>

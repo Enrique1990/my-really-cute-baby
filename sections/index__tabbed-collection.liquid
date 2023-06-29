@@ -1,0 +1,231 @@
+{% comment %}
+** Single featured collection - dynamic **
+- Draggable section
+{% endcomment %}
+
+{% assign with_arrows = true %}
+
+<section class="tab-collection section {{ css_class }} is-width-{{ width }} {% if show_gutter == false %}has-no-side-gutter has-background {% else %}has-gutter-enabled{% endif %}">
+                  <div class="container has-column-padding-bottom">
+  {% if object.settings.title != blank %}
+    <div class="container">
+      {% render 'heading', title: section.settings.title, heading_tag: 'h2', context: 'featured-collection', text_alignment: 'center', url: collections[col].url %}
+    </div>
+  {% endif %}
+
+<div class="tab-collection__buttons">
+{% for block in section.blocks %}
+  <button class="tab-collection__tablink" onclick="openCity(event, 'tab-{{ forloop.index }}')" {% if forloop.first %}id="defaultOpen"{% endif %}>{{ block.settings.title }}</button>
+{% endfor %}
+</div>
+
+{% for block in section.blocks %}
+  <div class="tab-collection__content" id="tab-{{ forloop.index }}">
+  {% include 'include-featured-collection-tabbed', type: 'block' , with_arrows: with_arrows %}
+  </div>
+{% endfor %}
+</div>
+</section>
+
+<script>
+{% for block in section.blocks %}
+{% assign block_id = block.id | remove: '-' %}
+const swiper_{{block_id}} = new Swiper ('.slider-gallery-{{ block.id }}', {
+  slidesPerView: 1.5,
+  spaceBetween: 20,
+  {% if with_arrows %}
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  {% endif %}
+  breakpoints: {
+    768: {
+      slidesPerView: 5
+    }
+  }
+})
+{% endfor %}
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-collection__content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tab-collection__tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active-tab", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active-tab";
+}
+document.getElementById("defaultOpen").click();
+</script>
+
+{% schema %}
+{
+  "name": "Tabbed collection",
+  "class": "featured-collection-section jsFeaturedCollection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading" 
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Collection Tab",
+      "type": "collection_tab",
+      "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "for_sale",
+      "label": "For Sale",
+      "default": false
+    },
+	  {
+      "type": "text",
+      "id": "sale_value",
+      "label": "Value of Sale",
+      "default": "0"
+    },
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "range",
+      "id": "products_per",
+      "label": "Products per row",
+      "min": 2,
+      "max": 7,
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "mobile_products_per_row",
+      "label": "Products per row on mobile",
+      "info": "Applied only when 'Collection layout' is set to 'Grid'.",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Limit products",
+      "min": 3,
+      "max": 50,
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "align_height",
+      "label": "Align to height"
+    },
+    {
+      "type": "range",
+      "id": "collection_height",
+      "label": "Product image height",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "default": 200,
+      "unit": "px",
+      "info": "Applied when 'Align to height' is enabled. [Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022543913)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "wide",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gutter",
+      "label": "Show gutter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 80,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ]
+  }],
+  "presets": [{
+    "name": "Tabbed collection",
+    "category": "Collection",
+    "settings": {
+
+    }
+  }]
+    
+}
+{% endschema %}

@@ -1,0 +1,83 @@
+{% if context == 'blog' %}
+  {% assign title = blog.title %}
+  {% assign image = section.settings.image %}
+{% elsif context =='cart' %}
+  {%- capture title -%}
+    {{'cart.general.title' | t }}
+  {%- endcapture -%}
+  {% assign subtitle = section.settings.subtitle %}
+  {% assign image = section.settings.image %}
+{% elsif context == 'article' %}
+  {% assign title = article.title %}
+  {% assign image = article.image %}
+{% elsif context == 'page' %}
+  {% assign title = page.title %}
+  {% assign image = section.settings.image %}
+{% elsif context == 'contact' %}
+  {% assign title = page.title %}
+  {% assign image = section.settings.image %}
+  {% assign subtitle = section.settings.subtitle %}
+{% elsif context == 'collection' %}
+  {% assign title = collection.title %}
+  <!-- {% assign subtitle = section.settings.subtitle %} -->
+  {% if section.settings.hide_banners_unless_ftd %}
+    {%- if collection.image -%}
+      {% assign image = collection.image %}
+    {% endif %}
+  {% else %}
+    {%- if collection.image -%}
+      {% assign image = collection.image %}
+     {%- else %}
+      {% assign image = collection.products.first.featured_image %}
+    {% endif %}
+{% endif %}
+  
+{% elsif context == '404' %}
+  {% capture title %}
+    {{ 'general.404.title' | t }}
+  {% endcapture %}
+  {% assign image = section.settings.image %}
+{% endif %}
+
+{% assign width = section.settings.width %}
+  
+<style>
+  .hide-when-banner-enabled {
+    display: none;
+  }
+</style>
+
+<section class="section
+                {{ css_class }}
+                is-width-{{ width }}">
+  <div class="container
+              {% if width == 'wide' %}
+                equal-columns--outside-trim
+              {% endif %}">
+    <div class="banner__wrapper {% if template contains 'page' and page.url=='/pages/rewards' or page.url=='/pages/rewards?ll_preview=page'%} loyalty-banner {% endif %}
+                one-whole
+                column
+                dark-overlay-{{ section.settings.image_darken }}
+                is-{{ section.settings.banner_height }}">
+      {% if image != blank %}
+        {% render 'image-element',
+                image: image,
+                alt: image.alt,
+                stretch_width: true
+        %}
+      {% else %}
+      {% unless section.settings.hide_banners_unless_ftd %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endunless %}
+      {% endif %}
+      <div class="banner__content card-content">
+        <div class="banner__text text-align-center">
+          <h1 class="banner__heading title">{{ title }}</h1>
+         {% if collection.description != blank %}
+         <p class="banner__subheading subtitle">{{ collection.description }}</p>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

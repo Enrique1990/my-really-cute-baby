@@ -1,0 +1,53 @@
+{% comment %}
+  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+{% endcomment %}
+<script>
+  window.__ctmaccount = 322621;
+window.__ctm_cvars = [{ business_unit : "Luxury Scenting" }];
+function gaPushToCTM() {
+   window.__ctm_cvars = window.__ctm_cvars || [];
+   var gaFields = gaconnector.getCookieValues();
+   var ctm_ga_obj = {};
+   for (var fieldName in gaFields) {
+      var ctm_fieldName = "ctm_" + fieldName;   
+      ctm_ga_obj[ctm_fieldName] = gaFields[fieldName];
+   }
+   window.__ctm_cvars.push(ctm_ga_obj);   
+}
+window.CTMSourceEvent = function (event) {
+   if (event.state == 'after') {
+      if (window.__ctm) { 
+         // We run our push CTM Parameters into the Form
+	 var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
+         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
+      }
+   }
+};
+(function (account) {
+   var ctmjs = document.createElement('script');
+   ctmjs.setAttribute("type", "application/javascript");
+   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
+   ctmjs.setAttribute("async", "async");
+   document.getElementsByTagName("head")[0].appendChild(ctmjs);
+   var gacjs = document.createElement('script');
+   gacjs.setAttribute("src", "https://tracker.gaconnector.com/gaconnector.js");
+   gacjs.setAttribute("async", "async");
+   gacjs.onload = function() { gaconnector.setCallback(gaPushToCTM); }
+   document.getElementsByTagName("head")[0].appendChild(gacjs);
+
+   var gac2js = document.createElement('script');
+   gac2js.setAttribute("src", "https://track.gaconnector.com/gaconnector.js");
+   gac2js.setAttribute("async", "async");
+   gac2js.onload = function() { gaconnector2.track("9bcf27ea123afebfc5cdb44b0ecadc21",{internalDomains:["luxuryscenting.com", "luxuryscenting.myshopify.com"], storageEngine: 'cookies'}); };
+   document.getElementsByTagName("head")[0].appendChild(gac2js);
+})(__ctmaccount);
+</script>
+<main id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section default-page">
+  <section class="section__wrapper
+                  section
+                  ">
+    <div class="container">
+      {% section 'page__main' %}
+    </div>
+  </section>
+</main>

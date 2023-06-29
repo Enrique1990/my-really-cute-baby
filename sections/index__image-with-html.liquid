@@ -1,0 +1,775 @@
+{% comment %}
+** Image with text - dynamic **
+- Draggable section
+- Uses blocks
+{% endcomment %}
+
+{% assign id = section.id %}
+{% comment %} Layout {% endcomment %}
+{% assign show_gutter = section.settings.show_gutter %}
+{% assign width = section.settings.width %}
+{% assign padding_top = section.settings.padding_top %}
+{% assign padding_bottom = section.settings.padding_bottom %}
+{% assign animation = section.settings.animation %}
+{% comment %} Advanced {% endcomment %}
+{% assign css_class = section.settings.css_class %}
+{% assign custom_css = section.settings.custom_css %}
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' %}
+      width: 100%;
+    {% endif %}
+  }
+  #shopify-section-{{ id }} .image-with-text__image-column {
+    position: relative;
+  }
+  #shopify-section-{{ id }} .section-header {
+    padding: 50px 0;
+  }
+  #shopify-section-{{ id }} .image-element__wrap {
+    position: relative;
+  }
+  #shopify-section-{{ id }} .image-element__wrap.desktop {
+    display: block;
+  }
+  #shopify-section-{{ id }} .image-element__wrap.mobile {
+    display: none;
+  }
+  #shopify-section-{{ id }} .smaller-text-block .html-block {
+    width: 42.5%;
+  }
+  #shopify-section-{{ id }} .smaller-text-block .image-block {
+    width: 57.5%;
+  }
+  #shopify-section-{{ id }} .reviews-section {
+    padding: 50px;
+  }
+  #shopify-section-{{ id }} .reviews-section .image-with-text__text-column {
+    align-items: flex-start;
+    padding: 50px 35px;
+  }
+  #shopify-section-{{ id }} .image-overlay-wrapper {
+    position: absolute;
+    left:0;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 50px 80px;
+    color: #000;
+    font-weight: 400;
+  }
+  #shopify-section-{{ id }} .image-overlay .first-line {
+    font-size: 24px;
+    line-height: 30px;
+    font-family: Monotype Bodoni,serif;
+  }
+  #shopify-section-{{ id }} .image-overlay .sub-price {
+    font-size: 72px;
+    line-height: 91px;
+    font-family: Monotype Bodoni,serif;
+  }
+  #shopify-section-{{ id }} .image-overlay .product-title {
+    font-size: 36px;
+    font-family: Monotype Bodoni,serif;
+  }
+  #shopify-section-{{ id }} .image-overlay .product-desc {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  #shopify-section-{{ id }} .product-cta a {
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: underline;
+  }
+  #shopify-section-{{ id }} .image-with-text__text-column {
+    padding: 65px;
+  }
+  #shopify-section-{{ id }} .image-with-text__wrapper .button {
+    height: 50px;
+    font-weight: 500;
+  }
+  #shopify-section-{{ id }} .image-with-text__heading.is-regular {
+    font-size: 38px;
+  }
+  #shopify-section-{{ id }} .feature-list {
+    list-style: none;
+    list-style-image: url({{ 'blood-drop.png' | asset_img_url }});
+  }
+  #shopify-section-{{ id }} .feature-list li {
+    margin-bottom: 10px;
+  }
+  #shopify-section-{{ id }} .image-with-text__heading_preline {
+    padding: 0 20px 30px;
+    max-width: 270px;
+    margin: auto;
+  }
+  #shopify-section-{{ id }} .button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 32px;
+    padding-right: 32px;
+    text-transform: uppercase;
+  }
+  #shopify-section-{{ id }} .button .button-icon {
+    display: block;
+    margin-left: 20px;
+  }
+  #shopify-section-{{ id }} .button:hover .button-icon {
+    filter: invert(1);
+  }
+  #shopify-section-{{ id }} .content-wrapper {
+    margin-bottom: 1.5rem;
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ id }} .image-element__wrap.desktop {
+        display: none;
+    }
+    #shopify-section-{{ id }} .image-element__wrap.mobile {
+        display: block;
+    }
+    #shopify-section-{{ id }} .smaller-text-block .html-block {
+        width: 100%;
+    }
+    #shopify-section-{{ id }} .smaller-text-block .image-block {
+        width: 100%;
+    }
+    #shopify-section-{{ id }} .reviews-section {
+        padding: 30px;
+    }
+    #shopify-section-{{ id }} .reviews-section .image-with-text__text-column {
+        align-items: flex-start;
+        padding: 30px 20px;
+    }
+    #shopify-section-{{ id }} .image-overlay-wrapper {
+      padding: 25px 30px;
+    }
+    #shopify-section-{{ id }} .image-overlay .sub-price {
+      font-size: 54px;
+      line-height: 68px;
+    }
+    #shopify-section-{{ id }} .image-overlay .product-title {
+      font-size: 24px;
+      line-height: 30px;
+      font-family: Monotype Bodoni,serif;
+    }
+    #shopify-section-{{ id }} .image-overlay .product-desc {
+      font-size: 14px;
+      line-height: 17px;
+    }
+    #shopify-section-{{ id }} .product-cta a {
+      font-size: 12px;
+      line-height: 15px;
+      text-decoration: underline;
+    }
+    #shopify-section-{{ id }} .image-with-text__heading.is-regular {
+      font-size: 28px;
+    }
+    #shopify-section-{{ id }} .image-with-text__text-column {
+      padding: 60px 30px;
+    }
+    #shopify-section-{{ id }} .image-with-text__text {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (min-width: 1400px) {
+    #shopify-section-{{ id }} .image-overlay-wrapper {
+      padding: 80px 100px;
+    }
+  }
+  @media screen and (min-width: 1610px) {
+    #shopify-section-{{ id }} .image-overlay-wrapper {
+      padding: 100px 150px;
+    }
+  }
+  {% render 'css-loop',
+          css: custom_css,
+          id: id
+  %}
+{% endstyle %}
+
+<script>
+    $(document).ready(function() {
+        var width = window.innerWidth;
+
+        if (width < 768) {
+            $('.reviews-section .container').flickity({
+                lazyLoad: 2,
+                freeScroll: true,
+                imagesLoaded: true,
+                draggable: true,
+                cellAlign: 'left',
+                pageDots: false,
+                arrowShape: arrowShape
+            });
+        }
+    })
+</script>
+
+{% comment %} HTML markup {% endcomment %}
+<section class="section
+                {{ css_class }}
+                is-width-{{ width }}
+                {% if show_gutter == false %}
+                  has-no-side-gutter
+                  has-background
+                {% else %}
+                  has-gutter-enabled
+                {% endif %}
+                {% if width == 'wide' %}
+                  equal-columns--outside-trim
+                {% endif %}
+                "
+                {% if animation != "none" %}
+                  data-scroll-class="{{ animation }}"
+                {% endif %}>
+    {% if section.settings.heading != blank %}
+    <div class="section-header">
+        {% if section.settings.heading != blank %}
+            <h3 class="image-with-text__heading text-align-center is-regular" >
+            {{ section.settings.heading }}
+            </h3>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+            <div class="image-with-text__text text-align-center content">
+            {{ section.settings.subheading }}
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+  <div class="container">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+
+      {% if block.type == 'html' %}
+
+        {% comment %} Is the color set to transparent? {% endcomment %}
+        {% assign background_alpha = block.settings.background | color_extract: 'alpha' %}
+        {% assign text_alpha = block.settings.text_color | color_extract: 'alpha' %}
+        {% comment %} Block specific CSS {% endcomment %}
+        {% capture block_css -%}
+
+          .image-with-text__heading {
+            color: {%- if text_alpha != 0 -%}{{ block.settings.text_color }}{%- else -%}{{ settings.heading_color }}{%- endif -%};
+          }
+
+          .image-with-text__text {
+            color: {%- if text_alpha != 0 -%}{{ block.settings.text_color }}{%- else -%}{{ settings.regular_color }}{%- endif -%};
+          }
+        {%- endcapture -%}
+
+        {% style %}
+          #shopify-section-{{ block.id }} {
+              background-color: {%- if background_alpha != 0 -%}{{ block.settings.background }}{% endif %};
+            }
+          {% render 'css-loop',
+                  css: block_css,
+                  id: block.id
+          %}
+        {% endstyle %}
+
+        <div class="image-with-text__text-column
+                    image-with-text__column
+                    html-block
+                    {% render 'column-width', value: forloop.length %}
+                    medium-down--one-whole
+                    column
+                    has-padding-left
+                    has-padding-right
+                    {% if background_alpha != 0 %}has-background {% endif %}
+                    is-flex
+                    is-flex-wrap
+                    is-justify-{{ block.settings.alignment }}
+                    is-align-{{ block.settings.vertical_position }}
+                    "
+                    {% if type != 'block' %}
+                      {{ block.shopify_attributes }} id="shopify-section-{{ block.id }}"
+                    {% endif %}>
+          <div class="image-with-text__wrapper">
+            <div class="content-wrapper">
+              {% if block.settings.pre_line != blank %}
+                <p class="image-with-text__heading_preline text-align-{{ block.settings.alignment }}" >
+                  {{ block.settings.pre_line }}
+                </p>
+              {% endif %}
+
+              {% if block.settings.title != blank %}
+                <h3 class="image-with-text__heading text-align-{{ block.settings.alignment }} is-{{ block.settings.heading_size }}" >
+                  {{ block.settings.title }}
+                </h3>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <div class="image-with-text__text text-align-{{ block.settings.alignment }} content">
+                  {{ block.settings.text }}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if block.settings.button_label != blank %}
+              <div class="buttons is-{{ block.settings.alignment }}">
+                {% if block.settings.button_label != blank %}
+                  <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} class="button {{ block.settings.button_style }}">
+                    <span>{{ block.settings.button_label }}</span>
+                    {% if block.settings.button_icon != blank %}
+                      <span>
+                        <img src="{{ block.settings.button_icon | img_url }}" alt="" class="button-icon">
+                      </span>
+                    {% endif %}
+                  </a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      {% elsif block.type == 'image' %}
+        <div class="image-with-text__image-column
+        image-with-text__column
+        image-block
+        {% if forloop.length == 1 %}
+          one-whole
+        {% elsif forloop.length == 2 %}
+          one-half
+        {% elsif forloop.length == 3 %}
+          one-third
+        {% endif %}
+        medium-down--one-whole
+        column
+        is-flex
+        is-align-center
+        {% if block.settings.image_crop != 'none' %}has-image-crop{% endif %}
+        image-crop--{{ block.settings.image_crop }}" {% if type != 'block' %}{{ block.shopify_attributes }} id="shopify-section-{{ block.id }}"{% endif %}>
+          {% if block.settings.image_link %}<a class="image-with-text__link" href="{{ block.settings.image_link }}">{% endif %}
+            {% if block.settings.image != blank %}
+                {% capture wrapper_classes %}
+                image-with-text__image {% if block.settings.mobile_image != blank %}desktop{% endif %}
+                {% endcapture %}
+                {% render 'image-element',
+                        image: block.settings.image,
+                        alt: block.settings.image.alt,
+                        stretch_width: true,
+                        wrapper_classes: wrapper_classes,
+                        additional_classes: 'image-with-text__image'
+                %}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+
+            {% if block.settings.mobile_image != blank %}
+                {% capture wrapper_classes_mobile %}
+                image-with-text__image {% if block.settings.image != blank %}mobile{% endif %}
+                {% endcapture %}
+                {% render 'image-element',
+                        image: block.settings.mobile_image,
+                        alt: block.settings.mobile_image.alt,
+                        stretch_width: true,
+                        wrapper_classes: wrapper_classes_mobile,
+                        additional_classes: 'image-with-text__image'
+                %}
+            {% endif %}
+
+            {% if block.settings.show_overlay_content %}
+            <div class="image-overlay-wrapper">
+              <div class="image-overlay">
+                <div class="first-line">{{ block.settings.overlay_pre }}</div>
+                <div class="sub-price">{{ block.settings.overlay_heading }}</div>
+                <div class="product-title">{{ block.settings.overlay_prod_title }}</div>
+                <div class="product-desc">{{ block.settings.overlay_prod_desc }}</div>
+                {% if block.settings.overlay_link_text != blank %}
+                <div class="product-cta">
+                  <a href="{{ block.settings.overlay_link }}">{{ block.settings.overlay_link_text }}</a>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+          {% if block.settings.image_link %}</a>{% endif %}
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with html",
+  "class": "image-with-text image-with-html image-with-text-1",
+  "max_blocks": 3,
+  "settings": [
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+    },
+    {
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Subheading"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "standard",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gutter",
+      "label": "Show gutter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Animation",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fadeIn",
+          "label": "Fade in"
+        },
+        {
+          "value": "fadeInDown",
+          "label": "Fade in down"
+        },
+        {
+          "value": "fadeInLeft",
+          "label": "Fade in left"
+        },
+        {
+          "value": "fadeInRight",
+          "label": "Fade in right"
+        },
+        {
+          "value": "slideInLeft",
+          "label": "Slide in left"
+        },
+        {
+          "value": "slideInRight",
+          "label": "Slide in right"
+        },
+        {
+          "value": "zoomIn",
+          "label": "Zoom in"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "1024 x 1024px recommended"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image",
+            "info": "500 x 500px recommended"
+        },
+        {
+          "type": "select",
+          "id": "image_crop",
+          "label": "Image cropping",
+          "default": "none",
+          "info": "Only applied when text area is taller than the image.",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay_content",
+          "label": "Show overlay content",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "overlay_pre",
+          "label": "Overlay pre-line",
+          "default": "For home or business"
+        },
+        {
+          "type": "text",
+          "id": "overlay_heading",
+          "label": "Overlay main heading",
+          "default": "$99/mo"
+        },
+        {
+          "type": "text",
+          "id": "overlay_prod_title",
+          "label": "Overlay product title",
+          "default": "Diffuser & Oil"
+        },
+        {
+          "type": "text",
+          "id": "overlay_prod_desc",
+          "label": "Overlay product description",
+          "default": "Scents up to 1,800 sq. ft."
+        },
+        {
+          "type": "url",
+          "id": "overlay_link",
+          "label": "Overlay link"
+        },
+        {
+          "type": "text",
+          "id": "overlay_link_text",
+          "label": "Overlay link text",
+          "default": "Contact us to get started"
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "Html",
+      "settings": [
+        {
+          "type": "text",
+          "id": "pre_line",
+          "label": "Pre line"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading text here"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Base size",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "regular",
+              "label": "Regular"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "regular"
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "View all"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+          "type": "image_picker",
+          "id": "button_icon",
+          "label": "Button Icon"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            {
+              "value": "button--primary",
+              "label": "Primary"
+            },
+            {
+              "value": "button--secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "button--link-style",
+              "label": "Link style"
+            }
+          ],
+          "default": "button--primary"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "vertical_position",
+          "label": "Vertical position",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Middle"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with html",
+      "category": "Image",
+      "settings": {
+          "padding_top": 20,
+          "padding_bottom": 20
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "html"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

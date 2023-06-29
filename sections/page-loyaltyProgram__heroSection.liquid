@@ -1,0 +1,110 @@
+<style>
+    .hero-section {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+</style>
+
+{% if section.settings.show_hero_section %}
+<section class="section__wrapper section hero-section">
+    <div class="container">
+        <div class="text-container">
+            <h1 class="header_title"> {{ section.settings.header_title }}</h1>
+            <h2 class="subtitle"> {{ section.settings.subtitle }}</h2>
+            <p class="paragraph_text"> {{ section.settings.paragraph }}</p>
+        </div>
+        <div class="button-container">
+            <a class="button button1" href="{{ section.settings.button1_url }}">{{ section.settings.button1 }}</a>
+            <a class="button button2" href="{{ section.settings.button2_url }}">{{ section.settings.button2 }}</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "class": "loyalty-hero-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_hero_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+        "type": "header",
+        "content": "Text"
+    },
+    {
+        "type": "text",
+        "id": "header_title",
+        "label": "Title",
+        "default": "The Concierge Club"
+    },
+    {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "Loyalty Program"
+    },
+    {
+        "type": "richtext",
+        "id": "paragraph",
+        "label": "Paragraph",
+        "default": "<p>Create an account now to enjoy special perks, exclusive privilege to early sales and new collections, & collect points to redeem on your next order.</p>"
+    },
+    {
+        "type": "header",
+        "content": "Buttons"
+    },
+    {
+        "type": "text",
+        "id": "button1",
+        "label": "Button 1",
+        "default": "JOIN NOW"
+    },
+    {
+        "type": "url",
+        "id": "button1_url",
+        "label": "Button 1 Link"
+    },
+    {
+        "type": "text",
+        "id": "button2",
+        "label": "Button 2",
+        "default": "SIGN IN"
+    },
+    {
+        "type": "url",
+        "id": "button2_url",
+        "label": "Button 2 Link"
+    },
+    {
+        "type": "header",
+        "content": "Section Padding"
+    },
+    {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "default": 100,
+        "step": 5,
+        "min": 0,
+        "max": 200,
+        "unit": "px"
+    },
+    {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "default": 100,
+        "step": 5,
+        "min": 0,
+        "max": 200,
+        "unit": "px"
+    }
+  ]
+}
+
+{% endschema %}

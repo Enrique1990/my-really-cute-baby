@@ -1,0 +1,200 @@
+
+/* checkout overwrite */
+.product__description__variant,
+.product__description__property { display: none; }
+/* checkout trust badges */
+.trust-badges {
+    display: none;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content:center;
+  }
+  .trust-badges__header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 85px;
+    text-align: center;
+  }
+  @media screen and (max-width: 767.9px){
+    .trust-badges__header{
+      width: 63px;
+      margin-right: 5px;
+    }
+  }
+
+  .trust-badges__item {
+    padding: 0.5rem 0.25rem;
+    margin-bottom: 1rem;
+  }
+  .trust-badges__header h3 {
+    font-size: 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  }
+  .trust-badges__header img {
+    display: inline-block; 
+    max-width: 40px;
+    padding: 12px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  .trust-badges__header svg {
+    display: inline-block;
+    max-width: 30px;
+    padding: 12px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-bottom: 12px;
+  }
+  @media screen and (max-width: 500px){
+    .trust-badges__header {
+      max-width: 3.5rem;
+    }
+    .trust-badges__header img {
+      max-width: 2rem;
+      padding: 8px;
+    }
+    .trust-badges__header h3 {
+      font-size: 0.65rem;
+    }
+  }
+/* breadcrumbs */
+ol.breadcrumb {
+  justify-content : space-between;
+  position : relative;
+  margin : 25px -55px;
+}
+
+ol.breadcrumb::before {
+  position : absolute;
+  content : "";
+  width : 80%;
+  left : 50%;
+  top : 25px;
+  transform : translate(-50%, -50%);
+  height : 3px;
+  background : rgb(152, 152, 152);
+}
+
+.breadcrumb__item.breadcrumb__item--current {
+  color : rgb(0, 0, 0);
+}
+
+.breadcrumb__item {
+  text-align : center;
+  white-space : nowrap;
+  justify-content : center;
+  flex-grow : 0;
+  flex-shrink : 0;
+  flex-basis : 20%;
+  max-width : 20%;
+  position : relative;
+  z-index : 5;
+  color : rgb(152, 152, 152);
+}
+
+.breadcrumb__item svg {
+  display : none;
+}
+
+.breadcrumb__item a, .breadcrumb__item span {
+  text-transform : uppercase;
+  position : relative;
+  font-size : 11px;
+  font-weight : 500;
+  letter-spacing : 0.04em;
+  display : block;
+  padding-top : 60px;
+  color : inherit;
+  min-width : 40px;
+}
+
+.breadcrumb__item a::after, .breadcrumb__item span::after {
+  content : "";
+  display : flex;
+  justify-content : center;
+  align-content : center;
+  border : 4px solid currentcolor;
+  position : absolute;
+  top : 0px;
+  left : 50%;
+  transform : translateX(-50%);
+  width : 40px;
+  height : 40px;
+  border-radius : 50%;
+  color : currentcolor;
+  font-size : 20px;
+  line-height : 40px;
+  background : rgb(246, 246, 246);
+}
+@media (max-width: 740px) {
+  .breadcrumb__item a::after, .breadcrumb__item span::after {
+    border-width : 3px;
+  }
+}
+.breadcrumb__item.breadcrumb__item--current a::after, .breadcrumb__item.breadcrumb__item--current span::after {
+  background : rgb(0, 0, 0);
+  border-color : rgb(6, 2, 3);
+  color : rgb(255, 255, 255);
+}
+
+.breadcrumb__item:nth-child(1) a::after, .breadcrumb__item:nth-child(1) span::after {
+  content : "1";
+}
+
+.breadcrumb__item:nth-child(2) a::after, .breadcrumb__item:nth-child(2) span::after {
+  content : "2";
+}
+
+.breadcrumb__item:nth-child(3) a::after, .breadcrumb__item:nth-child(3) span::after {
+  content : "3";
+}
+
+.breadcrumb__item:nth-child(4) a::after, .breadcrumb__item:nth-child(4) span::after {
+  content : "4";
+}
+
+.breadcrumb__item:nth-child(5) a::after, .breadcrumb__item:nth-child(5) span::after {
+  content : "5";
+}
+
+.breadcrumb__item.breadcrumb__item--completed a::after, .breadcrumb__item.breadcrumb__item--completed span::after {
+  background-image : url("//cdn.shopify.com/s/files/1/2068/9901/t/79/assets/check-solid.svg?v=12412351534927823078");
+  background-position : center center;
+  background-repeat : no-repeat no-repeat;
+  background-attachment : initial;
+  background-origin : initial;
+  background-clip : initial;
+  background-color : rgb(255, 255, 255);
+  background-size : 60%;
+  content : "";
+}
+
+.extra-bread {
+  display : none;
+}
+@media (max-width: 750px) {
+  ol.breadcrumb {
+    margin : 0px !important;
+  }
+
+  .breadcrumb__item a, .breadcrumb__item span {
+    font-size : 8px;
+    min-width : 30px;
+  }
+
+  .extra-bread {
+    display : block;
+  }
+
+  .normal-bread {
+    display : none;
+  }
+}
+.checkout-timer-container {
+  padding-top : 0px;
+}

@@ -1,0 +1,20 @@
+<div class="product-thumbnail">
+    {% if settings.display_vendor %}
+      <span class="product-thumbnail__vendor">{{ product.vendor }}</span>
+    {% endif %}
+  
+    <a href="{{ product.url | within: collection }}" class="product-thumbnail__title">{{ product.title }}</a>
+    
+    {% if product.metafields.custom_fields["desc"] != blank %}
+    <p class="inspired_by_subheading">{{ product.metafields.custom_fields["desc"] }} </p>
+    
+    <style>
+      p.inspired_by_subheading {
+          font-size: 12px;
+          padding-top: 1%;
+            font-style: italic;
+      }
+    </style>
+    {% endif %}
+  </div>
+  

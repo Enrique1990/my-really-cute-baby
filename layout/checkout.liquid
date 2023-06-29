@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- Google Optimize -->
+<script src="https://www.googleoptimize.com/optimize.js?id=OPT-KBFTTNP"></script>
+
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+
+    <title>{{ page_title }}</title>
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ 'checkout.css' | asset_url | stylesheet_tag }}
+    {{ checkout_scripts }}
+    {% include "loyaltylion" %}
+<script>lion.configure({ checkout: true })</script>
+<script type="text/javascript">
+  /*
+  @require
+  Jquery: https://jquery.com/
+  jquery-cookie: https://github.com/carhartl/jquery-cookie
+
+  Allows you to set a discount code via a URL and pass into shopify checkout
+
+  https://myshopifystore.com?coupon=MYCOUPONCODE
+  can append ?coupon=MYCOUPONCODE to any URL
+
+  */
+
+  // Get paramaters from the URL
+
+  $discountInput = $("input.js-form-discount");
+    if ($discountInput.length > 0) {
+      $discountInput.val( $discountInput );
+    }
+  </script>
+<!--     <style>.notice--warning {display: none !important}</style> -->
+
+
+  {% include 'friendbuy' %}
+</head>
+  <body>
+    <!-- <input type="hidden" class="cart__discounts" name="discount" value="HOLIDAY21"> -->
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+
+ <div id="trust-badges" class="trust-badges order-summary order-summary--is-collapsed">
+              <div class="trust-badges__item">
+                <div class="trust-badges__header"><img src="{{ 'badge-1.png' | asset_img_url, 100x }}" /><h3>Cruelty Free</h3></div>
+              </div>
+              <div class="trust-badges__item">
+                <div class="trust-badges__header"><img src="{{ 'badge-2.png' | asset_img_url, 100x }}" /><h3>Paraben Free</h3></div>
+                <div class="trust-badges__text"></div>
+              </div>
+              <div class="trust-badges__item">
+                <div class="trust-badges__header"><img src="{{ 'badge-3.png' | asset_img_url, 100x }}" /><h3>Hypoallergenic</h3></div>
+                <div class="trust-badges__text"></div>
+              </div>
+              <div class="trust-badges__item">
+                <div class="trust-badges__header"><img src="{{ 'badge-4.png' | asset_img_url, 100x }}" /><h3>Vegan</h3></div>
+                <div class="trust-badges__text"></div>
+              </div>
+              <div class="trust-badges__item">
+                <div class="trust-badges__header"><img src="{{ 'badge-5.png' | asset_img_url, 100x }}" /><h3>Sustainable</h3></div>
+                <div class="trust-badges__text"></div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {% if settings.checkout_customization %}
+      {% render 'checkout-customization' %}
+    {% endif %}
+
+    {% if settings.enable_mystery_box %}
+      {% render 'mystery-box' %}
+    {% endif %}
+
+    {{ tracking_code }}
+
+
+<div data-rebuy-id="23216"></div>
+
+<div data-rebuy-id="24084"></div>
+<script async src="https://rebuyengine.com/js/rebuy?shop=hotelcollection.myshopify.com"></script>
+
+
+
+<script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop=hotelcollection.myshopify.com"></script>
+</body>
+</html>
+
+<script>
+ try{
+  document.querySelector('.order-summary-toggle').addEventListener('click', function(){
+    document.querySelector('#trust-badges').classList.toggle('order-summary--is-expanded')
+    document.querySelector('#trust-badges').classList.toggle('order-summary--is-collapsed')
+  })
+} catch {
+  console.log('you are not mobile')
+}
+</script>

@@ -1,0 +1,35 @@
+<div class="shipping-estimate-paragraph">
+  <div class="shipping-estimate-paragraph__wrapper">
+    <img class="shipping-estimate-paragraph__img" src="{{ 'shipping-icon.png' | asset_img_url: '100x' }}" />
+    {% if variant.metafields.custom.estimated_shipping_override != blank %}
+    <p>{{variant.metafields.custom.estimated_shipping_override}}</p>
+    {% else %}
+    <p>
+      Est. Delivery between:
+      <strong><span id="shipping_lead_time_min" class="date-selector"></span></strong> -
+      <strong><span id="shipping_lead_time_max" class="date-selector"></span></strong>
+    </p>
+    {% endif %}
+  </div>
+</div>
+<script>
+  var shippingLeadTimeMin = parseInt("{{ settings.shipping_lead_time_min }}")
+  var shippingLeadTimeMax = parseInt("{{ settings.shipping_lead_time_max }}")
+  function showShippingEstimates(){
+    let dateToday = new Date();
+    let options = {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short'
+    };
+    let leadMinDate
+    let leadMaxDate
+    leadMinDate = new Date (dateToday.setDate(dateToday.getDate() + shippingLeadTimeMin ))
+    leadMaxDate = new Date (dateToday.setDate(dateToday.getDate() + shippingLeadTimeMax ));
+    document.getElementById('shipping_lead_time_min').innerHTML = leadMinDate.toLocaleDateString('en-us', options);
+    document.getElementById('shipping_lead_time_max').innerHTML = leadMaxDate.toLocaleDateString('en-us', options);
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    showShippingEstimates()
+  })
+</script>

@@ -1,0 +1,255 @@
+{% if context == 'product' and section.settings.show_payment_button %}
+  {% assign show_payment_button = true %}
+{% elsif context == 'product' and block.settings.show_payment_button %}
+  {% assign show_payment_button = true %}
+{% elsif context == 'quickshop' and settings.show_dynamic_checkout_button %}
+  {% assign show_payment_button = true %}
+{% else %}
+  {% assign show_payment_button = false %}
+{% endif %}
+
+{% if hide_quantity != blank %}
+  {% if hide_quantity %}
+    {% assign hide_quantity_selector = true %}
+  {% else %}
+    {% assign hide_quantity_selector = false %}
+  {% endif %}
+{% else %}
+  {% assign hide_quantity_selector = false %}
+{% endif %}
+
+{% if context == 'product' and section.settings.hide_out_of_stock %}
+  {% assign hide_out_of_stock = true %}
+{% else %}
+  {% assign hide_out_of_stock = false %}
+{% endif %}
+
+<div class="sticky-atc-anchor"></div>
+{% assign variant = product.selected_or_first_available_variant %}
+<div class="sticky-atc">
+<div class="clearfix product_form init smart-payment-button--{{ show_payment_button }} {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %} product_form--{{ settings.product_form_style }}"
+      id="product-form-{{ product.id }}"
+      data-product-form
+      data-money-format="{{ shop.money_format | strip_html }}"
+      data-shop-currency="{{ shop.currency }}"
+      data-select-id="product-select-{{ product.id }}{{ product-form }}{{ object.id }}{{ block.id }}"
+      data-enable-state="{% if template contains 'product' %}true{% else %}false{% endif %}"
+      data-product="{{ product | json | escape }}"
+      {% if settings.limit_quantity or settings.display_inventory_left %}
+        data-variant-inventory='[{%- for v in product.variants -%}{"id":{{v.id}},"inventory_quantity":{{v.inventory_quantity}},"inventory_management":"{{v.inventory_management}}","inventory_policy":"{{v.inventory_policy}}"}{% if forloop.last == false %},{% endif %}{%- endfor -%}]'
+      {% endif %}
+      data-product-id="{{ product.id }}"
+      >
+
+    {% form 'product', product, data-productid: product.id %}
+    <div class="sticky-atc__image-title">
+      <div class="sticky-atc__product-title">
+        {% render 'shipping-estimate', variant: variant, line_break: true %}
+      </div>
+    </div>
+
+    <div class="rc-widget-injection-parent"></div>
+
+    {% if product.variants.size > 1 %}
+        {% if product.options.size > 1 %}
+        <div class="select-container">
+            {% if context == 'quickshop' %}
+                <div class="select">
+            {% endif %}
+            <select id="product-select-{{ product.id }}{{ product-form }}{{ object.id }}{{ block.id }}" name="id" data-productid="{{ product.id }}" class="multi_select" data-variant-selector>
+                {% for v in product.variants %}
+                <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-image-id="{{ v.featured_media.id }}" data-sku="{{ v.sku }}">{{ v.title }}</option>
+                {% endfor %}
+            </select>
+            {% if context == 'quickshop' %}
+                </div>
+            {% endif %}
+        </div>
+        {% elsif product.options.size == 1 and product.variants.size > 1 or product.options.size == 1 and product.options[0] != "Title" %}
+        <div class="select-container">
+            <label class="label">{{ product.options[0] }}</label>
+            <div>
+            {% if context == 'quickshop' %}
+                <div class="select">
+            {% endif %}
+            <select id="product-select-{{ product.id }}{{ product-form }}{{ object.id }}{{ block.id }}" name="id" data-productid="{{ product.id }}" data-variant-selector>
+                {% for v in product.variants %}
+                <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-image-id="{{ v.featured_media.id }}" data-sku="{{ v.sku }}">{{ v.title }}</option>
+                {% endfor %}
+            </select>
+            {% if context == 'quickshop' %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ variant.id }}" />
+    {% endif %}
+
+    {% if product.variants.size > 1 %}
+        {% if settings.product_form_style == "swatches" and product.variants.size > 1 or settings.product_form_style == "swatches" and product.options[0] != "Title" %}
+        <div class="swatch_options collection_swatches" onclick="changePriceQuantity()">
+            {% for option in product.options %}
+            {% render 'product__swatch',
+                    product: product,
+                    hide_out_of_stock: hide_out_of_stock,
+                    option: option
+            %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endif %}
+
+    {% if product.available %}
+        {% if settings.display_inventory_left %}
+        <p class="items_left">
+            {% if variant.inventory_management != blank and variant.inventory_quantity > 0 %}
+            {% capture items_left_text %}
+                {% if variant.inventory_quantity == 1 %}
+                {{ 'products.product.items_left_count.one' | t }}
+                {% else %}
+                {{ 'products.product.items_left_count.other' | t }}
+                {% endif %}
+            {% endcapture %}
+            {% if variant.inventory_quantity <= settings.inventory_threshold %}
+                {{ variant.inventory_quantity }} {{ items_left_text }}
+            {% endif %}
+            {% endif %}
+        </p>
+    {% endif %}
+
+    {% if product.id == 5314947186854 %}
+        <p class="custom-shipping-text custom-shipping-text-scent-diffuser"></p>
+    {% endif %}
+
+    {% assign bundle_products = product.metafields.custom.co_ords_products.value %}
+
+    <div class="co-ords-wrapper">
+        <p class="co-ord_selector_label">Select Hotel Scent</p>
+        <div class="co-ord_selector">
+            <div class="co-ord_selected_item">
+                {% for item in bundle_products %}
+                    {% if forloop.first %}
+                        <div class="co-ord_selected_content co-ord-item">
+                            <h5>{{ item.title }}</h5>
+                            <span>{{ item.metafields.custom_fields["desc"] }}</span>
+                        </div>
+                        {% break %}
+                    {% endif %}
+                {% endfor %}
+                <div class="co-ord_dropdown_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                    </svg>
+                </div>
+            </div>
+
+            {% for item in bundle_products %}
+                {% if forloop.first %}
+                    <input type="hidden" name="co-ord-product" id="co-ord-product-id" value="{{ item.selected_or_first_available_variant.id }}" />
+                    {% for selling_plan_allocation in item.selected_or_first_available_variant.selling_plan_allocations %}
+                        {% if selling_plan_allocation.selling_plan.recurring_deliveries %}
+                        <input
+                            type="hidden"
+                            name="co-ord-plan"
+                            id="co-ord-selling-plan"
+                            value="{{ selling_plan_allocation.selling_plan.id }}"
+                        />
+                        {% endif %}
+                    {% endfor %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="co-ords_dropdown">
+            <ul class="co-ord-item_wrapper">
+                {% for item in bundle_products %}
+                    {%- capture selling_plan_id -%}
+                    {% for selling_plan_allocation in item.selected_or_first_available_variant.selling_plan_allocations %}
+                        {% if selling_plan_allocation.selling_plan.recurring_deliveries %}
+                            {{ selling_plan_allocation.selling_plan.id }}
+                        {% endif %}
+                    {% endfor %}
+                    {% endcapture %}
+
+                    <li
+                        class="co-ord-item{% if forloop.first %} selected{% endif %}"
+                        data-product-title="{{ item.title }}"
+                        data-product-desc="{{ item.metafields.custom_fields["desc"] }}"
+                        data-variant-id="{{ item.selected_or_first_available_variant.id }}"
+                        data-selling-plan="{{ selling_plan_id | strip }}"
+                    >
+                        <h5>{{ item.title }}</h5>
+                        <span>{{ item.metafields.custom_fields["desc"] }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="purchase-details">
+      {% if settings.display_product_quantity and hide_quantity_selector == false %}
+        <div class="purchase-details__quantity product-quantity-box quantity-box--{{ settings.qty_box_style }}">
+          {% render 'quantity-box' %}
+        </div>
+      {% endif %}
+      {% comment %} Error message for add to cart action {% endcomment %}
+      <div class="cart-warning"></div>
+      <div class="purchase-details__buttons purchase-details__spb--{{ show_payment_button }}">
+        {% if settings.cart_action == 'reload_page' %}
+          <input type="hidden" name="return_to" value="back" />
+        {% elsif settings.cart_action == 'redirect_checkout' %}
+          <input type="hidden" name="return_to" value="/checkout" />
+        {% endif %}
+
+        {% if product.metafields.custom_fields["shipping_details"] != blank %}
+            {% assign details = product.metafields.custom_fields["shipping_details"] %}
+        {% endif %}
+        <input id="product-shipping-details" type="hidden" name="properties[_Shipping Details]" value="{{ details }}">
+
+        {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}Get started{% endif %}{% endcapture %}
+        <button type="{% if settings.cart_action == 'mini_cart' or settings.cart_action == 'drawer' %}button{% else %}submit{% endif %}" name="add" class="button {% if settings.cart_action == 'mini_cart' or settings.cart_action == 'drawer' %} ajax-submit {% endif %}action_button button--add-to-cart {% if show_payment_button %} action_button--secondary {% endif %}" data-label={{ add_to_cart_label | json }} data-add-to-cart-trigger>
+          {% if  settings.button_cart_icon != blank and settings.button_cart_icon_position == 'left' %}
+            {% render 'icon',
+                    name: settings.button_cart_icon,
+                    icon_class: 'icon--cart'
+            %}
+          {% endif %}
+          <span class="text">{{ add_to_cart_label }}</span>
+          <span class="subscribe-button">Subscribe</span>
+          {% if  settings.button_cart_icon != blank and settings.button_cart_icon_position == 'right' %}
+            {% render 'icon',
+                    name: settings.button_cart_icon,
+                    icon_class: 'icon--cart icon--right'
+            %}
+          {% endif %}
+          <span class="sticky-atc__price">{{ product.selected_or_first_available_variant.price }}</span>
+          <svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" class="checkmark">
+            <path fill="none" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>
+          </svg>
+        </button>
+
+        {% capture the_snippet_fave %}{% render 'socialshopwave-widget-fave' %}{% endcapture %}
+        {% unless the_snippet_fave contains 'Liquid error' %}
+        {{ the_snippet_fave }}
+        {% endunless %}
+
+        {% if show_payment_button %}
+          {{ form | payment_button }}
+        {% endif %}
+
+         {% comment %}
+            Automatically inserted by Shop Pay Installments theme updater
+        {% endcomment %}
+          {% unless settings.disable_autogenerated_payment_terms %}
+          {{ form | payment_terms }}
+        {% endunless %}
+
+      </div>
+    </div>
+  {% endif %}
+{% endform %}
+</div>
+</div>

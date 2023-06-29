@@ -1,0 +1,63 @@
+<div class="product-thumbnail">
+  <span>hello</span>
+  {% if settings.display_vendor %}
+    <span class="product-thumbnail__vendor">{{ product.vendor }}</span>
+  {% endif %}
+
+  <a href="{{ shop.url }}/discount/5OFFCART?redirect={{ product.url | within: collection }}" class="product-thumbnail__title">{{ product.title }}</a>
+    {% render 'okendo-reviews-product-rating-summary', product: product %}
+
+  {% if product.metafields.custom_fields["desc"] != blank %}
+  <p class="inspired_by_subheading">{{ product.metafields.custom_fields["desc"] }} </p>
+
+  <style>
+    p.inspired_by_subheading {
+    	font-size: 12px;
+    	padding-top: 1%;
+      	font-style: italic;
+    }
+  </style>
+  {% endif %}
+
+  {%  if product.metafields.custom_fields["notes"] != blank %}
+  <p class="notes_subheading">{{ product.metafields.custom_fields["notes"] }} </p>
+  <style>
+    p.notes_subheading {
+    	font-size: 11px;
+    	padding-top: 1%;
+      	font-style: italic;
+      color:#525c48;
+    }
+  </style>
+  {% endif %}
+
+  {% if collection_handles contains 'coming-soon' %}
+    {% if settings.stickers_enabled == false %}
+      {{ 'collections.general.coming_soon' | t }}
+    {% endif %}
+  {% else %}
+    <span class="product-thumbnail__price price {% if product.compare_at_price_max > product.price %}sale{% endif %}" style="color: #000000;">
+      {% if product.available %}
+        {% if product.price_varies and product.price_min > 0 %}
+          <small><em>{{ 'products.general.from' | t }}</em></small>
+        {% endif %}
+        {% if product.price_min > 0 %}
+          <span class="money">
+            {% render 'price-element', price: product.price_min %}
+          </span>
+        {% else %}
+          {{ settings.free_price_text }}
+        {% endif %}
+        {% if product.compare_at_price_max > product.price %}
+          <span class="product-thumbnail__was-price was-price">
+            <span class="money">
+              {% render 'price-element', price: product.compare_at_price_max %}
+            </span>
+          </span>
+        {% endif %}
+      {% else %}
+        <span class="product-thumbnail__sold-out sold-out">{{ 'products.product.sold_out' | t }}</span>
+      {% endif %}
+    </span>
+  {% endif %}
+</div>

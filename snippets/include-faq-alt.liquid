@@ -1,0 +1,55 @@
+<style>
+    .faq-container {
+        padding: 0 30px !important;
+    }
+    @media only screen and (min-width: 992px) {
+        .faq-container {
+            padding: 0 140px !important;
+        }
+    }
+    @media only screen and (min-width: 1610px) {
+        .faq-container {
+            padding: 0 180px !important;
+        }
+    }
+</style>
+<div class="section is-width-wide has-gutter-enabled">
+    <div class="container">
+        <div class="faq-container">
+            {% if section.settings.heading != blank %}
+            <h2 class="heading-section__heading title">{{ section.settings.heading }}</h2>
+            {% endif %}
+
+            {% if section.settings.subheading != blank %}
+            <div class="heading-section__subheading subtitle">
+                {{ section.settings.subheading }}
+            </div>
+            {% endif %}
+
+            {% if section.blocks.size > 0 %}
+            <div class="faq-body">
+                <div class="faq-left">
+                    {% for block in section.blocks %}
+                        {% unless forloop.index == 4 %}
+                            <div class="faq-item">
+                                <h4 class="faq-q">{{ block.settings.question }}</h4>
+                                <div class="faq-a">{{ block.settings.answer }}</div>
+                            </div>
+                        {% endunless %}
+                    {% endfor %}
+                </div>
+                <div class="faq-right">
+                    {% for block in section.blocks %}
+                        {% if forloop.index == 4 %}
+                            <div class="faq-item">
+                                <h4 class="faq-q">{{ block.settings.question }}</h4>
+                                <div class="faq-a">{{ block.settings.answer }}</div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

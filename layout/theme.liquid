@@ -1,0 +1,957 @@
+{% capture content %}
+<!doctype html>
+<html lang="{{ shop.locale }}">
+<head>
+
+<script>
+/* >> TriplePixel :: start*/
+~function(W,H,A,L,E){try{A.setItem(H,1+(0|A.getItem(H)||0)),W.includes("⇈")&&A.setItem(H+"Stg",1+(0|A.getItem(H+"Stg")||0))}catch(e){}function O(T,R){void 0===R&&(R=!1),H=new XMLHttpRequest,H.open("GET","//triplewhale-pixel.web.app/triplepx.txt?"+~(Date.now()/9e7),!0),H.send(null),H.onreadystatechange=function(){4===H.readyState&&200===H.status?setTimeout(function(){return eval(H.responseText)},50):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(T-1))}}A=window,A[H]||(L=function(){return"tp.."+Date.now().toString(36)+Math.random().toString(36)},E=A[H]=function(t,e,n){return W=L(),(E._q=E._q||[]).push([W,e,n]),W},E.ch=W,O(5))}("","TriplePixel",localStorage);
+/* << TriplePixel :: end*/
+</script>
+
+
+{% unless template.suffix contains 'rewards' %}
+  {{ 'prismfly-custom.css' | asset_url | stylesheet_tag }}
+  {% endunless %}
+  <meta name="facebook-domain-verification" content="fpkp0s3oaw19vnfiyyeknp0ywzicay" />
+  <meta charset="utf-8">
+  <meta http-equiv="cleartype" content="on">
+  {% if product.id == 7186083381414 or product.id == 7225891455142 or template == 'page.mini-landing' or template == 'product.mini-landing' or template == 'page.sale-landing' %}
+    <meta name="robots" content="noindex,nofollow">
+    {% else %}
+    <meta name="robots" content="index,follow">
+  {% endif %}
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.shop_bg_color }}">
+  <link rel="canonical" href="{{ canonical_url }}" />
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KPDXVW3');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Optimize -->
+<script src="https://www.googleoptimize.com/optimize.js?id=OPT-KBFTTNP"></script>
+
+<!-- LP - Gtag base code -->
+<!-- Global site tag (gtag.js) - Google Ads: 10933142018 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10933142018"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-10933142018');
+</script>
+<!--  bing pixel code  -->
+  <script>
+    (function(w,d,t,r,u)
+     {
+      var f,n,i;
+      w[u]=w[u]||[],f=function()
+      {
+        var o={ti:" 17498669"};
+        o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")
+      },
+        n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function()
+      {
+        var s=this.readyState;
+        s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)
+      },
+        i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)
+    })
+    (window,document,"script","//bat.bing.com/bat.js","uetq");
+  </script>
+  <!--  end bing  -->
+
+<!--MNTN Tracking Pixel-->
+<!-- INSTALL ON ALL PAGES OF SITE-->
+<script type="text/javascript">
+	(function(){"use strict";var e=null,b="4.0.0",
+	n="33163",
+	additional="term=value",
+	t,r,i;try{t=top.document.referer!==""?encodeURIComponent(top.document.referrer.substring(0,2048)):""}catch(o){t=document.referrer!==null?document.referrer.toString().substring(0,2048):""}try{r=window&&window.top&&document.location&&window.top.location===document.location?document.location:window&&window.top&&window.top.location&&""!==window.top.location?window.top.location:document.location}catch(u){r=document.location}try{i=parent.location.href!==""?encodeURIComponent(parent.location.href.toString().substring(0,2048)):""}catch(a){try{i=r!==null?encodeURIComponent(r.toString().substring(0,2048)):""}catch(f){i=""}}var l,c=document.createElement("script"),h=null,p=document.getElementsByTagName("script"),d=Number(p.length)-1,v=document.getElementsByTagName("script")[d];if(typeof l==="undefined"){l=Math.floor(Math.random()*1e17)}h="dx.mountain.com/spx?"+"dxver="+b+"&shaid="+n+"&tdr="+t+"&plh="+i+"&cb="+l+additional;c.type="text/javascript";c.src=("https:"===document.location.protocol?"https://":"http://")+h;v.parentNode.insertBefore(c,v)})()
+</script>
+
+  {%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' -%}{%- endif -%}
+  <title>{%- if template contains "index" -%}{{ page_title }}{%- else -%}{{ page_title }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags }}{%- endif -%}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}{% endif %}</title>
+
+  <link rel="preconnect dns-prefetch" href="https://fonts.shopifycdn.com" />
+  <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com" />
+  <link rel="preconnect dns-prefetch" href="https://v.shopify.com" />
+  <link rel="preconnect dns-prefetch" href="https://cdn.shopifycloud.com" />
+  {% if settings.enable_shopify_review_comments %}
+    <link rel="preconnect dns-prefetch" href="https://productreviews.shopifycdn.com" />
+  {% endif %}
+
+  {{ 'fancybox.css' | asset_url | stylesheet_tag }}
+  <!-- Stylesheets for Flex "2.0.3" -->
+  {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+
+  {% if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 %}
+    <script type="text/javascript" src="/services/javascripts/currencies.js" ></script>
+  {% endif %}
+  <script>
+    {% render 'js-variables' %}
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script defer src="{{ 'vendors.js' | asset_url }}"></script>
+  <script defer src="{{ 'utilities.js' | asset_url }}"></script>
+  <script defer src="{{ 'app.js' | asset_url }}"></script>
+
+  {%- if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 -%}
+    <script defer src="{{ 'currencyConversion.js' | asset_url }}"></script>
+  {%- endif -%}
+
+  {%- if settings.enable_shipping_calculator and template contains "cart" -%}
+    <script defer type="text/javascript" src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    <script defer type="text/javascript" src="{{ 'api.jquery.js' | shopify_asset_url }}"></script>
+    <script defer type="text/javascript" src="/services/javascripts/countries.js"></script>
+  {%- endif -%}
+
+  <noscript>
+    <style>
+      /* Insert styles for styles when JS is not loaded */
+    </style>
+  </noscript>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags | escape }}.{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}.{% endif %}" />
+  {%- endif -%}
+
+  {%- if settings.favicon != nil -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ settings.favicon | img_url: '180x180' }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | img_url: '180x180' }}"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ settings.favicon | img_url: '57x57' }}"/>
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ settings.favicon | img_url: '60x60' }}"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ settings.favicon | img_url: '72x72' }}"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ settings.favicon | img_url: '76x76' }}"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ settings.favicon | img_url: '114x114' }}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | img_url: '180x180' }}"/>
+    <link rel="apple-touch-icon" sizes="228x228" href="{{ settings.favicon | img_url: '228x228' }}"/>
+  {%- else -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+  {%- endif -%}
+
+  {%- if template.directory == 'customers' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script>
+    <script src="{{ 'customer_area.js' | shopify_asset_url }}"></script>
+  {%- endif -%}
+
+  {% render 'treedify' %}{{ content_for_header }}
+{% include 'globo.formbuilder.scripts' %}
+
+  {% render 'social-meta-info' %}
+  {% if collection.previous_product %}<link rel="prev" href="{{ collection.previous_product }}">{% endif %}
+  {% if collection.next_product %}<link rel="next" href="{{ collection.next_product }}">{% endif %}
+
+<!-- Textual
+<script type="text/javascript" src="https://go.textual.com/x-scripts/textual.js"></script>
+<script type="text/javascript">
+	window.textualReady = function() {
+
+		new TextualSession({
+			companyHandle: "aroma360",
+		});
+
+	};
+</script> -->
+
+  <!--- Loyalty Lion -->
+<!--   <script>
+    !function(t,n){var e=n.loyaltylion||[];if(!e.isLoyaltyLion){n.loyaltylion=e,void 0===n.lion&&(n.lion=e),e.version=2,e.isLoyaltyLion=!0;var o=n.URLSearchParams,i=n.sessionStorage,r="ll_loader_revision",a=(new Date).toISOString().replace(/-/g,""),s="function"==typeof o?function(){try{var t=new o(n.location.search).get(r);return t&&i.setItem(r,t),i.getItem(r)}catch(t){return""}}():null;c("https://sdk.loyaltylion.net/static/2/"+a.slice(0,8)+"/loader"+(s?"-"+s:"")+".js");var l=!1;e.init=function(t){if(l)throw new Error("Cannot call lion.init more than once");l=!0;var n=e._token=t.token;if(!n)throw new Error("Token must be supplied to lion.init");var o=[];function i(t,n){t[n]=function(){o.push([n,Array.prototype.slice.call(arguments,0)])}}"_push configure bootstrap shutdown on removeListener authenticateCustomer".split(" ").forEach(function(t){i(e,t)}),c("https://sdk.loyaltylion.net/sdk/start/"+a.slice(0,11)+"/"+n+".js"),e._initData=t,e._buffer=o}}function c(n){var e=t.getElementsByTagName("script")[0],o=t.createElement("script");o.src=n,o.crossOrigin="",e.parentNode.insertBefore(o,e)}}(document,window);
+  </script>
+  <script>
+    loyaltylion.init({
+      token: 'a87e4f6e4f8f7203105120dfb23b7427',
+    })
+  </script>
+ -->
+
+{% include 'loyaltylion' %}
+  
+<meta name="google-site-verification" content="SsL7n1o724qxGP-Sy1eNsnSSor69FEDCZ7ud0T7W314" />
+
+<!-- Global site tag (gtag.js) - Google Ads: 611999839 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-611999839"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-611999839');
+</script>
+
+  <!-- Linkedin Pixel -->
+<script type="text/javascript">
+_linkedin_partner_id = "4087730";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=4087730&fmt=gif" />
+</noscript>
+  
+  
+<!-- Start of Littledata - Fix Google Analytics Script-->
+{% include 'LittledataLayer' %}
+<!-- End of Littledata - Fix Google Analytics Script -->
+  <script src="https://www.dwin1.com/19038.js" type="text/javascript" defer="defer"></script>
+  <!-- Hotjar Tracking Code for https://www.hotelcollection.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:2168247,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<!-- ga tags - utm for crm -->
+<script>
+window.__ctmaccount = 312204;
+window.__ctm_cvars = [{ business_unit : "Hotel Collection" }];
+function gaPushToCTMandHiddenInputs() {
+   window.__ctm_cvars = window.__ctm_cvars || [];
+   var gaFields = gaconnector.getCookieValues();
+   var ctm_ga_obj = {};
+   for (var fieldName in gaFields) {
+      var fieldValue = gaFields[fieldName];
+
+      var ctm_fieldName = "ctm_" + fieldName;
+      ctm_ga_obj[ctm_fieldName] = fieldValue;
+
+      var hidden_input = document.getElementById(fieldName);
+      if (hidden_input) { hidden_input.value = fieldValue; }
+   }
+   window.__ctm_cvars.push(ctm_ga_obj);
+}
+window.CTMSourceEvent = function (event) {
+   if (event.state == 'after') {
+      if (window.__ctm) {
+         // We run our push CTM Parameters into the Form
+         var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
+         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
+      }
+      // We are using the CTM Flip code to give Facebook a delay
+      var Facebook_FBCLID = document.getElementById('LEADCF314');
+
+      let fbp = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+      let fbc = /_fbc=(fb\.1\.\d+\.[^;]+)/.exec(window.document.cookie);
+      var fb_cookievals = {};
+      if (fbp && fbp[1]) {
+         fb_cookievals["Facebook_FBP"] = fbp[1];
+         var Facebook_FBP = document.getElementById('LEADCF313');
+         if (Facebook_FBP != null) {
+            Facebook_FBP.value = fbp[1];
+            Facebook_FBP.dispatchEvent(new Event('change'));
+         }
+      }
+
+      if (fbc && fbc[1]) {
+         fb_cookievals["Facebook_FBCLID"] = fbc[1];
+         var Facebook_FBCLID = document.getElementById('LEADCF314');
+         if (Facebook_FBCLID != null) {
+            Facebook_FBCLID.value = fbc[1];
+            Facebook_FBCLID.dispatchEvent(new Event('change'));
+         }
+      }
+      window.__ctm_cvars = window.__ctm_cvars || [];
+      window.__ctm_cvars.push(fb_cookievals);
+   }
+};
+(function (account) {
+   var ctmjs = document.createElement('script');
+   ctmjs.setAttribute("type", "application/javascript");
+   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
+   ctmjs.setAttribute("async", "async");
+   document.getElementsByTagName("head")[0].appendChild(ctmjs);
+   var gacjs = document.createElement('script');
+   gacjs.setAttribute("src", "https://tracker.gaconnector.com/gaconnector.js");
+   gacjs.setAttribute("async", "async");
+   gacjs.onload = function() { gaconnector.setCallback(gaPushToCTMandHiddenInputs); }
+   document.getElementsByTagName("head")[0].appendChild(gacjs);
+
+   var gac2js = document.createElement('script');
+   gac2js.setAttribute("src", "https://track.gaconnector.com/gaconnector.js");
+   gac2js.setAttribute("async", "async");
+   gac2js.onload = function() { gaconnector2.track("a869596c85117d3beb785b0750efeaec",{internalDomains:["hotelcollection.com", "hotelcollection.myshopify.com"], storageEngine: 'cookies'}); };
+   document.getElementsByTagName("head")[0].appendChild(gac2js);
+
+})(__ctmaccount);
+</script>
+
+  {% comment %} Age verification code {% endcomment %}
+  {% if collection.handle contains 'wine' and collection.handle != 'wine-accessories' %}
+  	<script src="https://zooomyapps.com/age/ZooomyAgeVerify.js" data-shop="hotelcollection.myshopify.com"></script>
+  {% endif %}
+
+  <script>
+    var metaData = { };
+  </script>
+<script async src="https://assets.apphero.co/script_tags/341610_841286.js"></script><script async src="https://assets.apphero.co/script_tags/711821_304822.js"></script><script async src="https://assets.apphero.co/script_tags/733871_796483.js"></script><script async src="https://assets.apphero.co/script_tags/605694_933406.js"></script><script async src="https://assets.apphero.co/script_tags/988118_364933.js"></script><script async src="https://assets.apphero.co/script_tags/820386_60589.js"></script><script async src="https://assets.apphero.co/script_tags/323266_570142.js"></script><script async src="https://assets.apphero.co/script_tags/205941_649859.js"></script>
+{% render 'digismoothie-giftbox' %}
+
+
+  {% if template.name == 'page' %}
+<style>
+  .image-with-text__image-column > a {
+    width: 100%;
+  }
+</style>
+{% endif %}
+
+{% if template.name == 'page.hvac-scenting' %}
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8" />
+{% endif %}
+
+<!-- swiper js  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.2.3/swiper-bundle.min.js" integrity="sha512-d3gZ3Oo0k2qZ8HJ3JNdmqH/YHjFj3qYaS7HQBhF6P6ohVKpCnUy3KovWTv0V9UBkO9Auo1uhPsIzNE5I4C/CpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.2.3/swiper-bundle.css" integrity="sha512-RDcDPFl1DiFz9e6nlScN4c+whvchUuQa920d9c00e4i48rWxOQDOcto24nztQz1By9hBfSI7TU6EpFXRv8HJcg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {% include 'friendbuy' %}
+    {% include "loyaltylion" %}
+</head>
+
+
+{% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ routes.search_url }}?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+{% endif %}
+
+<!-- <div id="influencer-subscribe" style="display:none;">
+  <img src="" alt="">
+  <div class="klaviyo-form-Tx8Q7T"></div>
+  <script>
+  setTimeout(function () {
+      openPopup();
+  }, 3000);
+  </script>
+
+</div>
+
+<script>
+
+  if(window.location.href.indexOf('?influencer') != -1) {
+    function openPopup() {
+      $("#influencer-subscribe").fancybox({
+        closeClick  : false,
+        fitToView: true,
+        autoResize: true,
+        closeBtn : false,
+        // showCloseButton : false,
+        // smallBtn: false,
+        toolbar: false,
+        helpers : {
+          overlay : {closeClick: false}
+        },
+        clickSlide: false, // disable close on outside click
+        touch: false // disable close on swipe
+      }).trigger('click');
+      };
+    };
+
+
+</script> -->
+
+
+{% for locale in shop.enabled_locales %}
+  {% if locale.primary == true %}
+    {% assign defaultLocale = locale.iso_code %}
+  {% endif %}
+{% endfor %}
+
+<body class="{%- if template == '404' -%}
+              error-404
+            {% else -%}
+              {{ template | replace: '.', '-' | handle }}
+            {%- endif -%}
+            {% if settings.header_layout == 'vertical' -%}
+              has-vertical-header
+            {%- endif -%}"
+      data-money-format="
+        {%- if settings.currency_format == 'money_with_currency_format' -%}
+          {{ shop.money_with_currency_format | strip_html }}
+        {%- else -%}
+          {{ shop.money_format | strip_html }}
+        {%- endif -%}"
+      data-shop-url="{{ shop.url }}"
+      data-default-lang="{{ defaultLocale }}"
+      data-current-lang="{{ request.locale.iso_code }}">
+{% capture the_snippet_content %}{% render 'socialshopwave-helper' %}{% endcapture %}
+            {% unless the_snippet_content contains 'Liquid error' %}
+              {{ the_snippet_content }}
+            {% endunless %}
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPDXVW3"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  <!-- temp sale banner
+  <div class="temp-image-banner">
+    <img src="{{ 'memorial_banner-mobile.png' | file_url  }}" alt="Memorial Day Sale" class="temp-image-mobile">
+    <img src="{{ 'memorial-banner3.png' | file_url  }}" alt="Memorial Day Sale" class="temp-image-desktop">
+  </div> -->
+
+  {%- if settings.show_announcement_bar -%}
+      {% if settings.show_24h_countdown %}
+      {% assign date_today = "now" | date: "%Y, %m, %d"  %}
+      {% assign date_start = settings.date_start %}
+      {% assign date_end = settings.date_end %}
+      {% if date_today >= date_start and date_today <= date_end %}
+  		<style>
+          .twentyfour_announcement_outer{
+          	display: block;
+            
+          }
+          .regular_announcement_outer{
+          	display: none;
+          }
+  		</style>
+  		{% else %}
+  		  		<style>
+          .twentyfour_announcement_outer{
+          	display: none;
+          }
+          .regular_announcement_outer{
+          	display: block;
+          }
+  		</style>
+      {% endif %}
+  		 {% comment %} <div class="twentyfour_announcement_outer">{% section 'announcement-24h' %}</div>  
+  		<div class="regular_announcement_outer">{% section 'announcement-alt' %}</div> {% endcomment %}
+    {% else %}
+      {% comment %} {% section 'announcement-alt' %}  {% endcomment %}
+    {% endif %}
+  {%- endif -%}
+
+  
+  {% if template == 'page.mini-landing' or template == 'product.mini-landing' %}
+  		<style>
+          .twentyfour_announcement_outer{
+          	display: block;
+            
+          }
+          .regular_announcement_outer{
+          	display: none;
+          }
+  		</style>
+		<div class="twentyfour_announcement_outer">{% section 'announcement-24h' %}</div>
+  {% else %}
+        <div class="twentyfour_announcement_outer">{% section 'announcement-bar-alt' %}</div>  
+    {% if settings.show_1h_countdown %}
+      <style>
+        .twentyfour_announcement_outer{
+          display: block;
+          
+        }
+        .regular_announcement_outer{
+          display: none;
+        }
+    </style>
+  {% comment %} <div class="twentyfour_announcement_outer">{% section 'announcement-bar-alt' %}</div>  {% endcomment %}
+    {% endif %}
+  {% endif %}
+
+
+   {%- if settings.show_sale_bar -%}
+    {% section 'sale-bar' %}
+  {%- endif -%}
+
+  {%- if settings.header_layout == "classic" -%}
+    {% section 'header__top-bar' %}
+    {% section 'header-classic' %}
+  {%- elsif settings.header_layout == "centered" -%}
+    {% section 'header-centered__top-bar' %}
+    {% section 'header-centered' %}
+  {%- elsif settings.header_layout == "vertical" -%}
+    {% section 'header-vertical' %}
+  {%- elsif settings.header_layout == "search_focus" -%}
+    {% section 'header__top-bar' %}
+    {% section 'header-search-focus' %}
+  {%- endif -%}
+
+  {%- if settings.cart_action == 'drawer' -%}
+    {% render 'ajax-cart' %}
+  {%- endif -%}
+
+  {% if settings.mega_menu_1 == true %}
+    {% section 'mega-menu-1' %}
+  {% endif %}
+  {% if settings.mega_menu_2 == true %}
+    {% section 'mega-menu-2' %}
+  {% endif %}
+  {% if settings.mega_menu_3 == true %}
+    {% section 'mega-menu-3' %}
+  {% endif %}
+  {% if settings.mega_menu_4 == true %}
+    {% section 'mega-menu-4' %}
+  {% endif %}
+  {% if settings.mega_menu_5 == true %}
+    {% section 'mega-menu-5' %}
+  {% endif %}
+  {% if settings.mega_menu_6 == true %}
+    {% section 'mega-menu-6' %}
+  {% endif %}
+  {% if settings.mega_menu_7 == true %}
+    {% section 'mega-menu-7' %}
+  {% endif %}
+  {% if settings.mega_menu_8 == true %}
+    {% section 'mega-menu-8' %}
+  {% endif %}
+  {% if settings.mega_menu_9 == true %}
+    {% section 'mega-menu-9' %}
+  {% endif %}
+  {% if settings.mega_menu_10 == true %}
+    {% section 'mega-menu-10' %}
+  {% endif %}
+
+  {% if settings.header_layout == "vertical" %}
+    <div class="is-beside-vertical-header">
+  {% endif %}
+
+  {{ content_for_layout }}
+	<noscript class="endOfLayoutContentX" type="text/mark"></noscript>{% render 'treedify_script' %}
+
+  {% if settings.footer_layout == "centered" %}
+    {% section 'footer__icon-bar' %}
+    {% section 'footer-centered' %}
+  {% elsif settings.footer_layout == "classic" %}
+    {% section 'footer__icon-bar' %}
+    {% section 'footer-classic' %}
+  {% elsif settings.footer_layout == "promotional" %}
+    {% section 'footer__icon-bar' %}
+    {% section 'footer-promotional' %}
+  {% endif %}
+
+  {% if settings.header_layout == "vertical" %}
+    </div>
+  {% endif %}
+
+  {% if settings.show_fixed_message %}
+    {% section 'fixed-message' %}
+  {% endif %}
+
+  {% if settings.enable_quickshop %}
+    {% render 'quick-shop' %}
+  {% endif %}
+
+  {% if settings.search_display_style == 'popup' %}
+    {% render 'search-popup' %}
+  {% endif %}
+
+  {% if settings.show_popup %}
+    {% section 'popup' %}
+  {% endif %}
+
+
+  {% if settings.disqus_enabled %}
+    {% if template contains "blog" or template contains "article" or template contains "index" %}
+      <script id="dsq-count-scr" src="//{{ settings.disqus_shortname }}.disqus.com/count.js" async></script>
+    {% endif %}
+  {% endif %}
+
+
+
+{% include 'pick-an-option' %}
+
+
+{% include 'mw_GP_objects' %}{% render 'awesome-quantity', product: product %}
+<!-- zoho tracking -->
+  <script type="application/javascript">
+window.__ctmaccount = 312204;
+window.__ctm_cvars = window.__ctm_cvars || [];
+__ctm_cvars.push({ business_unit : "Hotel Collection" });
+window.CTMSourceEvent = function (event) {
+   if (event.state == 'after') {
+      if (window.__ctm) {
+         // We run our push CTM Parameters into the Form
+	 var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
+         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
+      }
+   }
+};
+(function (account) {
+   var ctmjs = document.createElement('script');
+   ctmjs.setAttribute("type", "application/javascript");
+   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
+   ctmjs.setAttribute("async", "async");
+   document.getElementsByTagName("head")[0].appendChild(ctmjs);
+})(__ctmaccount);
+</script>
+ {% include 'smile-initializer' %}
+
+
+<script src="https://cdn.attn.tv/hotelcollection/dtag.js"></script>
+<!-- chat -->
+<iframe class="ctm-call-widget" src="https://312204.tctm.co/form/FRT472ABB2C5B9B141A283BEFF6465EBEE001B899589910DC0BF93205EB1536EFC9.html" style="display:none"></iframe>
+<script defer async src="https://312204.tctm.co/formreactor.js"></script>
+    {% if collection.handle == "the-wine-collection" %}
+
+
+
+{% endif %}
+  {% for collection in product.collections %}
+
+  {% if collection.handle == "the-wine-collection" %}
+
+
+
+{% endif %}
+{% endfor %}
+
+{% if template contains 'product' %}
+{{ 'prismfly-product.js' | asset_url | script_tag }}
+{% endif %}
+<!-- snippet for out of stock notification flow, managed via Klaviyo -->
+<script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+<script>
+    var klaviyo = klaviyo || [];
+    klaviyo.init({
+      account: "W6n4RN",
+      platform: "shopify",
+      list: 'SBzyfS',
+    });
+    klaviyo.enable("backinstock",{
+    trigger: {
+      product_page_text: "Notify Me When Available",
+      product_page_class: "btn",
+      product_page_text_align: "center",
+      product_page_margin: "0px",
+      replace_anchor: false
+    },
+    modal: {
+    subscribe_checked: true,
+     headline: "{product_name}",
+     body_content: "<strong>Inerested in this item?</strong> <br>Be the first to know when we restock! Sign up now to receive an email update as soon as its back.",
+     email_field_label: "Email",
+     button_label: "Notify me when available",
+     subscription_success_label: "You're in! We'll let you know when it's back.",
+     footer_content: '',
+     drop_background_color: "#000",
+     background_color: "#fff",
+     text_color: "#222",
+     button_text_color: "#fff",
+     button_background_color: "#000",
+     close_button_color: "#ccc",
+     error_background_color: "#fcd6d7",
+     error_text_color: "#C72E2F",
+     success_background_color: "#d3efcd",
+     success_text_color: "#1B9500"
+    }
+  });
+</script>
+
+  
+<!--  retention engine  -->
+<script src='//d3ty4og90bdf2f.cloudfront.net/code_snippets/recharge_redirect.js'>
+</script>
+<script>
+  window.addEventListener(
+    'DOMContentLoaded', startRetentionEngine('https://app.bellwethr.com/offboard/experience/hotel-collection-3342252508')
+  );
+
+  const generateRetentionEngineLink = (subscription_ids_array) => {
+    return RELinkGenerator('https://app.bellwethr.com/offboard/experience/hotel-collection-3342252508', subscription_ids_array);
+  };
+</script>
+
+<style>
+  .rc_cancel-btn {
+    display:none;
+  }
+  </style>
+  
+<script>
+
+  if ({{customer.id}} !== "")
+  {
+
+console.log('[SHOPIFY CUSTOMER ID]', "{{customer.id}}")
+var settings = {
+  "url": "https://eogjg7ewvz2rvo0.m.pipedream.net",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "customer_id": "{{customer.id}}"
+  }),
+};
+
+$.ajax(settings).done(function (response) {
+  var count = parseInt(response.count);
+  console.log('[API RESONSE]', count);
+
+  if (count >= 2) {
+    $('.rc_cancel-btn').css('display', 'block');
+  }
+  else {
+    $('.rc_cancel-btn').parent().after('<p>You are not eligible to cancel until after 2 deliveries. Contact <a href="mailto:support@hotelcollection.com">support@hotelcollection.com</a> for questions.</p>');
+  }
+});
+}
+</script>
+
+  <script type="text/javascript">!function(){var b=function(){window.__AudioEyeSiteHash = "79925416d0731d42560230bdc56675a5"; var a=document.createElement("script");a.src="https://wsmcdn.audioeye.com/aem.js";a.type="text/javascript";a.setAttribute("async","");document.getElementsByTagName("body")[0].appendChild(a)};"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",b):window.attachEvent&&window.attachEvent("onload",b):b()}();</script>
+  
+  <script src="https://unpkg.com/@loophq/onstore-sdk@latest/dist/loop-onstore-sdk.js"></script>
+  <script>
+    LoopOnstore.init({
+      key: "a1f91227bc946c0042bba9bd28ce9c0feb3dcba3",
+      attach: ".rebuy-cart__flyout-actions button"
+    });
+  </script>
+  <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
+<!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=14877"></script>
+<script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
+<script>
+  function waitForElm(selector) {
+      return new Promise(resolve => {
+          if (document.querySelector(selector)) {
+              return resolve(document.querySelector(selector));
+          }
+
+          const observer = new MutationObserver(mutations => {
+              if (document.querySelector(selector)) {
+                  resolve(document.querySelector(selector));
+                  observer.disconnect();
+              }
+          });
+
+          observer.observe(document.body, {
+              childList: true,
+              subtree: true
+          });
+      });
+  }
+
+  function changePriceQuantity() {
+
+      setTimeout(function() {
+          let currentQuantity = document.querySelector('.quantity-input').value;
+          console.log(document.querySelector('.modal_price .sale_price') !== null)
+          if (document.querySelector('.modal_price .sale_price') !== null) {
+
+              let salePrice = document.querySelector('[data-price]');
+              let originalPrice = document.querySelector('[data-compare-price]')
+
+              salePrice.innerHTML = '$' + (parseInt(salePrice.getAttribute('data-price')) * currentQuantity) / 100 + "&nbsp;";
+              originalPrice.innerHTML = '$' + (parseInt(originalPrice.getAttribute('data-compare-price')) * currentQuantity) / 100;
+              console.log(originalPrice.innerHTML)
+              document.querySelector('.modal_price [data-price-mutation-watcher]').style.display = 'none';
+              try {
+                  document.querySelector('.modal_price s').removeChild(document.querySelector('.modal_price s .original-price-child'))
+              } catch {
+                  console.log('no adjusted prices yet')
+              }
+              let newSpan = document.createElement('span')
+              newSpan.classList.add('original-price-child')
+              newSpan.innerHTML = '$' + ((parseInt(originalPrice.getAttribute('data-compare-price')) * currentQuantity) / 100).toFixed(2);
+              document.querySelector('.modal_price s').appendChild(newSpan)
+              let shopifyMeta = document.querySelector('shopify-payment-terms').getAttribute('shopify-meta')
+              let parsedJSON = JSON.parse(shopifyMeta)
+              let currentInterest = '$' + (parseInt(parsedJSON.variants[0].price.replace(/\$/g, '')) * currentQuantity)
+              document.querySelector('.payment-price').innerHTML = currentInterest;
+              let hostCart = document.querySelector('.shoppay-payment [shopify-meta]')
+              let styleCart = document.createElement('style')
+              styleCart.textContent = '.shopify-installments__content{display:none!important;}'
+              hostCart.shadowRoot.appendChild(styleCart)
+              document.querySelector('.shoppay-payment .payment-text').style.display = 'block';
+              document.querySelector('.shoppay-payment .shoppay-logo').style.display = 'block';
+          } else {
+
+              let salePrice = document.querySelector('[data-price]')
+              let originalPrice = document.querySelector('[data-price]')
+              salePrice.innerHTML = '$' + (parseInt(salePrice.getAttribute('data-price')) * currentQuantity) / 100 + "&nbsp;";
+              originalPrice.innerHTML = '$' + (parseInt(originalPrice.getAttribute('data-price')) * currentQuantity) / 100;
+              console.log(originalPrice.innerHTML)
+              try {
+                  document.querySelector('.modal_price [data-price-mutation-watcher]').style.display = 'none';
+              } catch {
+
+                  if (document.querySelector('.modal_price[data-price-mutation-watcher]') !== null) {
+                      document.querySelector('.modal_price[data-price-mutation-watcher]').style.display = 'none';
+                  } else {
+                      document.querySelector('p.modal_price').style.display = 'none';
+                  }
+              }
+
+
+
+              try {
+                  document.querySelector('.modal_price').parentElement.removeChild(document.querySelector('.original-price-child'))
+              } catch {
+                  console.log('no adjusted prices yet')
+              }
+              try {
+                  let newSpan = document.createElement('span')
+                  newSpan.classList.add('original-price-child')
+                  newSpan.innerHTML = '$' + ((parseInt(originalPrice.getAttribute('data-price')) * currentQuantity) / 100).toFixed(2);
+                  document.querySelector('.modal_price').parentElement.appendChild(newSpan)
+              } catch {
+                  console.log('no sale price')
+              }
+
+              let shopifyMeta = document.querySelector('shopify-payment-terms').getAttribute('shopify-meta')
+              let parsedJSON = JSON.parse(shopifyMeta)
+              let currentInterest = '$' + (parseInt(parsedJSON.variants[0].price.replace(/\$/g, '')) * currentQuantity)
+              document.querySelector('.payment-price').innerHTML = currentInterest;
+              let hostCart = document.querySelector('.shoppay-payment [shopify-meta]')
+              let styleCart = document.createElement('style')
+              styleCart.textContent = '.shopify-installments__content{display:none!important;}'
+              hostCart.shadowRoot.appendChild(styleCart)
+              document.querySelector('.shoppay-payment .payment-text').style.display = 'block';
+              document.querySelector('.shoppay-payment .shoppay-logo').style.display = 'block';
+
+          }
+
+      }, 1200)
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+      function populateText(allUpsell) {
+          for (let a = 0; a < allUpsell.length; a++) {
+              let productHref = allUpsell[a].querySelector('.rebuy-product-info a').href;
+              productHref = productHref + '&view=metafield'
+              console.log(productHref)
+              fetch(productHref).then(response => response.text()).then(data => {
+                  const parser = new DOMParser();
+                  const htmlDocument = parser.parseFromString(data, "text/html");
+                  let jsonMetafield = JSON.parse(htmlDocument.getElementById('product-metafield').innerHTML);
+                  let newElement = document.createElement('span');
+                  let newElement2 = document.createElement('span')
+                  newElement.innerText = jsonMetafield.Hotel;
+                  newElement.classList.add('rebuy-product-info__javsacript-span')
+                  allUpsell[a].querySelector('.rebuy-product-info').appendChild(newElement);
+                  newElement2.innerText = jsonMetafield.Scent;
+                  newElement2.classList.add('rebuy-product-info__javsacript-span')
+                  allUpsell[a].querySelector('.rebuy-product-info').appendChild(newElement2);
+              });
+          }
+      }
+      waitForElm('#rebuy-widget-42751 .rebuy-product-grid .rebuy-product-info').then((elm) => {
+          populateText(document.querySelectorAll('#rebuy-widget-42751 .rebuy-product-block'));
+          populateText(document.querySelectorAll('#rebuy-widget-24588 .rebuy-product-block'));
+      });
+  })
+
+
+  {% if template contains 'product' %}
+
+    waitForElm('.rc-template').then((elm) => {
+      document.querySelector('.rc-template').addEventListener('click', function() {
+          let sellingPlan = document.querySelector('.rc-radio__input:checked').value;
+          if (sellingPlan == 'subsave') {
+              let variantPrice = parseFloat(document.querySelector('[data-price-subsave]').innerHTML.replace(/\$/g, ''))
+              if (document.querySelector('.modal_price .sale_price') !== null) {
+                  $('[data-price]').attr('data-price', parseInt(100 * variantPrice * ((100 - parseInt($('[data-saleval]').attr('data-saleval'))) / 100.00)))
+                  $('.modal_price [data-compare-price]').attr('data-compare-price', parseInt(100 * variantPrice))
+              } else {
+                  $('[data-price]').attr('data-price', parseInt(100 * variantPrice))
+              }
+          } else {
+              let variantPrice = parseFloat(document.querySelector('[data-price-onetime]').innerHTML.replace(/\$/g, ''))
+              if (document.querySelector('.modal_price .sale_price') !== null) {
+                  $('[data-price]').attr('data-price', parseInt(100 * variantPrice * ((100 - parseInt($('[data-saleval]').attr('data-saleval'))) / 100.00)))
+                  $('.modal_price [data-compare-price]').attr('data-compare-price', parseInt(100 * variantPrice))
+              } else {
+                  $('[data-price]').attr('data-price', parseInt(100 * variantPrice))
+              }
+
+          }
+          setTimeout(function() {
+              changePriceQuantity()
+          }, 500)
+      })
+    })
+
+  {% endif %}
+
+  waitForElm('.rebuy-cart__flyout').then((elm) => {
+      let checkoutButton = document.querySelector('.rebuy-cart__flyout-actions');
+      let dynamicCheckout = `<div class="cart-drawer__express-payments">
+                            {%- if additional_checkout_buttons -%}
+                            <div class="express-payments__buttons">{{ content_for_additional_checkout_buttons }}</div>
+                          {%- endif -%}
+                                </div>`
+      checkoutButton.insertAdjacentHTML('afterend', dynamicCheckout)
+  })
+  
+  const isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+  if (isMobile) {
+      waitForElm(".rebuy-cart__flyout .dynamic-checkout__content undefined").then((elm) => {
+          const para = elm.querySelector(".shopify-cleanslate");
+          para.classList.add("para_collapsed");
+          para.addEventListener("click", function() {
+              if (para.classList.contains('para_collapsed')) {
+                  para.classList.remove("para_collapsed");
+              } else {
+                  para.classList.add("para_collapsed");
+              }
+          })
+      });
+  }
+
+
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      if (!window.location.href.includes(navigator.platform)) {
+          if (navigator.platform.includes('Mac68K') || navigator.platform.includes('MacPPC') || navigator.platform.includes('MacIntel') || navigator.platform.includes('iPhone') || navigator.platform.includes('iPod') || navigator.platform.includes('iPad')) {
+              if (window.location.href.includes('?')) {
+                  window.location.href = window.location.href + '&device-type=' + navigator.platform
+              } else {
+                  window.location.href = window.location.href + '?device-type=' + navigator.platform
+              }
+          }
+      }
+      if (navigator.platform.includes('Mac68K') || navigator.platform.includes('MacPPC') || navigator.platform.includes('MacIntel') || navigator.platform.includes('iPhone') || navigator.platform.includes('iPod') || navigator.platform.includes('iPad')) {
+          waitForElm('.rebuy-cart__flyout').then((elm) => {
+              let checkoutButton = document.querySelector('.rebuy-cart__flyout-actions');
+              let dynamicCheckout = `<div class="cart-drawer__express-payments ios-mac">
+                          {%- if additional_checkout_buttons -%}
+                          <div class="express-payments__buttons">{{ content_for_additional_checkout_buttons }}</div>
+                        {%- endif -%}
+                              </div>`
+              checkoutButton.insertAdjacentHTML('afterend', dynamicCheckout)
+          })
+      }
+  })
+</script>
+{% if product %}
+<div data-rebuy-id="53766" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+{% endif %}
+</body>
+</html>
+{% endcapture %}
+{% assign content = content | replace_first: '<!doctype', '!doctype' | split: ' <' %}
+{%- for html in content -%}{%- assign htmlblock = html | strip | prepend: ' <' -%}{{htmlblock | replace: ' </', '</'}}{%- endfor -%}

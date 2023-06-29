@@ -1,0 +1,275 @@
+{% if type == 'block' %}
+  {% assign object = block %}
+{% else %}
+  {% assign object = section %}
+{% endif %}
+
+{% assign id = object.id %}
+{% assign padding_top = object.settings.padding_top %}
+{% assign padding_bottom = object.settings.padding_bottom %}
+{% assign width = object.settings.width %}
+{% assign css_class = object.settings.css_class %}
+{% assign custom_css = object.settings.custom_css %}
+
+{% style %}
+  #shopify-section-{{ id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if width == 'wide' -%}
+      width: 100%;
+    {%- endif %}
+    {% unless object.settings.background == blank %}
+    background-color: {{ object.settings.background }};
+    {% endunless %}
+  }
+  {% render 'css-loop',
+          css: custom_css,
+          id: id
+  %}
+{% endstyle %}
+
+<style>
+    #shopify-section-{{ id }} .section-heading {
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 51px;
+        letter-spacing: -0.015em;
+        text-align: center;
+    }
+    #shopify-section-{{ id }} .divider {
+      height: 0;
+      width: 103px;
+      border-top: 1px solid #000;
+      margin: 40px auto;
+    }
+    #shopify-section-{{ id }} .featured-product-container {
+        text-align: center;
+    }
+    #shopify-section-{{ id }} .featured-product-container .product-image-wrapper {
+        width: 350px;
+        margin: auto;
+    }
+    #shopify-section-{{ id }} .okeReviews.okeReviews--theme .okeReviews-reviewsSummary {
+        margin-top: 5px;
+    }
+    #shopify-section-{{ id }} .featured-product-info {
+      padding-top: 20px;
+    }
+    #shopify-section-{{ id }} .featured-product-title {
+      font-size: 24px;
+    }
+    #shopify-section-{{ id }} .featured-product-container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    #shopify-section-{{ id }} .featured-product-container .featured-product-item {
+        height: 100%;
+        margin: 0 15px 20px;
+    }
+    #shopify-section-{{ id }} .featured-product-container .featured-product-item .product-image-wrapper {
+        /* border: 1px solid #ccc; */
+    }
+    #shopify-section-{{ id }} .featured-product-container .featured-product-item .product-image-wrapper img {
+        display: block;
+    }
+    @media screen and (max-width: 768px) {
+        #shopify-section-{{ id }} .section-heading {
+            font-size: 30px;
+            padding: 0 80px;
+        }
+        #shopify-section-{{ id }} .divider {
+            margin: 20px auto;
+        }
+        #shopify-section-{{ id }} .featured-product-title {
+            font-size: 22px;
+        }
+        #shopify-section-{{ id }} .featured-product-container {
+            display: block;
+        }
+        #shopify-section-{{ id }} .featured-product-container .featured-product-item {
+            height: fit-content;
+        }
+    }
+</style>
+
+<section class="section
+    {{ css_class }}
+    is-width-{{ width }}
+    ">
+    <div class="featured-product-wrapper">
+        <h2 class="section-heading">{{ object.settings.heading }}</h2>
+        <div class="divider"></div>
+        {% if section.blocks.size > 0 %}
+            <div class="featured-product-container">
+                {% for block in section.blocks %}
+                {% if block.type == 'product' %}
+                {% assign featured_product = block.settings.featured_product %}
+                {%- assign product = all_products[featured_product] -%}
+                {% assign variant = product.selected_or_first_available_variant %}
+                
+                {% if block.settings.featured_product_image != blank %}
+                    {% assign media = block.settings.featured_product_image %}
+                {% else %}
+                    {% assign media = product.media[0] %}
+                {% endif %}
+
+                {% capture image_alt %}{{ media.alt | escape }}{% endcapture %}
+                {% capture image_100x %}{{ media | img_url: '100x' }}{% endcapture %}
+                {% capture image_200x %}{{ media | img_url: '200x' }}{% endcapture %}
+                {% capture image_400x %}{{ media | img_url: '400x' }}{% endcapture %}
+                {% capture image_600x %}{{ media | img_url: '600x' }}{% endcapture %}
+                {% capture image_800x %}{{ media | img_url: '800x' }}{% endcapture %}
+                {% capture image_1200x %}{{ media | img_url: '1200x' }}{% endcapture %}
+                {% capture image_2000x %}{{ media | img_url: '2000x' }}{% endcapture %}
+                {% capture image_5000x %}{{ media | img_url: '5000x' }}{% endcapture %}
+
+                <a href="/products/{{ product.handle }}">
+                  <div class="featured-product-item">
+                      <div class="product-image-wrapper">
+                          <img
+                              class="lazyload lazyload--fade-in"
+                              alt="{{ media.alt | escape }}"
+                              data-zoom-src="{{ image_5000x }}"
+                              data-image-id="{{ product.media[forloop.index0].id }}"
+                              data-index="{{ forloop.index0 }}"
+                              data-sizes="auto"
+                              data-src="{{ image_1200x }}"
+                              data-srcset=" {{ image_200x }} 200w,
+                                          {{ image_400x }} 400w,
+                                          {{ image_600x }} 600w,
+                                          {{ image_800x }} 800w,
+                                          {{ image_1200x }} 1200w,
+                                          {{ image_2000x }} 2000w"
+                              data-aspectratio="{{ media.width }}/{{ media.height }}"
+                              height="{{ media.height }}"
+                              width="{{ media.width }}"
+                              srcset="data:image/svg+xml;utf8,<svg%20xmlns='http://www.w3.org/2000/svg'%20width='{{ media.width }}'%20height='{{ media.height }}'></svg>"
+                          >
+                      </div>
+                      <div class="featured-product-info">
+                          <h3 class="featured-product-title">{{ product.title }}</h3>
+      
+                          {% comment %} Review stars {% endcomment %}
+                          {% render 'okendo-reviews-product-rating-summary', product: product %}
+      
+                          <div class="featured-product-price">{{ variant.price | money }}</div>
+                      </div>
+                  </div>
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "class": "featured-product-section featured-product-alt-section jsProduct",
+  "settings": [
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "default": "standard",
+      "options": [
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 80,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 80,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+        "type": "color",
+        "id": "background",
+        "label": "Background color"
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product information"
+        },
+        {
+          "type": "product",
+          "id": "featured_product",
+          "label": "Product"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_product_image",
+            "label": "Featured product image"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_product_lightbox",
+          "label": "Enable lightbox",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Featured products",
+    "category": "Product",
+    "settings": {
+
+    }
+  }]
+}
+{% endschema %}

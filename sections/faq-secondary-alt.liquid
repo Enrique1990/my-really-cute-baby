@@ -1,0 +1,53 @@
+{% include 'include-faq-alt' %}
+
+{% comment %} Schema {% endcomment %}
+{% schema %}
+{
+  "name": "FAQ",
+  "class": "faq-section faq-section-alt",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub heading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Faq",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "faq"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
