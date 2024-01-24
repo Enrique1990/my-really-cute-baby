@@ -223,84 +223,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </script>
 
 <!-- ga tags - utm for crm -->
-<script>
-window.__ctmaccount = 312204;
-window.__ctm_cvars = [{ business_unit : "Hotel Collection" }];
-function gaPushToCTMandHiddenInputs() {
-   window.__ctm_cvars = window.__ctm_cvars || [];
-   var gaFields = gaconnector.getCookieValues();
-   var ctm_ga_obj = {};
-   for (var fieldName in gaFields) {
-      var fieldValue = gaFields[fieldName];
-
-      var ctm_fieldName = "ctm_" + fieldName;
-      ctm_ga_obj[ctm_fieldName] = fieldValue;
-
-      var hidden_input = document.getElementById(fieldName);
-      if (hidden_input) { hidden_input.value = fieldValue; }
-   }
-   window.__ctm_cvars.push(ctm_ga_obj);
-}
-window.CTMSourceEvent = function (event) {
-   if (event.state == 'after') {
-      if (window.__ctm) {
-         // We run our push CTM Parameters into the Form
-         var CTM2GA = { "LEADCF220" : "dma", "LEADCF301" : "gaid", "LEADCF302" : "region", "LEADCF303" : "host", "LEADCF304" : "zip", "LEADCF305" : "gid", "LEADCF306" : "area", "LEADCF307" : "tracking_source", "LEADCF308" : "country",  "LEADCF309" : "gacode"};
-         for (const [id, ctm] of Object.entries(CTM2GA)) { var x = document.getElementById(id); if (x !== null) { x.value = window.__ctm.config[ctm]; } }
-      }
-      // We are using the CTM Flip code to give Facebook a delay
-      var Facebook_FBCLID = document.getElementById('LEADCF314');
-
-      let fbp = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
-      let fbc = /_fbc=(fb\.1\.\d+\.[^;]+)/.exec(window.document.cookie);
-      var fb_cookievals = {};
-      if (fbp && fbp[1]) {
-         fb_cookievals["Facebook_FBP"] = fbp[1];
-         var Facebook_FBP = document.getElementById('LEADCF313');
-         if (Facebook_FBP != null) {
-            Facebook_FBP.value = fbp[1];
-            Facebook_FBP.dispatchEvent(new Event('change'));
-         }
-      }
-
-      if (fbc && fbc[1]) {
-         fb_cookievals["Facebook_FBCLID"] = fbc[1];
-         var Facebook_FBCLID = document.getElementById('LEADCF314');
-         if (Facebook_FBCLID != null) {
-            Facebook_FBCLID.value = fbc[1];
-            Facebook_FBCLID.dispatchEvent(new Event('change'));
-         }
-      }
-      window.__ctm_cvars = window.__ctm_cvars || [];
-      window.__ctm_cvars.push(fb_cookievals);
-   }
-};
-(function (account) {
-   var ctmjs = document.createElement('script');
-   ctmjs.setAttribute("type", "application/javascript");
-   ctmjs.setAttribute("src", "https://"+account+".tctm.co/t.js");
-   ctmjs.setAttribute("async", "async");
-   document.getElementsByTagName("head")[0].appendChild(ctmjs);
-   var gacjs = document.createElement('script');
-   gacjs.setAttribute("src", "https://tracker.gaconnector.com/gaconnector.js");
-   gacjs.setAttribute("async", "async");
-   gacjs.onload = function() { gaconnector.setCallback(gaPushToCTMandHiddenInputs); }
-   document.getElementsByTagName("head")[0].appendChild(gacjs);
-
-   var gac2js = document.createElement('script');
-   gac2js.setAttribute("src", "https://track.gaconnector.com/gaconnector.js");
-   gac2js.setAttribute("async", "async");
-   gac2js.onload = function() { gaconnector2.track("a869596c85117d3beb785b0750efeaec",{internalDomains:["hotelcollection.com", "hotelcollection.myshopify.com"], storageEngine: 'cookies'}); };
-   document.getElementsByTagName("head")[0].appendChild(gac2js);
-
-})(__ctmaccount);
-</script>
-
-  {% comment %} Age verification code {% endcomment %}
-  {% if collection.handle contains 'wine' and collection.handle != 'wine-accessories' %}
-  	<script src="https://zooomyapps.com/age/ZooomyAgeVerify.js" data-shop="hotelcollection.myshopify.com"></script>
-  {% endif %}
-
+<!-- {% comment %} <!--  --> {% endcomment %} -->
   <script>
     var metaData = { };
   </script>
@@ -587,7 +510,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <script type="application/javascript">
 window.__ctmaccount = 312204;
 window.__ctm_cvars = window.__ctm_cvars || [];
-__ctm_cvars.push({ business_unit : "Hotel Collection" });
+__ctm_cvars.push({ business_unit : "My Really Cute Baby" });
 window.CTMSourceEvent = function (event) {
    if (event.state == 'after') {
       if (window.__ctm) {
@@ -608,9 +531,9 @@ window.CTMSourceEvent = function (event) {
  {% include 'smile-initializer' %}
 
 
-<script src="https://cdn.attn.tv/hotelcollection/dtag.js"></script>
+
 <!-- chat -->
-<iframe class="ctm-call-widget" src="https://312204.tctm.co/form/FRT472ABB2C5B9B141A283BEFF6465EBEE001B899589910DC0BF93205EB1536EFC9.html" style="display:none"></iframe>
+
 <script defer async src="https://312204.tctm.co/formreactor.js"></script>
     {% if collection.handle == "the-wine-collection" %}
 
@@ -670,17 +593,9 @@ window.CTMSourceEvent = function (event) {
 
   
 <!--  retention engine  -->
-<script src='//d3ty4og90bdf2f.cloudfront.net/code_snippets/recharge_redirect.js'>
+<script src='//d3ty4og90bdf2f.cloudfront.net/code_snippets/recharge_redirect.js' defer>
 </script>
-<script>
-  window.addEventListener(
-    'DOMContentLoaded', startRetentionEngine('https://app.bellwethr.com/offboard/experience/hotel-collection-3342252508')
-  );
 
-  const generateRetentionEngineLink = (subscription_ids_array) => {
-    return RELinkGenerator('https://app.bellwethr.com/offboard/experience/hotel-collection-3342252508', subscription_ids_array);
-  };
-</script>
 
 <style>
   .rc_cancel-btn {
@@ -714,7 +629,7 @@ $.ajax(settings).done(function (response) {
     $('.rc_cancel-btn').css('display', 'block');
   }
   else {
-    $('.rc_cancel-btn').parent().after('<p>You are not eligible to cancel until after 2 deliveries. Contact <a href="mailto:support@hotelcollection.com">support@hotelcollection.com</a> for questions.</p>');
+    $('.rc_cancel-btn').parent().after('<p>You are not eligible to cancel until after 2 deliveries. Contact <a href="myreallycutebaby90@gmail.com">myreallycutebaby90@gmail.com</a> for questions.</p>');
   }
 });
 }
@@ -730,7 +645,7 @@ $.ajax(settings).done(function (response) {
     });
   </script>
   <script async src="https://cdn.rebuyengine.com/onsite/js/rebuy.js?shop={{ shop.permanent_domain }}"></script>
-<!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=14877"></script>
+<!--Gorgias Chat Widget Start-->
 <script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
 <script>
   function waitForElm(selector) {
@@ -950,6 +865,15 @@ $.ajax(settings).done(function (response) {
 {% if product %}
 <div data-rebuy-id="53766" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
 {% endif %}
+  <!-- Stamped -->
+<script 
+async 
+type="text/javascript" 
+data-api-key="31c9e28f-3874-4390-b696-4ca06be7d3b7" 
+id="stamped-script-widget" 
+src="https://cdn1.stamped.io/files/widget.min.js">
+</script>
+<!-- End Stamped -->
 </body>
 </html>
 {% endcapture %}
