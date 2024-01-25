@@ -8667,7 +8667,7 @@
           "ca9dcb5f-2746-4739-8600-6527029f6693-16871876408aced820-2"
         ],
         "custom_css": [
-          "section-ca9dcb5f-2746-4739-8600-6527029f6693 .button {justify-content: center !important;}"
+          ".button {justify-content: center !important;}"
         ],
         "settings": {
           "heading": "",
