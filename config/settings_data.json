@@ -8647,8 +8647,8 @@
           "ca9dcb5f-2746-4739-8600-6527029f6693-16871876408aced820-2": {
             "type": "html",
             "settings": {
-              "pre_line": "",
-              "title": "Baby Sound Machine",
+              "pre_line": "Baby Sound Machine",
+              "title": "",
               "heading_size": "small",
               "text": "This portable sound machine is designed to create a peaceful environment that promotes relaxation and better sleep for babies.",
               "button_label": "View all",
