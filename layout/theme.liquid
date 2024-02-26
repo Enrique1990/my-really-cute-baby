@@ -13,7 +13,7 @@
 {% unless template.suffix contains 'rewards' %}
   {{ 'prismfly-custom.css' | asset_url | stylesheet_tag }}
   {% endunless %}
-  <meta name="facebook-domain-verification" content="fpkp0s3oaw19vnfiyyeknp0ywzicay" />
+ 
   <meta charset="utf-8">
   <meta http-equiv="cleartype" content="on">
   {% if product.id == 7186083381414 or product.id == 7225891455142 or template == 'page.mini-landing' or template == 'product.mini-landing' or template == 'page.sale-landing' %}
@@ -79,10 +79,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   {%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' -%}{%- endif -%}
   <title>{%- if template contains "index" -%}{{ page_title }}{%- else -%}{{ page_title }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags }}{%- endif -%}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}{% endif %}</title>
 
-  <link rel="preconnect dns-prefetch" href="https://fonts.shopifycdn.com" />
-  <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com" />
-  <link rel="preconnect dns-prefetch" href="https://v.shopify.com" />
-  <link rel="preconnect dns-prefetch" href="https://cdn.shopifycloud.com" />
   {% if settings.enable_shopify_review_comments %}
     <link rel="preconnect dns-prefetch" href="https://productreviews.shopifycdn.com" />
   {% endif %}
