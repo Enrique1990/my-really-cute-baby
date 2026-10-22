@@ -78,22 +78,22 @@
 
  <div id="trust-badges" class="trust-badges order-summary order-summary--is-collapsed">
               <div class="trust-badges__item">
-                <div class="trust-badges__header"><img src="{{ 'badge-1.png' | asset_img_url, 100x }}" /><h3>Cruelty Free</h3></div>
+                <div class="trust-badges__header"><img src="{{ 'badge-1.png' | asset_img_url: renamed_variable_100x }}" /><h3>Cruelty Free</h3></div>
               </div>
               <div class="trust-badges__item">
-                <div class="trust-badges__header"><img src="{{ 'badge-2.png' | asset_img_url, 100x }}" /><h3>Paraben Free</h3></div>
+                <div class="trust-badges__header"><img src="{{ 'badge-2.png' | asset_img_url: renamed_variable_100x }}" /><h3>Paraben Free</h3></div>
                 <div class="trust-badges__text"></div>
               </div>
               <div class="trust-badges__item">
-                <div class="trust-badges__header"><img src="{{ 'badge-3.png' | asset_img_url, 100x }}" /><h3>Hypoallergenic</h3></div>
+                <div class="trust-badges__header"><img src="{{ 'badge-3.png' | asset_img_url: renamed_variable_100x }}" /><h3>Hypoallergenic</h3></div>
                 <div class="trust-badges__text"></div>
               </div>
               <div class="trust-badges__item">
-                <div class="trust-badges__header"><img src="{{ 'badge-4.png' | asset_img_url, 100x }}" /><h3>Vegan</h3></div>
+                <div class="trust-badges__header"><img src="{{ 'badge-4.png' | asset_img_url: renamed_variable_100x }}" /><h3>Vegan</h3></div>
                 <div class="trust-badges__text"></div>
               </div>
               <div class="trust-badges__item">
-                <div class="trust-badges__header"><img src="{{ 'badge-5.png' | asset_img_url, 100x }}" /><h3>Sustainable</h3></div>
+                <div class="trust-badges__header"><img src="{{ 'badge-5.png' | asset_img_url: renamed_variable_100x }}" /><h3>Sustainable</h3></div>
                 <div class="trust-badges__text"></div>
               </div>
 
@@ -137,3 +137,25 @@
   console.log('you are not mobile')
 }
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'badge-1.png' | asset_img_url, 100x }}"
+  to: "{{ 'badge-1.png' | asset_img_url: renamed_variable_100x }}"
+  position: 2602..2660
+- from: "{{ 'badge-2.png' | asset_img_url, 100x }}"
+  to: "{{ 'badge-2.png' | asset_img_url: renamed_variable_100x }}"
+  position: 2820..2878
+- from: "{{ 'badge-3.png' | asset_img_url, 100x }}"
+  to: "{{ 'badge-3.png' | asset_img_url: renamed_variable_100x }}"
+  position: 3093..3151
+- from: "{{ 'badge-4.png' | asset_img_url, 100x }}"
+  to: "{{ 'badge-4.png' | asset_img_url: renamed_variable_100x }}"
+  position: 3368..3426
+- from: "{{ 'badge-5.png' | asset_img_url, 100x }}"
+  to: "{{ 'badge-5.png' | asset_img_url: renamed_variable_100x }}"
+  position: 3634..3692
+{% endcomment %}

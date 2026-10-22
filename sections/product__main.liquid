@@ -4359,7 +4359,7 @@
 {% endschema %}
 
 {% if has_variant_description == true %}
-{% capture 'meta_data' %}
+{% capture meta_data %}
   {% for variant in product.variants %}
     {{ variant.id }}:`{{ variant.metafields.my_fields.variant_description }}`
     {% unless forloop.last %},{% endunless %}
@@ -4370,3 +4370,13 @@
   var metaData = { {{ meta_data }} };
 </script>
 {% endif %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% capture 'meta_data' %}"
+  to: "{% capture meta_data %}"
+  position: 113863..113886
+{% endcomment %}
